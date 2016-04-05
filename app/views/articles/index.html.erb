@@ -13,3 +13,23 @@
     </tr>
   <% end %>
 </table>
+
+<h1>Results</h1>
+ 
+<table>
+  <tr>
+    <th>Game</th>
+    <th>Numbers</th>
+    <th>Won</th>
+    <th>Date</th>
+  </tr>
+ 
+  <% @results.each do |result| %>
+    <tr>
+      <td><%= result.game %></td>
+      <td><%= result.numbers %></td>
+      <td><%= result.won %></td>
+      <td><%= result.created_at %></td>
+    </tr>
+  <% end %>
+</table>
