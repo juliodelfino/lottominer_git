@@ -1,0 +1,1 @@
+# lottominer_git
