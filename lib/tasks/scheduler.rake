@@ -20,7 +20,7 @@ def send_lotto_mail(mail_info)
   mail = SendGrid::Mail.new do |m|
     m.to = 'jhackr@gmail.com'
     m.from = 'taco@cat.limo'
-    m.subject = 'Notification from Lottominer ' + DateTime.now
+    m.subject = 'Notification from Lottominer ' + DateTime.now.strftime(" on %m-%d-%Y at at %I:%M%p")
     m.text = 'Here are the lotto results:<br>Game: ' + mail_info.game + "<br>Results: " + mail_info.numbers
   end
 
