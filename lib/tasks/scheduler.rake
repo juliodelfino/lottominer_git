@@ -11,6 +11,7 @@ end
 def generate_result
   @result = LottoResult.create(game: "SuperLotto 6/49", numbers: "3 6 8 12 16 49", won: false)
   @result.save
+  return @result
 end
 
 def send_lotto_mail(mail_info)
