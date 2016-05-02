@@ -59,9 +59,12 @@ class ArticlesController < ApplicationController
         m.subject = 'Notification from Lottominer ' + DateTime.now.strftime(" on %m-%d-%Y at at %I:%M%p")
         m.text = 'Here are the lotto results:<br>Game: ' + mail_info.game + "<br>Results: " + mail_info.numbers
       end
-    
+      
+      curr_url = request.original_url
+      uri = URI.parse(curr_url)
+      params = uri.query.nil? ? [] : CGI.parse(uri.query)
       res = client.send(mail)
-      @resp = LottoResult.create(game: res.code, numbers: res.body, won: false)
+      @resp = LottoResult.create(game: res.code, numbers: res.body.to_s + "; " + params.to_s, won: false)
       @resp.save
     end
 end
