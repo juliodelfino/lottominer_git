@@ -32,12 +32,21 @@ class ArticlesController < ApplicationController
     end
     
     
-    
-    
     def generate_result
-      @result = LottoResult.create(game: "SuperLotto 6/49", numbers: "3 6 8 12 16 49", won: false)
-      @result.save
-      return @result
+      result = LottoResult.create(game: "SuperLotto 6/49", numbers: generate_random(), won: false)
+      result.save
+      return result
+    end
+    
+    def generate_random
+      nums = []
+      while nums.size < 6 do
+        num = rand(1..49)
+        unless nums.include?(num) 
+          nums << num
+        end
+      end
+      return nums.sort.join(" ")
     end
     
     def send_lotto_mail(mail_info)
@@ -46,7 +55,7 @@ class ArticlesController < ApplicationController
       
       mail = SendGrid::Mail.new do |m|
         m.to = 'jhackr@gmail.com'
-        m.from = 'taco@cat.limo'
+        m.from = 'sofia@lottominer.com'
         m.subject = 'Notification from Lottominer ' + DateTime.now.strftime(" on %m-%d-%Y at at %I:%M%p")
         m.text = 'Here are the lotto results:<br>Game: ' + mail_info.game + "<br>Results: " + mail_info.numbers
       end
