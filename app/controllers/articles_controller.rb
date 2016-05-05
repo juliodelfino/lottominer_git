@@ -1,7 +1,5 @@
 class ArticlesController < ApplicationController
   def index
-    Article.delete_all
-    LottoResult.delete_all
     @articles = Article.all
     @results = LottoResult.all
   end
