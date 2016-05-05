@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head id="Head1">
+		<title></title>
+		<style>
+			#search-lotto {
+				font-family: Calibri;
+				font-size: 16px;
+				color: #333;
+			}
+			#search-lotto #ddlStartMonth, #search-lotto #ddlStartDate, #search-lotto #ddlStartYear, #search-lotto #ddlEndMonth, #search-lotto #ddlEndDay, #search-lotto #ddlEndYear, #search-lotto #ddlSelectGame, #search-lotto #btnSearch, #search-lotto #GridView1 {
+				padding: 5px;
+				margin-right: 10px;
+			}
+			#search-lotto #ddlStartDate, #search-lotto #ddlStartYear, #search-lotto #ddlEndDay, #search-lotto #ddlEndYear {
+				font-family: Consolas;
+			}
+			.Grid {
+				background-color: #fff;
+				margin: 5px 0 10px 0;
+				border: solid 1px #525252;
+				border-collapse: collapse;
+				font-family: Calibri;
+				color: #474747;
+			}
+			.Grid td {
+				padding: 8px;
+				border: solid 1px #c1c1c1;
+			}
+			.Grid tr:hover {
+				background-color: #ddf;
+			}
+			.Grid th {
+				padding: 8px;
+				color: #fff;
+				background: #363670;
+				border-left: solid 1px #525252;
+				font-size: 0.9em;
+			}
+			.Grid .alt {
+				background: #fcfcfc;
+			}
+			.Grid .pgr {
+				background: #363670;
+			}
+			.Grid .pgr tr:hover {
+				background: #363670;
+			}
+			.Grid .pgr table {
+				margin: 3px 0;
+			}
+			.Grid .pgr td {
+				border-width: 0;
+				padding: 5px 10px 5px 10px;
+				border-left: solid 1px #666;
+				font-weight: bold;
+				color: #fff;
+				line-height: 12px;
+			}
+			.Grid .pgr td:hover {
+				background: #363670;
+			}
+			.Grid .pgr a {
+				color: #fff;
+				text-decoration: none;
+			}
+			.Grid .pgr a:hover {
+				color: #fff;
+				text-decoration: underline;
+			}
+		</style>
+	</head>
+	<body>
+		<form method="post" action="./lotto-search.aspx" id="form1">
+			<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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" />
+			<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="B41326B5" />
+			<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="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" />
+			<div id="search-lotto">
+				<span class ="instruction"> Instruction: Set the Start Date and End Date of Lotto Draw and select from the list of Lotto games below to view a complete list of current and past draw results: </span><strong>
+				<p>
+					Set Draw Date
+				</p></strong>
+				<table>
+					<tr>
+						<td>From:</td><td colspan="2">
+						<select name="ddlStartMonth" id="ddlStartMonth">
+							<option value="January">January</option><option value="February">February</option><option value="March">March</option><option value="April">April</option><option selected="selected" value="May">May</option><option value="June">June</option><option value="July">July</option><option value="August">August</option><option value="September">September</option><option value="October">October</option><option value="November">November</option><option value="December">December</option>
+						</select>
+						<select name="ddlStartDate" id="ddlStartDate">
+							<option value="1">1</option><option value="2">2</option><option value="3">3</option><option selected="selected" value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option>
+						</select>
+						<select name="ddlStartYear" id="ddlStartYear">
+							<option selected="selected" value="2016">2016</option><option value="2015">2015</option><option value="2014">2014</option><option value="2013">2013</option><option value="2012">2012</option><option value="2011">2011</option><option value="2010">2010</option><option value="2009">2009</option><option value="2008">2008</option><option value="2007">2007</option><option value="2006">2006</option>
+						</select></td>
+					</tr>
+					<tr>
+						<td>To:</td><td>
+						<select name="ddlEndMonth" id="ddlEndMonth">
+							<option value="January">January</option><option value="February">February</option><option value="March">March</option><option value="April">April</option><option selected="selected" value="May">May</option><option value="June">June</option><option value="July">July</option><option value="August">August</option><option value="September">September</option><option value="October">October</option><option value="November">November</option><option value="December">December</option>
+						</select>
+						<select name="ddlEndDay" id="ddlEndDay">
+							<option value="1">1</option><option value="2">2</option><option value="3">3</option><option selected="selected" value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option>
+						</select>
+						<select name="ddlEndYear" id="ddlEndYear">
+							<option selected="selected" value="2016">2016</option><option value="2015">2015</option><option value="2014">2014</option><option value="2013">2013</option><option value="2012">2012</option><option value="2011">2011</option><option value="2010">2010</option><option value="2009">2009</option><option value="2008">2008</option><option value="2007">2007</option><option value="2006">2006</option>
+						</select></td>
+					</tr>
+				</table>
+				<strong>
+				<p>
+					Select Lotto Game
+				</p></strong>
+				<select name="ddlSelectGame" id="ddlSelectGame">
+					<option selected="selected" value="0">All Games</option><option value="18">Ultra Lotto 6/58</option><option value="17">Grand Lotto 6/55</option><option value="1">Super Lotto 6/49</option><option value="2">Mega Lotto 6/45</option><option value="13">Lotto 6/42</option><option value="5">6Digit</option><option value="6">4Digit</option><option value="8">Suertres Lotto 11AM</option><option value="9">Suertres Lotto 4PM</option><option value="10">Suertres Lotto 9PM</option><option value="15">EZ2 Lotto 11AM</option><option value="16">EZ2 Lotto 4PM</option><option value="11">EZ2 Lotto 9PM</option>
+				</select>
+				<br />
+				<br />
+				<input type="submit" name="btnSearch" value="Search Lotto" id="btnSearch" />
+				<br />
+				<br />
+				<hr />
+				<div class="error">
+					<span id="lblError">Search Results</span>
+					<br />
+				</div>
+				<div>
+					<table class="Grid" cellspacing="0" rules="all" border="1" id="GridView1" height="126" width="712">
+						<tr>
+							<th scope="col">LOTTO GAME</th><th scope="col">COMBINATIONS</th><th scope="col">DRAW DATE</th><th scope="col">JACKPOT</th><th scope="col">WINNERS</th>
+						</tr>
+						<tr>
+							<td>Megalotto 6/45</td><td>24-19-12-35-26-22</td><td>5/4/2016</td><td>9,000,000.00</td><td>0</td>
+						</tr>
+						<tr class="alt">
+							<td>4Digit</td><td>9-1-9-0</td><td>5/4/2016</td><td>51,133.00</td><td>18</td>
+						</tr>
+						<tr>
+							<td>Suertres Lotto 11AM</td><td>7-8-8</td><td>5/4/2016</td><td>4,500.00</td><td>338</td>
+						</tr>
+						<tr class="alt">
+							<td>Suertres Lotto 4PM</td><td>4-0-7</td><td>5/4/2016</td><td>4,500.00</td><td>729</td>
+						</tr>
+						<tr>
+							<td>Suertres Lotto 9PM</td><td>0-8-7</td><td>5/4/2016</td><td>4,500.00</td><td>506</td>
+						</tr>
+						<tr class="alt">
+							<td>EZ2 Lotto 9PM</td><td>15-20</td><td>5/4/2016</td><td>4,000.00</td><td>537</td>
+						</tr>
+						<tr>
+							<td>EZ2 Lotto 11AM</td><td>08-11</td><td>5/4/2016</td><td>4,000.00</td><td>285</td>
+						</tr>
+						<tr class="alt">
+							<td>EZ2 Lotto 4PM</td><td>22-29</td><td>5/4/2016</td><td>4,000.00</td><td>169</td>
+						</tr>
+						<tr>
+							<td>Grand Lotto 6/55</td><td>14-20-16-05-22-24</td><td>5/4/2016</td><td>59,887,252.00</td><td>0</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</form>
+		<script type="text/javascript">
+			parent.AdjustIframeHeight(document.getElementById("search-lotto").scrollHeight);
+		</script>
+	</body>
+</html>

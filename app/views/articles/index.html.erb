@@ -20,7 +20,9 @@
   <tr>
     <th>Game</th>
     <th>Numbers</th>
-    <th>Won</th>
+    <th>Draw Date</th>
+    <th>Jackpot Prize</th>
+    <th>Winners</th>
     <th>Date</th>
   </tr>
  
@@ -28,7 +30,9 @@
     <tr>
       <td><%= result.game %></td>
       <td><%= result.numbers %></td>
-      <td><%= result.won %></td>
+      <td><%= result.draw_date.strftime("%B %d, %Y") %></td>
+      <td align="right"><%= number_to_currency(result.jackpot_prize) %></td>
+      <td><%= result.winners %></td>
       <td><%= result.created_at %></td>
     </tr>
   <% end %>
