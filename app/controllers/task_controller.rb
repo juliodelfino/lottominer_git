@@ -13,13 +13,6 @@ class TaskController < ApplicationController
   def get_daily_results
     
     puts "Method invoked by: " + (params[:callid].nil? ? "nil" : params[:callid])
-    puts 'Got dummy results'
-    @result = 'Dummy results'
-  end
-
-  def get_daily_results2
-    
-    puts "Method invoked by: " + (params[:callid].nil? ? "nil" : params[:callid])
     
     url = URI.parse("http://www.pcso.gov.ph/lotto-search/lotto-search.aspx")
     http = Net::HTTP.new(url.host, url.port)
