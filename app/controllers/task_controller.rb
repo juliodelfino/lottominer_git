@@ -9,8 +9,15 @@ class TaskController < ApplicationController
     puts "Method invoked by: " + (params[:callid].nil? ? "nil" : params[:callid])
     send_lotto_mail
   end
-
+  
   def get_daily_results
+    
+    puts "Method invoked by: " + (params[:callid].nil? ? "nil" : params[:callid])
+    puts 'Got dummy results'
+    @result = 'Dummy results'
+  end
+
+  def get_daily_results2
     
     puts "Method invoked by: " + (params[:callid].nil? ? "nil" : params[:callid])
     
