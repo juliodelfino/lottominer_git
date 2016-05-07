@@ -7,7 +7,7 @@ class TaskController < ApplicationController
   def notify_user_daily
     
     puts "Method invoked by: " + (params[:callid].nil? ? "nil" : params[:callid])
-    send_lotto_mail
+    render json: send_lotto_mail
   end
   
   def get_daily_results
@@ -49,7 +49,7 @@ class TaskController < ApplicationController
     
     rows = body_text[body_text.index('LOTTO GAME')..-1].scan(/<tr.*?<\/tr>/m)
     
-    @result = rows.map{ |row| LottoResultUtil.parse(row).to_s }.to_s
+    render json: rows.map{ |row| LottoResultUtil.parse(row).to_s }.to_s
   end
   
   def get_daily_results_from_file

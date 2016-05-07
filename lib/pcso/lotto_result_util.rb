@@ -12,7 +12,7 @@ class LottoResultUtil
        winners:       cells[4].sub(/.*>(.*)<.*/, '\1').to_i)
      
      if (LottoResult.find_by(game: row.game, draw_date: row.draw_date).nil?)
-        row.save
+        return row.save
      end
      
      return row

@@ -12,6 +12,7 @@ class EmailUtil
     end
     
     res = client.send(mail)
-    Rails.logger.debug "Sending mail status: " + res.code.to_s
+    puts "Sending mail status: " + res.code.to_s
+    return res.code.to_s
   end
 end
