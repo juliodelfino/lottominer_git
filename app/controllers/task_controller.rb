@@ -17,19 +17,15 @@ class TaskController < ApplicationController
     url = URI.parse("http://www.pcso.gov.ph/lotto-search/lotto-search.aspx")
     http = Net::HTTP.new(url.host, url.port)
     http = http.start
-    puts 'getting url'
     request = Net::HTTP::Get.new(url)
     response = http.request(request)
     
-    puts 'got response'
 
     from_date = params[:from].nil? ? Date.today : DateTime.parse(params[:from])
     to_date = params[:to].nil? ? Date.today : DateTime.parse(params[:to])
     
-    puts 'reading body'
     respText = response.read_body
     
-    puts 'got body'
     formData = {'__VIEWSTATE' => extract_form_value('__VIEWSTATE', respText),
         '__VIEWSTATEGENERATOR' => extract_form_value('__VIEWSTATEGENERATOR', respText),
         '__EVENTVALIDATION' => extract_form_value('__EVENTVALIDATION', respText),
@@ -47,22 +43,18 @@ class TaskController < ApplicationController
     req.set_form_data(formData)
     http.use_ssl = (url.scheme == "https")
     
-    puts 'another request'
     response = http.request(req)
     
-    puts 'calling response'
     body_text = response.read_body
     
-    puts 'parsing body'
     rows = body_text[body_text.index('LOTTO GAME')..-1].scan(/<tr.*?<\/tr>/m)
     
-    puts 'mapping rows'
     @result = rows.map{ |row| LottoResultUtil.parse(row).to_s }.to_s
-    puts 'done'
   end
   
   def get_daily_results_from_file
-    body_text = File.read("/Users/julio/Documents/Aptana Studio 3 Workspace/lottominer_git/sample_lotto_result.html")
+    
+    body_text = File.read(File.dirname(__FILE__) + "/../../tmp/sample_lotto_result.html")
     rows = body_text[body_text.index('LOTTO GAME')..-1].scan(/<tr.*?<\/tr>/m)
     @result = "from file: " + rows.map{ |row| LottoResultUtil.parse(row).to_s }.to_s
   end

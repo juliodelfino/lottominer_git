@@ -12,5 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui
+//= require jquery.dataTables
 //= require turbolinks
+//= require bootstrap
+//= require json2
 //= require_tree .

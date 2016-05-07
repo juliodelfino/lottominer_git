@@ -11,10 +11,11 @@ class LottoResultUtil
        jackpot_prize: cells[3].sub(/.*>(.*)<.*/, '\1').gsub(',','').to_i, 
        winners:       cells[4].sub(/.*>(.*)<.*/, '\1').to_i)
      
-     lotto_result = LottoResult.find_or_create_by(row.attributes)
-
-
-     return lotto_result
+     if (LottoResult.find_by(game: row.game, draw_date: row.draw_date).nil?)
+        row.save
+     end
+     
+     return row
    end
    
 end
