@@ -1,3 +1,26 @@
 // Place all the styles related to the welcome controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.winners-bg {
+  background-color: greenyellow
+}
+
+#left-arrow {
+  
+  background: url('/assets/images/arrows.png') no-repeat;
+  background-position: -16px -37px;
+  opacity: 0.5;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+#right-arrow {
+  
+  background: url('/assets/images/arrows.png') no-repeat;
+  background-position: -195px -37px;
+  opacity: 0.5;
+  cursor: pointer;
+  overflow: hidden;
+  float: right
+}

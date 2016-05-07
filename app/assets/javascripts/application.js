@@ -17,4 +17,3 @@
 //= require turbolinks
 //= require bootstrap
 //= require json2
-//= require_tree .

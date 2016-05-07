@@ -1,4 +1,13 @@
 class WelcomeController < ApplicationController
   def index
+    
+    
+    @selected_date = (params[:date].nil? || DateTime.parse(params[:date]) > Date.yesterday)? \
+        Date.yesterday : DateTime.parse(params[:date])
+    @prev_date = (@selected_date - 1.days).strftime("%Y%m%d")
+    @next_date = (@selected_date + 1.days).strftime("%Y%m%d")
+    all_results = LottoResult.where(draw_date: @selected_date).order(jackpot_prize: :desc)
+    @latest_result = all_results[0]
+    @other_results = all_results[1..all_results.length-1]
   end
 end
