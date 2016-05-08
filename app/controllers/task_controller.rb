@@ -3,6 +3,7 @@ require 'uri'
 require 'net/http'
 
 class TaskController < ApplicationController
+  skip_before_filter :authenticate 
   
   def notify_user_daily
     

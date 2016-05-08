@@ -1,0 +1,36 @@
+
+
+<h1>Hello there!</h1>
+<div class="jumbotron">
+	<table>
+	  <tr>
+	    <td class="reg-photo"><%= image_tag @db_user.photo, width: 96 %></td>
+	    </td>
+	    <td>
+	    	
+			<%= form_for :user, url: '/register', method: :post do |f| %>
+			  <p>
+			    <%= f.label :email %><br>
+			    <%= f.text_field :email, value: @db_user.email %>
+			  </p>
+			 
+			  <p>
+			    <%= f.label :name %><br>
+			    <%= f.text_field :name, value: @db_user.name %>
+			  </p>
+			  	  
+			  <%= f.hidden_field :fb_id, value: @db_user.fb_id %>
+			  <%= f.hidden_field :photo, value: @db_user.photo %>			  
+			  <%= f.hidden_field :fb_info, value: @db_user.fb_info %>
+			  
+			  <p>
+			    <%= submit_tag "Save", class: "btn btn-large btn-danger" %>
+			  </p>
+			<% end %>	    		    	    	
+	    </td>
+	  </tr>
+	</table>
+	
+	
+
+</div>

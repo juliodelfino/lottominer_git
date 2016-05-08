@@ -24,5 +24,9 @@ module Lottominer
     config.autoload_paths += %W(#{config.root}/lib/pcso)
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+    
+    PROJECT_NAME = "Lotto Analytics"
+    FB_APP_ID = "1763514440594738"
+    FB_APP_SECRET = "49cead587375873da4b191de078b0e30"
   end
 end

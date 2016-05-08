@@ -1,20 +1,29 @@
 Rails.application.routes.draw do
 
-  get 'admin', to: "admin#index"
-  get 'admin/ajax_get_results'
-  get 'admin/ajax_delete_row'
-
-  get 'task/notify_user_daily'
-
-  get 'task/get_daily_results'
-
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
   root 'welcome#index'
+  
+  get 'admin' => "admin#index"
+  get 'admin/ajax_get_results'
+  get 'admin/ajax_delete_row'
 
-  resources :articles
+  get 'task/notify_user_daily'
+  get 'task/get_daily_results'
+
+  resources :login do
+    collection do
+      post 'validate'
+      get 'facebook'
+      get 'fb_redirect'
+    end
+  end  
+  get '/register' => 'login#register'
+  post '/register' => 'login#saveuser'
+  get '/logout' => 'login#logout'
+  get '/dashboard' => 'dashboard#index'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
