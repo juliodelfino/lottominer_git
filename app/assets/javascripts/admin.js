@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
 	var table = $('#admin_tbl').DataTable({
-		ajax : "/admin/ajax_get_results",
+		ajax : "/admin/ajax_get_results?table=" + $('#table_name').val(),
 		columns : [{
 			data : 0
 		}, {
@@ -29,10 +29,14 @@ $(document).ready(function() {
 	$('#refresh').click(function() {
 		table.ajax.reload();
 	});
+	
+	$('#table_name').change(function(){
+		window.location = "/admin?table=" + $(this).val();
+	});
 
 	function row_delete(id) {
 		$.ajax({
-			url : "/admin/ajax_delete_row?id="+id
+			url : "/admin/ajax_delete_row?id="+id + "&table=" + $('#table_name').val()
 		}).done(function(data) {
 			table.ajax.reload();
 		});

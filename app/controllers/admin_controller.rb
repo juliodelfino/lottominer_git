@@ -1,5 +1,8 @@
 class AdminController < ApplicationController
+  skip_before_filter :authenticate 
+  
   def index
+    @selected_table = params[:table].nil? ? 'LottoResult' : params[:table]
   end
   
   def ajax_get_results2
@@ -8,9 +11,13 @@ class AdminController < ApplicationController
   
   def ajax_get_results
     
+    @selected_table = params[:table].nil? ? 'LottoResult' : params[:table]
     exclude_columns = ['created_at', 'updated_at']
-    columns = LottoResult.attribute_names - exclude_columns
-    result = LottoResult.select(columns)
+    
+    clazz = @selected_table.constantize
+    
+    columns = clazz.attribute_names - exclude_columns
+    result = clazz.select(columns)
     
     jsonResult = {
       data: result.map{ |row| row.attributes.map{ |cell, cellval| cellval} }
@@ -20,7 +27,9 @@ class AdminController < ApplicationController
   
   def ajax_delete_row
     
-    lotto_result = LottoResult.find(params[:id])
+    @selected_table = params[:table].nil? ? 'LottoResult' : params[:table]
+    clazz = @selected_table.constantize
+    lotto_result = clazz.find(params[:id])
     lotto_result.destroy
     render json: true
   end
