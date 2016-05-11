@@ -42,7 +42,7 @@ production_old:
   url: <%= ENV['DATABASE_URL'] %>
   
 production:
-  adapter: mysql
+  adapter: mysql2
   encoding: utf8
   pool: 5
-  url: <%= ENV['CLEARDB_DATABASE_URL'] %>
+  url: mysql2://b8d5ef46380ed3:74bafb31@us-cdbr-iron-east-04.cleardb.net/heroku_03c614de0517203?reconnect=true
