@@ -45,4 +45,4 @@ production:
   adapter: mysql2
   encoding: utf8
   pool: 5
-  url: mysql2://b8d5ef46380ed3:74bafb31@us-cdbr-iron-east-04.cleardb.net/heroku_03c614de0517203?reconnect=true
+  url: mysql2://lottominer_admin:googel123@166.62.6.80/lottominer?reconnect=true
