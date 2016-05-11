@@ -45,4 +45,4 @@ production:
   adapter: mysql2
   encoding: utf8
   pool: 5
-  url: <%= ENV['CLEARDB_DATABASE_URL'] %>
+  url: mysql2://lottominer_admin:googel123@166.62.6.80/lottominer?reconnect=true
