@@ -37,12 +37,12 @@ test:
   <<: *default
   database: lottominer_test
 
-production:
+production_old:
   <<: *default
   url: <%= ENV['DATABASE_URL'] %>
   
-production_new:
+production:
   adapter: mysql2
   encoding: utf8
   pool: 5
-  url: mysql2://lottominer_admin:googel123@166.62.6.80/lottominer?reconnect=true
+  url: <%= ENV['CLEARDB_DATABASE_URL'] %>
