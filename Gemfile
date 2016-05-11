@@ -6,7 +6,7 @@ gem 'rails', '4.2.4'
 # Use sqlite3 as the database for Active Record
 #gem 'sqlite3'
 # Ensure the MySQL gem is defined in your Gemfile
-gem 'mysql2', '~> 0.3.18', group: :development
+gem 'mysql2'
 
 gem 'pg'
 # Use SCSS for stylesheets
@@ -29,7 +29,6 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'mail'
 gem 'sendgrid-ruby'
-
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
