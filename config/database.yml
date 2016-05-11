@@ -13,7 +13,7 @@ default: &default
   encoding: unicode
   pool: 5
 
-development_local:
+development:
   adapter: mysql2
   encoding: utf8
   database: lottominer_development
@@ -23,11 +23,6 @@ development_local:
   host: 127.0.0.1
   port: 3306
 
-development:
-  adapter: mysql2
-  encoding: utf8
-  pool: 5
-  url: mysql2://lottominer_admin:googel123@166.62.6.80/lottominer?reconnect=true
   
 
 # Warning: The database defined as "test" will be erased and
@@ -42,7 +37,7 @@ production_old:
   url: <%= ENV['DATABASE_URL'] %>
   
 production:
-  adapter: mysql2
+  adapter: mysql
   encoding: utf8
   pool: 5
   url: <%= ENV['CLEARDB_DATABASE_URL'] %>
