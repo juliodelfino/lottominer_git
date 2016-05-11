@@ -37,11 +37,11 @@ test:
   <<: *default
   database: lottominer_test
 
-production_old:
+production:
   <<: *default
   url: <%= ENV['DATABASE_URL'] %>
   
-production:
+production_new:
   adapter: mysql2
   encoding: utf8
   pool: 5
