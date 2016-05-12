@@ -8,6 +8,8 @@ gem 'rails', '4.2.4'
 # Ensure the MySQL gem is defined in your Gemfile
 gem 'mysql2', '~> 0.3.18'
 
+gem 'heroku_external_db'
+
 gem 'pg'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
