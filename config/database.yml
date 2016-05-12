@@ -41,8 +41,8 @@ production_old:
   <<: *default
   url: <%= ENV['DATABASE_URL'] %>
   
-production_old2:
+production:
   adapter: mysql2
-  encoding: unicode
+  encoding: utf8
   pool: 5
   url: <%= ENV['DATABASE_URL'] %>
