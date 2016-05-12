@@ -12,6 +12,14 @@ class TaskController < ApplicationController
   end
   
   def get_daily_results
+      url = URI.parse("http://jdelfino.com/")
+      http = Net::HTTP.new(url.host, url.port)
+      http = http.start
+      request = Net::HTTP::Get.new(url)
+      response = http.request(request)
+  end
+  
+  def get_daily_results2
     
     puts "Method invoked by: " + (params[:callid].nil? ? "nil" : params[:callid])
     
