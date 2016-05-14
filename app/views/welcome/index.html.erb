@@ -50,6 +50,7 @@
           </p>
           <h3>Draw Results (<%= @selected_date.strftime("%a, %B %d, %Y") %>)</h3> 
 		  <a href="?date=<%=@prev_date %>" id="left-arrow">PREVIOUS</a>
+		  <input type="hidden" id="datepicker" />
 		  <a href="?date=<%=@next_date %>" id="right-arrow">NEXT</a>
           <div class="jumbotron">
             <h1><%= @latest_result.game %></h1>
