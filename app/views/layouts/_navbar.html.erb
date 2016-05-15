@@ -1,0 +1,12 @@
+
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+    		<li class="<%= "active" if !params[:id].present? %>"><a href="/analytics">All Games</a></li>
+    		<% LottoResult.uniq.order(:game).pluck(:game).each do |result| %> 
+    			<li class="<%= "active" if result == params[:id] %>">
+    				<a href="/analytics/game?id=<%= result %>"><%= result %></a>
+    			</li>
+  			<% end %>
+          </ul>
+
+        </div>

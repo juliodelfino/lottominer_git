@@ -1,5 +1,4 @@
 class AdminController < ApplicationController
-  skip_before_filter :authenticate 
   
   def index
     @selected_table = params[:table].nil? ? 'LottoResult' : params[:table]

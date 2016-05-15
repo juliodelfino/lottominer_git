@@ -1,0 +1,16 @@
+          <h1 class="page-header">Analytics</h1> 
+ 
+ 		  <h4>Number of Draws for Each Game</h4>
+          <div style="overflow: auto">
+              <%= column_chart LottoResult.group(:game).count, width: "1600px" %>
+          </div>
+          <hr/>
+          
+ 		  <h4>Number of Draws Won for Each Game</h4>
+          <div style="overflow: auto">
+              <%= pie_chart LottoResult.where("winners > 0").group(:game).count %>
+          </div>
+          <hr/>         
+          <div style="overflow:auto;">
+          	<%= line_chart({20.day.ago => 50, 2008174456 => 4, "2013-05-07 00:00:00 UTC" => 7}) %>
+          </div>

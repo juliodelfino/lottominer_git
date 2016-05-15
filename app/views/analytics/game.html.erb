@@ -1,0 +1,21 @@
+          <h1 class="page-header">Analytics - <%= params[:id]%></h1>
+
+		  Total Draw Count: <%= @totalDrawCount %><br/>
+		  Total Draws Won: <%= @totalDrawsWon %> (<%= @winPercent %>% chance) <br />
+		  First Draw Date: <%= @drawEarliest.to_s %><br />
+		  Latest Draw Date: <%= @drawLatest.to_s %><br />
+          <h4>Draw Dates With Winners</h4>
+          <div style="overflow: auto">
+              <%= column_chart LottoResult.where("game = ? AND winners > 0", params[:id]).order(draw_date: :desc).limit(30).pluck(:draw_date, :jackpot_prize), \
+              		width: "1200px", xtitle: "Draw Date", ytitle: "Jackpot Prize", label: "Jackpot Prize" %>
+          </div>
+ 		  <hr/>
+          <h4>Jackpot Prize Trend for the Last 30 Days</h4>
+          <div style="overflow: auto">
+              <%= line_chart LottoResult.where(game: params[:id]).order(draw_date: :desc).limit(30).pluck(:draw_date, :jackpot_prize), \
+              		width: "1200px", xtitle: "Draw Date", ytitle: "Jackpot Prize", label: "Jackpot Prize" %>
+          </div>
+          
+          <div style="overflow: auto">
+              <%= bar_chart LottoResult.order(jackpot_prize: :desc).limit(20).pluck(:game, :jackpot_prize) %>
+          </div>
