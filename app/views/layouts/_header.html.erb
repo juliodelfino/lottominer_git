@@ -39,12 +39,11 @@
       </ul>
  	  <ul class="nav navbar-nav navbar-right">
         	<li>
-    	<% if (!@user.nil?) %>
+    		<% @user = controller.current_user %>
 			<a href="<%= @user["fb_id"] %>">
     		<%= image_tag @user["photo"], width: '24' %>
     		<%= @user["name"] %>
     		</a>
-    	<% end %>
     	</li>
     	<li>
     		<a id="btn-logout">Logout</a>
