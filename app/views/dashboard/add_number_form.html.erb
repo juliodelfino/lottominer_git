@@ -4,7 +4,7 @@
       <label for="game_id">Game</label>
       <%= select_tag(:game_id, options_for_select(LottoGame.all.pluck(:name, :id)), class: "form-control") %>
       <label for="name">Numbers (separate by commas)</label>
-      <input type="text" name="name" id="name" value="1,4,23,12,42,6" class="form-control">
+      <input type="number" name="name" id="name" value="1,4,23,12,42,6" class="form-control">
 
       <!-- Allow form submission with keyboard without duplicating the dialog button -->
       <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
