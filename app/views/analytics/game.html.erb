@@ -1,9 +1,23 @@
           <h1 class="page-header">Analytics - <%= params[:id]%></h1>
 
+          <h4>General Info</h4>
 		  Total Draw Count: <%= @totalDrawCount %><br/>
 		  Total Draws Won: <%= @totalDrawsWon %> (<%= @winPercent %>% chance) <br />
 		  First Draw Date: <%= @drawEarliest.to_s %><br />
 		  Latest Draw Date: <%= @drawLatest.to_s %><br />
+		  
+ 		  <hr/>
+          <h4>Top 10 Numbers with Highest Occurrences of Being Drawn</h4>
+          <div>
+              <% @rowData = LottoResult.where(game: params[:id]).group(:numbers).order('count_id desc').limit(10).count('id') %>
+              <% @rowData.each do |row| %>
+              	<p>
+              		<%= row[0] %> - <%= row[1] %> times
+          		</p>
+          	  <% end %>
+          </div>		  
+		  
+		  <hr />
           <h4>Draw Dates With Winners</h4>
           <div style="overflow: auto">
               <%= column_chart LottoResult.where("game = ? AND winners > 0", params[:id]).order(draw_date: :desc).limit(30).pluck(:draw_date, :jackpot_prize), \
@@ -15,7 +29,5 @@
               <%= line_chart LottoResult.where(game: params[:id]).order(draw_date: :desc).limit(30).pluck(:draw_date, :jackpot_prize), \
               		width: "1200px", xtitle: "Draw Date", ytitle: "Jackpot Prize", label: "Jackpot Prize" %>
           </div>
-          
-          <div style="overflow: auto">
-              <%= bar_chart LottoResult.order(jackpot_prize: :desc).limit(20).pluck(:game, :jackpot_prize) %>
-          </div>
+
+
