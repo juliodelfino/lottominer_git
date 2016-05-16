@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'welcome#index'
+  get 'about' => 'welcome#about'
+  get 'welcome/ajax_results'
   
   get 'admin' => "admin#index"
   get 'admin/ajax_get_results'

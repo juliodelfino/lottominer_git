@@ -1,0 +1,28 @@
+		  <input type="hidden" id="prev-date" value="<%= @prev_date %>" />  
+		  <input type="hidden" id="next-date" value="<%= @next_date %>" />  
+          <h3>Draw Results (<%= @selected_date.strftime("%a, %B %d, %Y") %>)</h3> 
+			  
+			  <div class="jumbotron">
+	            <h1><%= @latest_result.game %></h1>
+	            <h1><%= @latest_result.numbers %></h1>
+	            <p>Prize: <%= number_to_currency(@latest_result.jackpot_prize, unit: '₱') %><br />
+	               <% if @latest_result.winners > 0 %>
+	               	<span class="winners-bg">Winners: <%= @latest_result.winners %></span>
+	               	<% else %>Winners: <%= @latest_result.winners %>
+	               <% end %>
+	          </div>         
+	          <div>
+	      	  	<% @other_results.each do |result| %> 
+	            <div class="col-xs-6 col-lg-4">             
+					<h4><%= result.game %></h4>
+		            <h4><%= result.numbers %></h4>
+		            <p>Prize: <%= number_to_currency(result.jackpot_prize, unit: '₱') %><br />
+		               <% if result.winners > 0 %>
+		               	<span class="winners-bg">Winners: <%= result.winners %></span>
+		               	<% else %>Winners: <%= result.winners %>
+		               <% end %>
+	
+	            </div>
+			  	<% end %>
+	  
+	          </div>
