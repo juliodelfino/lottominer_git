@@ -1,15 +1,15 @@
 $(document).ready(function() {
 
 	var lottoDate = $("#datepicker").datepicker({
-      showOn: "button",
-      buttonImage: "assets/images/calendar.gif",
-      buttonImageOnly: true,
-      buttonText: "Select date",
       dateFormat: 'yymmdd',
       defaultDate: getParameterByName('date') != null ? getParameterByName('date') : new Date(),
       onSelect: function(date) {
       	$("#dynamic-content").load('/welcome/ajax_results?date=' + date);
       }
+    });
+    
+    $('#cal-btn').click(function(){
+    	lottoDate.datepicker('show');
     });
     
     $('#left-arrow').click(function(){
