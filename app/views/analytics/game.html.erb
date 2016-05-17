@@ -24,7 +24,7 @@
               		width: "1200px", xtitle: "Draw Date", ytitle: "Jackpot Prize", label: "Jackpot Prize" %>
           </div>
  		  <hr/>
-          <h4>Jackpot Prize Trend for the Last 30 Days</h4>
+          <h4>Jackpot Prize Trend for the Last 30 Draws</h4>
           <div style="overflow: auto">
               <%= line_chart LottoResult.where(game: params[:id]).order(draw_date: :desc).limit(30).pluck(:draw_date, :jackpot_prize), \
               		width: "1200px", xtitle: "Draw Date", ytitle: "Jackpot Prize", label: "Jackpot Prize" %>
