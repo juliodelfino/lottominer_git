@@ -1,12 +1,12 @@
 
 
     <div class="container">
-
       <div class="row row-offcanvas row-offcanvas-right">
-
         <div class="col-xs-12 col-sm-9">
+	      <h2 class="featurette-heading">Draw Results</h2>
 		  <a class="btn" href="#" id="left-arrow">PREVIOUS</a>
 		  <input class="btn" type="hidden" id="datepicker" />
+		  <%= image_tag 'images/calendar.gif', id: 'cal-btn', width: 16 %>
 		  <a class="btn" href="#" id="right-arrow">NEXT</a>
 		  <div id="dynamic-content">
 		  	<%= render '/welcome/results' %>
@@ -21,7 +21,7 @@
 	      <div class="row featurette">
 	        <div class="col-md-7">
 	          <h2 class="featurette-heading">Try your luck. <span class="text-muted">Sign in now.</span></h2>
-	          	<p class="lead">We trust Facebook in ensuring that you're not a robot.</p>
+	          	<p class="lead">Discover a lot of cool ways to analyze the numbers.</p>
 	  		    <a href="/login/facebook" id="btn-login" class="btn btn-primary">
 					<%= image_tag 'https://z-1-static.xx.fbcdn.net/rsrc.php/v2/yo/r/jVG1f1GslU7.png', width: 32 %>
 					Sign in thru Facebook
@@ -29,6 +29,5 @@
 	        </div>
 	      </div>
       <% end %>
-
 
     </div>

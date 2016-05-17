@@ -1,0 +1,22 @@
+
+ 
+  <br/>
+  <div class="row">
+  	
+	<div class="col-xs-6 col-sm-3 placeholder">
+	<input type="button" id="add_number_btn" class="btn" value="Add" />
+	<div id="add_number_form" title="Add Number"></div>
+	</div>
+</div>
+
+<div class="row">
+	
+	<% controller.current_user.user_numbers.each do |usernum| %>
+	
+	<div class="col-xs-6 col-sm-3 placeholder <%= cycle('result-even', 'result-odd') -%>">
+		<h4><%= usernum.numbers %></h4>
+		<span class="text-muted"><%= usernum.lotto_game.name %></span>
+	</div>
+	<% end %>
+
+</div>

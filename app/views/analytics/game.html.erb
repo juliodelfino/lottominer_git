@@ -11,7 +11,7 @@
           <div>
               <% @rowData = LottoResult.where(game: params[:id]).group(:numbers).order('count_id desc').limit(10).count('id') %>
               <% @rowData.each do |row| %>
-              	<p>
+              	<p class="<%= cycle('', 'result-odd') -%>">
               		<%= row[0] %> - <%= row[1] %> times
           		</p>
           	  <% end %>

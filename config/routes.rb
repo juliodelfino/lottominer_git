@@ -26,7 +26,8 @@ Rails.application.routes.draw do
   post '/register' => 'login#saveuser'
   get '/logout' => 'login#logout'
   get '/dashboard' => 'dashboard#index'
-  get '/dashboard/get_add_number_form' => 'dashboard#get_add_number_form'
+  get '/dashboard/get_add_number_form'
+  get '/dashboard/search_number'
   
   get '/analytics' => 'analytics#index'
   get '/analytics/game' => 'analytics#game'

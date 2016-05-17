@@ -24,5 +24,17 @@ $(document).ready(function() {
 	$('#add_number_btn').click(function() {
 		dialog.dialog( "open" );
 	});
+	
+	$('#search-num-box').on('input', function(){
+		$('#results').load('/dashboard/search_number?token=' + $(this).val(), onSearchResultsComplete);
+	});
+	
+	function onSearchResultsComplete() {
+		$(".lotto-num-menu").click(function(){
+			
+			$('#lotto-menu').detach().prependTo($(this)).show();
+			
+		});
+	}
 
 });
