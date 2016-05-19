@@ -37,13 +37,12 @@
             </ul>
         </li>
         <li class="<%= "active" if params[:controller] == "admin" %>"><a href="/admin">Admin Tools</a></li>
-        <li><a href="#">Settings</a></li>
-        <li><a href="#">About</a></li>
+        <li class="<%= "active" if params[:action] == "settings" %>"><a href="/settings">Settings</a></li>
       </ul>
  	  <ul class="nav navbar-nav navbar-right">
         	<li>
     		<% @user = controller.current_user %>
-			<a href="<%= @user["fb_id"] %>">
+			<a href="/settings">
     		<%= image_tag @user["photo"], width: '24' %>
     		<%= @user["name"] %>
     		</a>

@@ -1,0 +1,35 @@
+
+<% @db_user = controller.current_user %>
+<h1 class="page-header">Settings</h1>
+
+<div class="row">
+	<table>
+	  <tr>
+	    <td class="user-photo"><%= image_tag @db_user.photo %></td>
+	    </td>
+	    <td>
+	    	
+			<%= form_for :user, class: 'form-group', url: '/settings/save', method: :post do |f| %>
+			  <p>
+			    <%= f.label :email %><br>
+			    <%= f.text_field :email, value: @db_user.email, class: 'form-control' %>
+			  </p>
+			 
+			  <p>
+			    <%= f.label :name %><br>
+			    <%= f.text_field :name, value: @db_user.name, class: 'form-control' %>
+			  </p>
+			  	  
+			  <%= check_box_tag(:notify_daily_results) %>
+			  <%= label_tag(:notify_daily_results, "Notify me of the daily results") %><br/>
+			  <%= check_box_tag(:notify_if_winner) %>
+			  <%= label_tag(:notify_if_winner, "Notify me if I won") %>
+			  <p>
+			    <%= submit_tag "Save", class: "btn btn-primary" %>
+			  </p>
+			<% end %>	    		    	    	
+	    </td>
+	  </tr>
+	</table>
+	
+</div>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160515150336) do
+ActiveRecord::Schema.define(version: 20160519161219) do
 
   create_table "articles", force: :cascade do |t|
     t.string   "title",      limit: 255
@@ -41,13 +41,15 @@ ActiveRecord::Schema.define(version: 20160515150336) do
   end
 
   create_table "lotto_results", force: :cascade do |t|
-    t.string   "game",          limit: 255
-    t.string   "numbers",       limit: 255
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.string   "game",           limit: 255
+    t.string   "numbers",        limit: 255
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.date     "draw_date"
-    t.integer  "jackpot_prize", limit: 4
-    t.integer  "winners",       limit: 4
+    t.integer  "jackpot_prize",  limit: 4
+    t.integer  "winners",        limit: 4
+    t.integer  "lotto_game_id",  limit: 4
+    t.string   "sorted_numbers", limit: 255
   end
 
   create_table "user_numbers", force: :cascade do |t|

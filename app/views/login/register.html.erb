@@ -1,6 +1,6 @@
 
-
 <h1>Hello there!</h1>
+<p>To complete your registration, please enter or verify the following information.</p>
 <div class="jumbotron">
 	<table>
 	  <tr>
@@ -8,23 +8,26 @@
 	    </td>
 	    <td>
 	    	
-			<%= form_for :user, url: '/register', method: :post do |f| %>
+			<%= form_for :user, class: 'form-group', url: '/register', method: :post do |f| %>
 			  <p>
 			    <%= f.label :email %><br>
-			    <%= f.text_field :email, value: @db_user.email %>
+			    <%= email_field :email, value: @db_user.email, class: 'form-control' %>
 			  </p>
 			 
 			  <p>
 			    <%= f.label :name %><br>
-			    <%= f.text_field :name, value: @db_user.name %>
+			    <%= f.text_field :name, value: @db_user.name, class: 'form-control' %>
 			  </p>
 			  	  
 			  <%= f.hidden_field :fb_id, value: @db_user.fb_id %>
 			  <%= f.hidden_field :photo, value: @db_user.photo %>			  
 			  <%= f.hidden_field :fb_info, value: @db_user.fb_info %>
-			  
+			  <%= check_box_tag(:notify_daily_results) %>
+			  <%= label_tag(:notify_daily_results, "Notify me of the daily results") %><br/>
+			  <%= check_box_tag(:notify_if_winner) %>
+			  <%= label_tag(:notify_if_winner, "Notify me if I won") %>
 			  <p>
-			    <%= submit_tag "Save", class: "btn btn-large btn-danger" %>
+			    <%= submit_tag "Register", class: "btn btn-primary" %>
 			  </p>
 			<% end %>	    		    	    	
 	    </td>
