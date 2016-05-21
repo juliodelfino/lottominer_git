@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get 'task/notify_user_daily'
   get 'task/get_daily_results'
 
+  resources :images
   resources :login do
     collection do
       post 'validate'

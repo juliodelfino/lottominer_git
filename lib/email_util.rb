@@ -2,7 +2,7 @@ class EmailUtil
     
   def self.send(mail_info)
     
-    client = SendGrid::Client.new(api_key: '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')
+    client = SendGrid::Client.new(api_key: ENV['SENDGRID_API_KEY'])
     
     mail = SendGrid::Mail.new do |m|
       m.to = mail_info[:to]

@@ -12,7 +12,11 @@ class LottoResultUtil
        winners:       cells[4].sub(/.*>(.*)<.*/, '\1').to_i)
      
      if (LottoResult.find_by(game: row.game, draw_date: row.draw_date).nil?)
-        return row.save
+        nums = row.numbers.split('-').map(&:to_i).sort
+        row.sorted_numbers = '-' + nums.join('-') + '-'
+        game = LottoGame.where(name: row.game)
+        row.lotto_game_id = game.id
+       return row.save
      end
      
      return row

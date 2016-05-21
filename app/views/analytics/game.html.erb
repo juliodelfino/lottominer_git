@@ -19,15 +19,16 @@
 		  
 		  <hr />
           <h4>Draw Dates With Winners</h4>
-          <div style="overflow: auto">
-              <%= column_chart LottoResult.where("game = ? AND winners > 0", params[:id]).order(draw_date: :desc).limit(30).pluck(:draw_date, :jackpot_prize), \
-              		width: "1200px", xtitle: "Draw Date", ytitle: "Jackpot Prize", label: "Jackpot Prize" %>
+          <div class="graph-content">
+          	  <% draw_dates_with_winners_data = LottoResult.where("game = ? AND winners > 0", params[:id]).order(draw_date: :desc).limit(30).pluck(:draw_date, :jackpot_prize) %>
+              <%= column_chart draw_dates_with_winners_data, \
+              		width: (draw_dates_with_winners_data.size * 60).to_s + "px", xtitle: "Draw Date", ytitle: "Jackpot Prize", label: "Jackpot Prize" %>
           </div>
  		  <hr/>
           <h4>Jackpot Prize Trend for the Last 30 Draws</h4>
-          <div style="overflow: auto">
+          <div class="graph-content">
               <%= line_chart LottoResult.where(game: params[:id]).order(draw_date: :desc).limit(30).pluck(:draw_date, :jackpot_prize), \
-              		width: "1200px", xtitle: "Draw Date", ytitle: "Jackpot Prize", label: "Jackpot Prize" %>
+              		width: "900px", xtitle: "Draw Date", ytitle: "Jackpot Prize", label: "Jackpot Prize" %>
           </div>
 
 

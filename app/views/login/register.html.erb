@@ -1,17 +1,15 @@
 
 <h1>Hello there!</h1>
 <p>To complete your registration, please enter or verify the following information.</p>
-<div class="jumbotron">
-	<table>
-	  <tr>
-	    <td class="reg-photo"><%= image_tag @db_user.photo, width: 96 %></td>
-	    </td>
-	    <td>
+<div class="row">
+	    <div class="user-photo col-xs-10 col-lg-1"><%= image_tag @db_user.photo %></td>
+	    </div>
+	    <div class="col-xs-10 col-lg-5">
 	    	
 			<%= form_for :user, class: 'form-group', url: '/register', method: :post do |f| %>
 			  <p>
 			    <%= f.label :email %><br>
-			    <%= email_field :email, value: @db_user.email, class: 'form-control' %>
+			    <%= f.text_field :email, value: @db_user.email, class: 'form-control' %>
 			  </p>
 			 
 			  <p>
@@ -30,10 +28,6 @@
 			    <%= submit_tag "Register", class: "btn btn-primary" %>
 			  </p>
 			<% end %>	    		    	    	
-	    </td>
-	  </tr>
-	</table>
-	
-	
+	    </div>
 
 </div>

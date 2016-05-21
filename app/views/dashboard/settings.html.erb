@@ -3,11 +3,10 @@
 <h1 class="page-header">Settings</h1>
 
 <div class="row">
-	<table>
-	  <tr>
-	    <td class="user-photo"><%= image_tag @db_user.photo %></td>
-	    </td>
-	    <td>
+
+	    <div class="user-photo col-xs-10 col-lg-1"><%= image_tag @db_user.photo %></td>
+	    </div>
+	    <div class=" col-xs-10 col-lg-4">
 	    	
 			<%= form_for :user, class: 'form-group', url: '/settings/save', method: :post do |f| %>
 			  <p>
@@ -28,8 +27,6 @@
 			    <%= submit_tag "Save", class: "btn btn-primary" %>
 			  </p>
 			<% end %>	    		    	    	
-	    </td>
-	  </tr>
-	</table>
+	    </div>
 	
 </div>
