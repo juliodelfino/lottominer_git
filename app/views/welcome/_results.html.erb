@@ -6,22 +6,21 @@
 			  
 			  <div class="jumbotron">
 	            <h1><%= @latest_result.game %></h1>
-	            <h1><%= @latest_result.numbers %></h1>
-	            <p>Prize: <%= number_to_currency(@latest_result.jackpot_prize, unit: '₱') %><br />
+	            <h1><%= ball_view @latest_result.numbers %></h1>
+	            <h2><%= number_to_currency(@latest_result.jackpot_prize, unit: '₱') %>
 	               <% if @latest_result.winners > 0 %>
-	               	<span class="winners-bg">Winners: <%= @latest_result.winners %></span>
-	               	<% else %>Winners: <%= @latest_result.winners %>
+	               	<span class="winners-bg badge"><%= pluralize(@latest_result.winners, 'winner')  %></span>
 	               <% end %>
+	            </h2>
 	          </div>         
 	          <div>
 	      	  	<% @other_results.each do |result| %> 
 	            <div class="col-xs-6 col-lg-4 <%= cycle('result-even', 'result-odd') -%>">             
 					<h4><%= result.game %></h4>
-		            <h4><%= result.numbers %></h4>
-		            <p>Prize: <%= number_to_currency(result.jackpot_prize, unit: '₱') %><br />
+		            <h4><%= ball_view result.numbers %></h4>
+		            <p><%= number_to_currency(result.jackpot_prize, unit: '₱') %>
 		               <% if result.winners > 0 %>
-		               	<span class="winners-bg">Winners: <%= result.winners %></span>
-		               	<% else %>Winners: <%= result.winners %>
+		               	 <span class="winners-bg badge"><%= pluralize(result.winners, 'winner')  %></span>
 		               <% end %>
 	
 	            </div>

@@ -9,10 +9,10 @@
  		  <hr/>
           <h4>Top 10 Numbers with Highest Occurrences of Being Drawn</h4>
           <div>
-              <% @rowData = LottoResult.where(game: params[:id]).group(:numbers).order('count_id desc').limit(10).count('id') %>
+              <% @rowData = LottoResult.where(game: params[:id]).group(:sorted_numbers).order('count_id desc').limit(10).count('id') %>
               <% @rowData.each do |row| %>
-              	<p class="<%= cycle('', 'result-odd') -%>">
-              		<%= row[0] %> - <%= row[1] %> times
+              	<p class="<%= cycle('result-odd', 'result-even') -%>">
+              		<%= ball_view row[0] %> - <%= row[1] %> times
           		</p>
           	  <% end %>
           </div>		  

@@ -1,33 +1,41 @@
+<br/>
+<div class="row">
 
- 
-  <br/>
-  <div class="row">
-  	
 	<div class="col-xs-6 col-sm-3 placeholder">
-	<input type="button" id="add_number_btn" class="btn btn-primary" value="Add" />
-	<div id="add_number_form" class="form-group" title="Add Number">
-		<div id="form-content"></div>
-	</div>
+		<input type="button" id="add_number_btn" class="btn btn-primary" value="Add" />
+		<div id="add_number_dialog" class="form-group" title="Add Number">
+			<div id="dialog-content"></div>
+		</div>
+		
+		<div id="details_dialog" class="form-group" title="Details">
+			<div id="details-content"></div>
+		</div>
 	</div>
 </div>
 
 <div class="row">
-	
+
 	<% controller.current_user.user_numbers.each do |usernum| %>
-	
+
 	<div class="col-xs-6 col-sm-3 <%= cycle('result-even', 'result-odd') -%>">
-		<h4 class="dropdown"><%= usernum.numbers %>
-			<a class="dropdown-toggle caret user-num-menu" id="usernum-<%=usernum.id %>" data-toggle="dropdown" href="#"></a>
+		<h4 class="dropdown">
+			<%= ball_view usernum.numbers %>
+			<a class="dropdown-toggle caret user-num-menu" id="usernum-<%= usernum.id %>"
+				data-toggle="dropdown" data-numbers="<%= usernum.numbers %>" data-game-id="<%= usernum.lotto_game_id %>">
+			</a>
 		</h4>
 		<span class="text-muted"><%= usernum.lotto_game.name %></span>
 	</div>
 	<% end %>
 </div>
 
-  <ul class="dropdown-menu" role="menu" id="user-num-context-menu">
-    <li><a href="#">Details</a></li>
-    <li><a href="#">Analyze</a></li>
-    <li class="divider"></li>
-    <li><a id='remove-num-btn' href="#">Remove</a></li>
-  </ul>
+<ul class="dropdown-menu" role="menu" id="user-num-context-menu">
+	<li>
+		<a class="details-btn">Details</a>
+	</li>
+	<li class="divider"></li>
+	<li>
+		<a id='remove-num-btn' href="#">Remove</a>
+	</li>
+</ul>
 

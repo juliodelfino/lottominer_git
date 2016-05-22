@@ -8,8 +8,9 @@
 	<% @results.each do |result| %>
 	
 	<div class="col-xs-6 col-sm-3 <%= cycle('result-even', 'result-odd') -%>">
-		<h4 class="dropdown"><%= result.numbers %>
-			<a class="dropdown-toggle caret lotto-num-menu" id="result-<%=result.id %>" data-toggle="dropdown" href="#"></a>
+		<h4 class="dropdown"><%= ball_view result.numbers %>
+			<a class="dropdown-toggle caret lotto-num-menu" id="result-<%=result.id %>"
+				data-toggle="dropdown" data-numbers="<%= result.numbers %>" data-game-id="<%= result.lotto_game_id %>"></a>
 		</h4>
 		<span class="text-muted"><%= result.game %><br/>
 			<%= result.draw_date %>

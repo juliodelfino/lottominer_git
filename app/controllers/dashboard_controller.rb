@@ -15,6 +15,10 @@ class DashboardController < ApplicationController
       render action: 'number_search_results', layout: false
     end
     
+    def get_number_details
+      render action: 'get_number_details', layout: false
+    end
+    
     def settings     
     end
     

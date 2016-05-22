@@ -1,0 +1,3 @@
+<h1><%= ball_view params[:numbers] %></h1>
+<hr />
+<%= LottoGame.where(id: params[:game_id])[0].name %>

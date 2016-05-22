@@ -1,18 +1,13 @@
-
-
-    <div class="container">
-      <div class="row row-offcanvas row-offcanvas-right">
-        <div class="col-xs-12 col-sm-9">
-	      <h2 class="featurette-heading">Draw Results</h2>
-		  <a class="btn" href="#" id="left-arrow">PREVIOUS</a>
+      <h1>Draw Results</h1>
+      <div>
+		  <a class="btn" id="left-arrow">PREVIOUS</a>
 		  <input type="hidden" id="datepicker" />
 		  <%= image_tag 'images/calendar.gif', id: 'cal-btn', width: 16 %>
-		  <a class="btn" href="#" id="right-arrow">NEXT</a>
+		  <a class="btn" id="right-arrow">NEXT</a>
 		  <div id="dynamic-content">
 		  	<%= render '/welcome/results' %>
           
 	      </div>
-        </div><!--/.col-xs-12.col-sm-9-->
       </div><!--/row-->
       
       <% if (!controller.current_user.present?) %>
@@ -30,4 +25,3 @@
 	      </div>
       <% end %>
 
-    </div>
