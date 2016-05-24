@@ -89,7 +89,8 @@ class LoginController < ApplicationController
     fbuser = FbUser.new(fbuser_params)
     if (fbuser.save)
       session[:fb_user_id] = fbuser[:fb_id]
-      send_email fbuser
+      user_settings = create_user_settings(fb_user)
+      send_email(fbuser, user_settings)
       render 'reg_ok'
     else
       render text: @db_user.errors.full_messages.to_sentence
@@ -156,8 +157,18 @@ class LoginController < ApplicationController
     params.require(:user).permit(:fb_id, :name, :email, :photo, :fb_info)
   end
   
-  def send_email(user)
+  def create_user_settings(fbuser)
+    
+    setting = UserSetting.new(
+      fb_user_id: fbuser.id,
+      email_verification: SecureRandom.hex(16))
+    setting.save
+    return setting
+  end
+  
+  def send_email(user, settings)
     @user = user
+    @verify_url = request.base_url + '/login/verify?id=' + settings.email_verification
     mail_body = render_to_string :template => '/mail/verify_email', layout: 'mailer'
     mail_info = {
         to: user.email,

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160519161219) do
+ActiveRecord::Schema.define(version: 20160524165020) do
 
   create_table "articles", force: :cascade do |t|
     t.string   "title",      limit: 255
@@ -27,8 +27,9 @@ ActiveRecord::Schema.define(version: 20160519161219) do
     t.string   "mobile_no",  limit: 255
     t.string   "photo",      limit: 255
     t.text     "fb_info",    limit: 65535
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.boolean  "is_admin",                 default: false
   end
 
   create_table "lotto_games", force: :cascade do |t|
@@ -58,6 +59,14 @@ ActiveRecord::Schema.define(version: 20160519161219) do
     t.integer  "lotto_game_id", limit: 4
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+  end
+
+  create_table "user_settings", force: :cascade do |t|
+    t.integer  "fb_user_id",           limit: 4
+    t.string   "email_verification",   limit: 255
+    t.boolean  "notify_daily_results",             default: true
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
   end
 
 end
