@@ -89,7 +89,7 @@ class LoginController < ApplicationController
     fbuser = FbUser.new(fbuser_params)
     if (fbuser.save)
       session[:fb_user_id] = fbuser[:fb_id]
-      user_settings = create_user_settings(fb_user)
+      user_settings = create_user_settings(fbuser)
       send_email(fbuser, user_settings)
       render 'reg_ok'
     else
