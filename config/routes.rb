@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   end  
   get '/register' => 'login#register'
   post '/register' => 'login#saveuser'
+  get '/verifyemail' => 'login#verify'
   get '/logout' => 'login#logout'
   get '/dashboard' => 'dashboard#index'
   get '/settings' => 'dashboard#settings'

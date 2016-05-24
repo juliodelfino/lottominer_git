@@ -97,6 +97,21 @@ class LoginController < ApplicationController
     end
   end
   
+  def verify
+    id = params[:id]
+    if (!id.nil?)
+      setting = UserSetting.find_by(email_verification: id)
+      if (!setting.nil?)
+        @db_user = FbUser.find_by(id: setting.fb_user_id)
+        setting.email_verification = 'ok'
+        setting.save   
+        render 'email_verified'
+        return
+      end
+    end
+    raise ActionController::RoutingError.new('Not Found')
+  end
+  
   def logout
     @_current_user = session[:fb_user_id] = nil
     redirect_to root_path
@@ -168,7 +183,7 @@ class LoginController < ApplicationController
   
   def send_email(user, settings)
     @user = user
-    @verify_url = request.base_url + '/login/verify?id=' + settings.email_verification
+    @verify_url = request.base_url + '/verifyemail?id=' + settings.email_verification
     mail_body = render_to_string :template => '/mail/verify_email', layout: 'mailer'
     mail_info = {
         to: user.email,
