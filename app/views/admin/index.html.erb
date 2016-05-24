@@ -1,19 +1,47 @@
 <h1 class="page-header">Admin Tools</h1>
-<select id="table_name">
-  <option value="LottoResult" <% if @selected_table == "LottoResult"%>selected="selected"<% end %>>LottoResult</option>
-  <option value="FbUser" <% if @selected_table == "FbUser"%>selected="selected"<% end %>>FbUser</option>
-  <option value="UserNumber" <% if @selected_table == "UserNumber"%>selected="selected"<% end %>>UserNumber</option>
-</select>
 
-<table id="admin_tbl" class="display" cellspacing="0" width="100%">
-        <thead>
-            <tr>
-                <th>Column 1</th>
-                <th>Column 2</th>
-                <th>Column 3</th>
-                <th>Column 4</th>
-                <th>Column 5</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-    </table>
+<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab"  href="#latest-results-tab">Latest Results</a></li>
+  <li><a data-toggle="tab"  href="#database-tab">Database</a></li>
+</ul>
+
+<div class="tab-content">
+  <div id="latest-results-tab" class="tab-pane fade in active">
+		
+	<% weekday = DateTime.now.wday 
+		gamesToday = LottoGame.where("(draw_days like ? or draw_days=7) and active", "%#{weekday}%")
+	%>
+	<% gamesToday.each do |game| %>
+		<p><%= game.name %></p>
+	<% end %>
+	
+	<h3>Missing dates</h3>
+	<p><%= DateTime.now.to_date.to_s %></p>
+	<p><%= (DateTime.now-1.day).to_date.to_s %></p>
+	<p><%= (DateTime.now-2.days).to_date.to_s %></p>
+	<p><%= (DateTime.now-3.days).to_date.to_s %></p>
+	
+	
+	<button id="get-latest-btn" class="btn btn-primary">Get Latest Results</button>
+	<div id="dynamic-results-content">
+	</div>
+	
+	
+  </div>
+  <div id="database-tab" class="tab-pane fade">
+
+	<select id="table_name" class="form-control list">
+	  <option value=""></option>
+	  <option value="LottoResult" <% if @selected_table == "LottoResult"%>selected="selected"<% end %>>LottoResult</option>
+	  <option value="FbUser" <% if @selected_table == "FbUser"%>selected="selected"<% end %>>FbUser</option>
+	  <option value="UserNumber" <% if @selected_table == "UserNumber"%>selected="selected"<% end %>>UserNumber</option>
+	</select>
+	
+	<div id="dynamic-content">
+		<%= render '/admin/db_table' %>
+	</div>
+
+
+  </div>
+</div>
+

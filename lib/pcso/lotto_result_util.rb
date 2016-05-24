@@ -14,7 +14,7 @@ class LottoResultUtil
      if (LottoResult.find_by(game: row.game, draw_date: row.draw_date).nil?)
         nums = row.numbers.split('-').map(&:to_i).sort
         row.sorted_numbers = '-' + nums.join('-') + '-'
-        game = LottoGame.where(name: row.game)
+        game = LottoGame.where(name: row.game)[0]
         row.lotto_game_id = game.id
        return row.save
      end

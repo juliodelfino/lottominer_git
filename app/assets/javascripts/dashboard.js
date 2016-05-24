@@ -112,7 +112,7 @@ $(document).ready(function() {
 	var num_search_ctx_menu = $('#num-search-context-menu');
 	
 	$('#search-num-box').on('input', function(){
-		$('#results').load('/dashboard/search_number?token=' + $(this).val(), initNumSearchMenu);
+		$('#results').load('/dashboard/search_number?q=' + $(this).val(), initNumSearchMenu);
 	});
 	
 	function initNumSearchMenu() {

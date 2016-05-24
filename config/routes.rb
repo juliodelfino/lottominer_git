@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get 'welcome/ajax_results'
   
   get 'admin' => "admin#index"
+  get 'admin/get_db_table'
   get 'admin/ajax_get_results'
   get 'admin/ajax_delete_row'
 

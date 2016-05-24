@@ -1,3 +1,13 @@
+<%= LottoGame.where(id: params[:game_id])[0].name %>
 <h1><%= ball_view params[:numbers] %></h1>
 <hr />
-<%= LottoGame.where(id: params[:game_id])[0].name %>
+
+<p>2 odds, 4 evens</p>
+
+<% @draw_dates = LottoResult.where(numbers: params[:numbers], lotto_game_id: params[:game_id]).order(draw_date: :DESC) %>
+<p style="font-weight: bold; text-decoration: underline">Appeared <%= pluralize(@draw_dates.size, 'time')%> on These Dates</p>
+<% @draw_dates.each do |row| %>
+	
+	<p><%= row.draw_date.strftime("%Y %b %d") + ', ' + row.game %></p>
+
+<% end %>

@@ -10,7 +10,7 @@ class DashboardController < ApplicationController
     end
     
     def search_number
-      token = params[:token]
+      token = params[:q]
       @results = LottoResult.where('numbers LIKE ?', "%#{token}%").order(draw_date: :desc).limit(20);
       render action: 'number_search_results', layout: false
     end

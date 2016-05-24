@@ -36,7 +36,9 @@
         	  <li><a href="#">Results</a></li>
             </ul>
         </li>
+        <% if (controller.current_user.is_admin) %>
         <li class="<%= "active" if params[:controller] == "admin" %>"><a href="/admin">Admin Tools</a></li>
+        <% end %>
         <li class="<%= "active" if params[:action] == "settings" %>"><a href="/settings">Settings</a></li>
       </ul>
  	  <ul class="nav navbar-nav navbar-right">
