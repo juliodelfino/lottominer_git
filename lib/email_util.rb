@@ -9,6 +9,7 @@ class EmailUtil
       m.from = mail_info[:from]
       m.subject = mail_info[:subject]
       m.text = mail_info[:text]
+      m.html = mail_info[:html]
     end
     
     res = client.send(mail)

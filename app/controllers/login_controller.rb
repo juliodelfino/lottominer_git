@@ -163,7 +163,7 @@ class LoginController < ApplicationController
         to: user.email,
         from: 'sofia@lottominer.com',
         subject: 'Welcome to Lotto Analytics',
-        text: mail_body
+        html: mail_body
     }
       
     EmailUtil.send mail_info
