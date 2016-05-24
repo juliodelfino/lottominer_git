@@ -89,7 +89,8 @@ class LoginController < ApplicationController
     fbuser = FbUser.new(fbuser_params)
     if (fbuser.save)
       session[:fb_user_id] = fbuser[:fb_id]
-      redirect_to dashboard_path
+      send_email fbuser
+      render 'reg_ok'
     else
       render text: @db_user.errors.full_messages.to_sentence
     end
@@ -153,5 +154,18 @@ class LoginController < ApplicationController
   
   def fbuser_params
     params.require(:user).permit(:fb_id, :name, :email, :photo, :fb_info)
+  end
+  
+  def send_email(user)
+    @user = user
+    mail_body = render_to_string :template => '/mail/verify_email', layout: 'mailer'
+    mail_info = {
+        to: user.email,
+        from: 'sofia@lottominer.com',
+        subject: 'Welcome to Lotto Analytics',
+        text: mail_body
+    }
+      
+    EmailUtil.send mail_info
   end
 end

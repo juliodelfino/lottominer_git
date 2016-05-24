@@ -1,0 +1,7 @@
+  <div class="row text-center">
+      <h2 class="featurette-heading">Hello, <%= controller.current_user.name %>!</h2>
+      <p class="lead">Thank you for your registration.<br/>
+      	We have sent an email to <span style="text-decoration: underline"><%= controller.current_user.email %></span> for verification.</p>
+      <a href="/dashboard" class="btn btn-primary">Done</a>
+    </div>
+  </div>
