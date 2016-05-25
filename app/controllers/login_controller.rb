@@ -187,7 +187,7 @@ class LoginController < ApplicationController
     mail_body = render_to_string :template => '/mail/verify_email', layout: 'mailer'
     mail_info = {
         to: user.email,
-        from: 'sofia@lottominer.com',
+        from: 'Lotto Analytics <no-reply@lottominer.com>',
         subject: 'Welcome to Lotto Analytics',
         html: mail_body
     }
