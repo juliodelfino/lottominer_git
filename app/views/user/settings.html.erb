@@ -1,0 +1,38 @@
+<% @db_user = controller.current_user %>
+<h1 class="page-header">Settings</h1>
+
+<div class="row">
+
+	<div class="user-photo col-xs-10 col-lg-1">
+		<%= image_tag @db_user.photo %></td>
+	</div>
+	<div class=" col-xs-10 col-lg-4">
+		
+		<%= form_for :user, class: 'form-horizontal', url: '/settings/save', method: :post, :html => { :id => 'validate-form' } do |f| %>
+		<div class="form-group has-feedback">
+			<%= f.label :email, class: 'control-label' %> 
+			<% if (@db_user.user_setting.email_verification == 'ok') %>
+				<span class="text-muted">(Verified)</span>
+			<% end %>
+			<br>
+			<%= f.text_field :email, value: @db_user.email, class: 'form-control', placeholder: 'Enter your email' %>			
+		</div>
+
+		<div class="form-group has-feedback">
+			<%= f.label :name, class: 'control-label' %>
+			<br>
+			<%= f.text_field :name, value: @db_user.name, class: 'form-control', placeholder: 'Enter your name' %>
+		</div>
+
+		<%= check_box_tag(:notify_daily_results) %>
+		<%= label_tag(:notify_daily_results, "Notify me of the daily results") %>
+		<br/>
+		<%= check_box_tag(:notify_if_winner) %>
+		<%= label_tag(:notify_if_winner, "Notify me if I won") %>
+		<p>
+			<%= submit_tag "Save", class: "btn btn-primary" %>
+		</p>
+		<% end %>
+	</div>
+
+</div>

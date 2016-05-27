@@ -25,9 +25,7 @@ $(document).ready(function() {
           click: function() {
           add_number_dialog.dialog( "close" );
         }
-      }],
-      close: function() {
-      }
+      }]
     });
     
 	$('#add_number_btn').click(function() {
@@ -126,5 +124,5 @@ $(document).ready(function() {
 			}
 		});
 	}
-
+	
 });

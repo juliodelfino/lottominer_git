@@ -12,10 +12,11 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require bootstrap
 //= require jquery-ui
 //= require jquery.dataTables
+//= require jquery.validate
 //= require turbolinks
-//= require bootstrap
 //= require json2
 
 $(function() {

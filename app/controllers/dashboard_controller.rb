@@ -18,16 +18,7 @@ class DashboardController < ApplicationController
     def get_number_details
       render action: 'get_number_details', layout: false
     end
-    
-    def settings     
-    end
-    
-    def save_settings
-      current_user.update(user_params)
-      redirect_to '/dashboard'
-    end
-    
-    
+       
     def ajax_add_number
       row = UserNumber.new(
         numbers: params[:numbers],
@@ -49,8 +40,4 @@ class DashboardController < ApplicationController
       render json: row
     end
     
-    private
-      def user_params
-        params.require(:user).permit(:email, :name)
-      end
 end
