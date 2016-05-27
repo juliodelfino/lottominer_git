@@ -2,7 +2,7 @@
 <h1><%= ball_view params[:numbers] %></h1>
 <hr />
 
-<p>2 odds, 4 evens</p>
+<p><%= @odd_even_info %></p>
 
 <% @draw_dates = LottoResult.where(numbers: params[:numbers], lotto_game_id: params[:game_id]).order(draw_date: :DESC) %>
 <p style="font-weight: bold; text-decoration: underline">Appeared <%= pluralize(@draw_dates.size, 'time')%> on These Dates</p>
