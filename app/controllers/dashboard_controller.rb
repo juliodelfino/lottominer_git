@@ -16,6 +16,8 @@ class DashboardController < ApplicationController
     end
     
     def get_number_details
+      nums = params[:numbers].split(',').map{|n| n.to_i % 2 }
+      @odd_even_info = pluralize(nums.count(1), 'odd') + ', ' + pluralize(nums.count(0), 'even')
       render action: 'get_number_details', layout: false
     end
        
