@@ -153,7 +153,7 @@ class LoginController < ApplicationController
   def get_current_fb_user
 
     access_token = session[:fb_access_token]
-    uri = "https://graph.facebook.com/me?access_token=" + access_token
+    uri = "https://graph.facebook.com/me?fields=id,name,email&access_token=" + access_token
       
     fb_user = JSON.parse(NetworkUtil.https_get(uri))
     
