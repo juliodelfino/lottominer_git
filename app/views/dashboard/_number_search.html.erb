@@ -1,13 +1,24 @@
-  <br/>
-  <label for="search-num-box">Separate your number inputs by commas, dashes or spaces.</label>
-  <input type="text" name="search-num-box" id="search-num-box" class="form-control">
+<br/>
+<label for="search-num-box">Separate your number inputs by using comma, dash, space, or enter keys.</label>
 
-	<div id="results">
-			
-	</div>
-	
-  <ul class="dropdown-menu" role="menu" id="num-search-context-menu">
-    <li><a class="details-btn">Details</a></li>
-    <li class="divider"></li>
-    <li><a id="add-result-to-user-num-btn" href="#">Add to Your Numbers</a></li>
-  </ul>
+<div id="search-num-multi-input" class="multiple-val-input form-control">
+	<ul>
+		<input id="multi-input-text" type="text">
+		<span class="input_hidden"></span>
+	</ul>
+</div>
+
+<div id="results">
+
+</div>
+
+<ul class="dropdown-menu" role="menu" id="num-search-context-menu">
+	<li>
+		<a class="details-btn">Details</a>
+	</li>
+	<li class="divider"></li>
+	<li>
+		<a id="add-result-to-user-num-btn" href="#">Add to Your Numbers</a>
+	</li>
+</ul>
+

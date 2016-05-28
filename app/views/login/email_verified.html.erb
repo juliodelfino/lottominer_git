@@ -2,9 +2,10 @@
       <h2 class="featurette-heading">Congrats, <%= @db_user.name %>!</h2>
       <p class="lead">Your email <span style="text-decoration: underline"><%= @db_user.email %></span> has been verified.
       	</p>
-
-	    <a href="/login/facebook" id="btn-login" class="btn btn-primary">
-			Login
-		</a>  
+		<% if controller.current_user.present? %>
+		    <a href="/dashboard" id="btn-ok" class="btn btn-primary">Ok</a>	
+		<% else %>
+		    <a href="/login/facebook" id="btn-login" class="btn btn-primary">Login</a>	
+		<% end %>
     </div>
   </div>

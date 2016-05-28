@@ -1,12 +1,15 @@
+<form class="form-group">
+	<fieldset>
+		<label for="game_id">Game</label>
+		<%= select_tag(:game_id, options_for_select(LottoGame.all.pluck(:name, :id)), class: "form-control") %>
+		<label for="numbers">Numbers</label>
 
-  <form class="form-group">
-    <fieldset>
-      <label for="game_id">Game</label>
-      <%= select_tag(:game_id, options_for_select(LottoGame.all.pluck(:name, :id)), class: "form-control") %>
-      <label for="numbers">Numbers (separate by commas)</label>
-      <input type="text" name="numbers" id="numbers" class="form-control" />
-
-      <!-- Allow form submission with keyboard without duplicating the dialog button -->
-      <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
-    </fieldset>
-  </form>
+		<div id="add-number-multi-input" class="multiple-val-input form-control">
+			<ul>
+				<input id="multi-input-text" type="text">
+				<input id="numbers" name="numbers" type="hidden" />
+				<span class="input_hidden"></span>
+			</ul>
+		</div>
+	</fieldset>
+</form>

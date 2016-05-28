@@ -10,14 +10,15 @@ class DashboardController < ApplicationController
     end
     
     def search_number
-      token = params[:q]
-      @results = LottoResult.where('numbers LIKE ?', "%#{token}%").order(draw_date: :desc).limit(20);
+      token = params[:q].split('-').map{|x|x.to_i}.sort.join('-')
+      @results = LottoResult.where('sorted_numbers LIKE ?', "%#{token}%").order(draw_date: :desc).limit(20);
       render action: 'number_search_results', layout: false
     end
     
     def get_number_details
-      nums = params[:numbers].split(',').map{|n| n.to_i % 2 }
-      @odd_even_info = pluralize(nums.count(1), 'odd') + ', ' + pluralize(nums.count(0), 'even')
+      nums = params[:numbers].split('-').map{|n| n.to_i % 2 }
+      @even_count = nums.count(0)
+      @odd_count = nums.count(1)
       render action: 'get_number_details', layout: false
     end
        

@@ -32,7 +32,10 @@ $(document).ready(function() {
 		
 		if (!add_number_form_loaded) {
 			var url = '/dashboard/get_add_number_form';
-			$('#dialog-content').load(url, function(){	
+			$('#dialog-content').load(url, function(){
+				initMultipleValueInputField('#add-number-multi-input', function(text){
+					$('#numbers').val(text);
+				});
 				add_number_dialog.dialog( "open" );
 			});
 			
@@ -42,11 +45,10 @@ $(document).ready(function() {
 		}
 	});
     
-    
     $( "#details_dialog" ).dialog({
       autoOpen: false,
-      height: 500,
-      width: 340,
+      height: +$("#details_dialog").css('height').replace('px', ''),
+      width: +$("#details_dialog").css('width').replace('px', ''),
       modal: true,
       buttons: [{ text: "OK",
           'class': 'btn btn-primary',
@@ -125,4 +127,74 @@ $(document).ready(function() {
 		});
 	}
 	
+	initMultipleValueInputField('#search-num-multi-input', function(text){
+		
+		$('#results').load('/dashboard/search_number?q=' + text, initNumSearchMenu);
+	});
+	
+	
+	function invokeOnChange(inputId, onChange) {
+		var txt = '';
+		//join all boxed inputs into one text, separated by dashes
+		$(inputId + ' ul li div').each(function(){txt += $(this).html() + "-";});
+		if (onChange != null) {
+			onChange(txt);
+		}
+	}
+	
+	
+    function initMultipleValueInputField(inputId, onChange) {
+    	
+		$(inputId).on('click', function(){
+            $(this).find('input:text').focus();
+        });
+        $(inputId + ' ul input:text').on('input propertychange', function(){
+            $(this).siblings('span.input_hidden').text($(this).val());
+            var inputWidth = $(this).siblings('span.input_hidden').width();
+            $(this).width(inputWidth);
+        });
+        $(inputId + ' ul input:text').on('keypress', function(event){
+        	
+            if(event.which == 32 || event.which == 44 || event.which == 45 || event.which == 13){ //space, comma, dash, enter
+                var toAppend = $(this).val();
+                if(toAppend!=''){
+                    $('<li><div>'+toAppend+'</div><a href="#" class="text-muted">×</a></li>').insertBefore($(this));
+                    $(this).val('');
+                    invokeOnChange(inputId, onChange);
+                } else {
+                    return false;
+                }
+                return false;
+            } else if (event.which < 48 || event.which > 57) {
+            	return false;
+            } else {
+            	var toAppend = $(this).val();
+                if(toAppend.length >= 2){
+                    $('<li><div>'+toAppend+'</div><a href="#" class="text-muted">×</a></li>').insertBefore($(this));
+                    $(this).val('');
+                    invokeOnChange(inputId, onChange);
+                }
+            }
+        	
+        	
+        });
+        $(inputId + ' ul input:text').on('keydown', function(event){
+        	
+ 			if (event.which == 8) {
+            	if ($(this).val() == "") {
+		        	lastLi = $(inputId + ' ul li:last');
+		            if (lastLi != null) {
+		            	lastLi.detach();
+                    invokeOnChange(inputId, onChange);
+		            }
+		        }
+		        return true;
+            }
+           
+        });
+        $(document).on('click', inputId + ' ul li a', function(e){
+            e.preventDefault();
+            $(this).parents('li').remove();
+        });
+    }
 });
