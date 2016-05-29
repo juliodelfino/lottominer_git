@@ -20,7 +20,7 @@
 			  <%= f.hidden_field :photo, value: @db_user.photo %>			  
 			  <%= f.hidden_field :fb_info, value: @db_user.fb_info %>
 			  <%= check_box_tag :notify_daily_results, true, true %>
-			  <%= label_tag(:notify_daily_results, "Notify me of the daily results") %><br/>
+			  <%= label_tag(:notify_daily_results, "Subscribe to the Daily Results email") %><br/>
 			  <%= check_box_tag :notify_if_winner, true, true %>
 			  <%= label_tag(:notify_if_winner, "Notify me if I won") %>
 			  <p>
