@@ -1,4 +1,3 @@
-<% @db_user = controller.current_user %>
 <h1 class="page-header">Settings</h1>
 
 <div class="row">
@@ -24,7 +23,7 @@
 			<%= f.text_field :name, value: @db_user.name, class: 'form-control', placeholder: 'Enter your name' %>
 		</div>
 
-		<%= check_box_tag :notify_daily_results, true, true %>
+		<%= check_box_tag :notify_daily_results, true, @db_user.user_setting.notify_daily_results %>
 		<%= label_tag(:notify_daily_results, "Notify me of the daily results") %>
 		<br/>
 		<%= check_box_tag :notify_if_winner, true, true %>

@@ -5,7 +5,23 @@ class WelcomeController < ApplicationController
     compute_results
   end
   
+  def unsubscribe
+    user = FbUser.find_by(fb_id: params[:id])
+    if (user.present?)
+      user.user_setting.notify_daily_results = false
+      user.user_setting.save
+      render '/mail/unsubscribed'
+    else
+      raise ActionController::RoutingError.new('Not Found')
+    end
+  end
+  
   def about
+    @user = current_user
+    @draw_date = Date.yesterday
+    @lotto_results = LottoResult.where(draw_date: @draw_date).order("jackpot_prize DESC, game ASC")
+    txt = render_to_string :template => '/mail/daily_results', layout: 'mailer'
+    render text: txt
   end
   
   def ajax_results

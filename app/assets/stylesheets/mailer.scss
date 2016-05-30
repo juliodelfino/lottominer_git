@@ -1,5 +1,122 @@
- //*= require bootstrap
- 
-.main {
-  padding: 20px
+/*snippets taken from bootstrap.css*/
+* {
+  box-sizing: border-box;
 }
+
+body {
+  margin: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: #333;
+}
+
+h1 {
+  margin: 0;
+  padding: 10px 10px;
+  font-size: 36px;
+}
+
+p, h2 {
+  padding: 0 20px;
+}
+
+img {
+  vertical-align: middle
+}
+
+h1, h2, h3, h4 {
+  font-weight: 500;#line-height: 1.1;
+  color: inherit;
+}
+
+h4, .h4, h5, .h5, h6, .h6 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.row {
+  display: table
+}
+
+
+.navbar {
+  background-color: black;
+  color: white;
+}
+
+.lead {
+  margin-bottom: 20px;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.4;
+}
+
+hr {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 0;
+  border-top: 1px solid #eee;
+}
+
+a {
+  color: #428bca;
+  text-decoration: none;
+}
+
+.result-box {
+  width: 50%;
+  box-sizing: border-box;
+  float: left;
+  padding: 3px 20px;
+  
+  -webkit-border-radius: 6px 0 6px 6px;
+  -moz-border-radius: 6px 0 6px 6px;
+  border-radius: 6px 0 6px 6px;
+  margin-bottom: 3px;
+}
+
+.result-even {
+    border: solid 1px #eee;
+}
+
+.result-odd {
+    background-color: #eee;
+}
+
+span.ball {
+  background: #777;
+  border-radius: 0.8em;
+  -moz-border-radius: 0.8em;
+  -webkit-border-radius: 0.8em;
+  color: #ffffff;
+  display: inline-block;
+  line-height: 1.6em;
+  margin-right: 3px;
+  text-align: center;
+  width: 1.6em; 
+}
+
+.badge {
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    background-color: #777;
+    border-radius: 10px;
+}
+
+.winners-bg {
+    background-color: limegreen;
+    font-size: inherit;
+}
+
+.footnote {
+  font-size: 12px;
+}
+

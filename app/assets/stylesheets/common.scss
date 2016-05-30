@@ -185,7 +185,7 @@ body {
 }
 
 //src: http://kaliko.com/blog/circled-number-with-pure-css/
-span.ball, span.ball-odd {
+span.ball {
   background: #777;
   border-radius: 0.8em;
   -moz-border-radius: 0.8em;
@@ -196,10 +196,6 @@ span.ball, span.ball-odd {
   margin-right: 3px;
   text-align: center;
   width: 1.6em; 
-}
-
-span.ball-odd {
-  background: #333;
 }
 
 .winners-bg {

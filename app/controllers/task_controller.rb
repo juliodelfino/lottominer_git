@@ -8,7 +8,24 @@ class TaskController < ApplicationController
   def notify_user_daily
     
     puts "Method invoked by: " + (params[:callid].nil? ? "nil" : params[:callid])
-    render json: send_lotto_mail
+    
+    @draw_date = Date.yesterday
+    @lotto_results = LottoResult.where(draw_date: @draw_date).order("jackpot_prize DESC, game ASC")
+    first_result = @lotto_results[0]
+    users = FbUser.joins(:user_setting).where(user_settings: { email_verification: 'ok', notify_daily_results: true })
+    users.each do |u|     
+      @user = u
+      mail_body = render_to_string :template => '/mail/daily_results', layout: 'mailer'
+      mail_info = {
+          to: u.email,
+          from: 'Lotto Analytics <no-reply@' + request.domain + '>',
+          subject: ('[Daily Results] ' + first_result.game + ': ' + first_result.numbers),
+          html: mail_body
+      }
+      EmailUtil.send mail_info
+    end
+    
+    render json: users.map{ |u| u.email }
   end
   
   def get_daily_results
@@ -65,22 +82,5 @@ class TaskController < ApplicationController
     def extract_form_value(fieldname, text_to_extract)
       kvText = /id="#{fieldname}"\s+value=".*?"/.match(text_to_extract).to_s
       return kvText.sub(/.*?value="(.*)"/, '\1')
-    end
-  
-
-    def send_lotto_mail
-      
-      lotto_result = LottoResult.where(draw_date: Date.yesterday).order(jackpot_prize: :desc).limit(1)[0]
-        
-      mail_info = {
-        to: 'jhackr@gmail.com',
-        from: 'sofia@lottominer.com',
-        subject: lotto_result.game + ': ' + lotto_result.numbers,
-        text: DateTime.now.strftime(" on %m-%d-%Y at at %I:%M%p") \
-             + '\nHere are the lotto results:\nGame: ' + lotto_result.game + "\nResults: " + lotto_result.numbers \
-             + '\nJSON info: ' + lotto_result.to_json
-      }
-      
-      EmailUtil.send mail_info
     end
 end

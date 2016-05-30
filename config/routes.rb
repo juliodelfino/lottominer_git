@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   get '/dashboard' => 'dashboard#index'
   get '/settings' => 'user#settings'
   post '/settings/save' => 'user#save_settings'
+  get '/mail/unsubscribe' => 'welcome#unsubscribe'
   get '/dashboard/get_add_number_form'
   get '/dashboard/get_number_details'
   get '/dashboard/search_number'
