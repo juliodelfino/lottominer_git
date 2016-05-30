@@ -1,6 +1,8 @@
 $(document).ready(function() {
 
 	var lottoDate = $("#datepicker").datepicker({
+      changeYear: true,
+      yearRange: '2002:present',
       dateFormat: 'yymmdd',
       defaultDate: getParameterByName('date') != null ? getParameterByName('date') : new Date(),
       onSelect: function(date) {

@@ -1,0 +1,20 @@
+<h1 class="page-header">Analytics - Profit/Loss</h1>
+
+<% @draw_dates = LottoResult.joins(:lotto_game).where("(sorted_numbers = '-1-4-8-' or sorted_numbers = '-0-2-3-') and lotto_games.group_name='3D'").order(draw_date: :DESC) %>
+<% @tmp_date = nil %>
+<p class="num-detail-header">Appeared <%= pluralize(@draw_dates.size, 'time')%> on These Dates:</p>
+<ul>
+	
+<% @draw_dates.each do |row| %>
+	<% days_gap = @tmp_date.nil? ? 0 : (@tmp_date - row.draw_date).to_i %>
+	<% @tmp_date = row.draw_date %>
+	<li><%= row.draw_date.strftime("%Y %b %d") + ', ' + row.game %> - <%= days_gap %> days</li>
+<% end %>
+</ul>
+
+<p>
+	Total Gain: <%=  (@draw_dates.size * 750) %><br/>
+	Total Loss: <%= (LottoResult.joins(:lotto_game).where(lotto_games: {group_name: '3D'}).count - @draw_dates.size) * 20 %>
+	
+</p>
+

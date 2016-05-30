@@ -1,9 +1,15 @@
 <form class="form-group">
 	<fieldset>
+		<p>
 		<label for="game_id">Game</label>
-		<%= select_tag(:game_id, options_for_select(LottoGame.all.pluck(:name, :id)), class: "form-control") %>
+		<select id="game_id" name="game_id" class="form-control">
+			<% LottoGame.all.each do |g| %>
+				<option value="<%= g.id %>" data-count="<%= g.group_name[0] %>"><%= g.name %></option>
+			<% end %>
+		</select>
+		</p>
+		
 		<label for="numbers">Numbers</label>
-
 		<div id="add-number-multi-input" class="multiple-val-input form-control">
 			<ul>
 				<input id="multi-input-text" type="text">
@@ -11,5 +17,11 @@
 				<span class="input_hidden"></span>
 			</ul>
 		</div>
+		<span id='add-number-help-info' style="color: #26B0DE">Please enter up to 2 numbers only.</span>	
+
+		<p>
+		<%= check_box_tag :rambolito, 'rambolito', false %>
+		<%= label_tag(:rambolito, "Rambolito") %>
+		</p>
 	</fieldset>
 </form>

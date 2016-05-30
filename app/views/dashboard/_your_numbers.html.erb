@@ -15,16 +15,21 @@
 
 <div class="row">
 
-	<% controller.current_user.user_numbers.each do |usernum| %>
+	<% @num_info_list.each do |num_info| 
+		 user_num = num_info[:usernum]
+	%>
 
 	<div class="col-xs-6 col-sm-3 <%= cycle('result-even', 'result-odd') -%>">
 		<h4 class="dropdown">
-			<%= ball_view usernum.numbers %>
-			<a class="dropdown-toggle caret user-num-menu" id="usernum-<%= usernum.id %>"
-				data-toggle="dropdown" data-numbers="<%= usernum.numbers %>" data-game-id="<%= usernum.lotto_game_id %>">
+			<%= ball_view user_num.numbers %>
+			<a class="dropdown-toggle caret user-num-menu" id="usernum-<%= user_num.id %>"
+				data-toggle="dropdown" data-numbers="<%= user_num.numbers %>" data-game-id="<%= user_num.lotto_game_id %>">
 			</a>
 		</h4>
-		<span class="text-muted"><%= usernum.lotto_game.name %></span>
+		<span class="text-muted"><%= user_num.lotto_game.name %></span>
+		<% if (num_info[:won])%>
+			<span class="winners-bg badge">Today's winner!</span>
+		<% end %>
 	</div>
 	<% end %>
 </div>

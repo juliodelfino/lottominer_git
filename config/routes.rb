@@ -39,7 +39,8 @@ Rails.application.routes.draw do
   post '/dashboard/ajax_copy_result_to_user_number'
   
   get '/analytics' => 'analytics#index'
-  get '/analytics/game' => 'analytics#game'
+  get '/analytics/game'
+  get '/analytics/profit'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

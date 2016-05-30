@@ -3,7 +3,7 @@
  		  <h4>Dates of Last 30 Recently Won Draws</h4>
           <div class="graph-content">
           	  <% row_data = LottoResult.joins(:lotto_game).where("group_name like '6D%' AND winners > 0").order(draw_date: :DESC).limit(30).pluck(:name, :draw_date, :jackpot_prize)
-          	     display_data = row_data.map{ |row| [ row[0] + ', ' + row[1].to_s, row[2] ] };
+          	     display_data = row_data.map{ |row| [ row[1].to_s + ', ' + row[0], row[2] ] };
           	   %>
               <%= column_chart display_data, width: "1600px" %>
           </div>

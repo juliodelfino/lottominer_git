@@ -2,7 +2,7 @@
 
           <h4>General Info</h4>
 		  Total Draw Count: <%= @totalDrawCount %><br/>
-		  Total Draws Won: <%= @totalDrawsWon %> (<%= @winPercent %>% chance) <br />
+		  Total Draws Won: <%= @totalDrawsWon %> (<%= '%.2f' % @winPercent %>% chance) <br />
 		  First Draw Date: <%= @drawEarliest.to_s %><br />
 		  Latest Draw Date: <%= @drawLatest.to_s %><br />
 		  

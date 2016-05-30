@@ -33,9 +33,12 @@ $(document).ready(function() {
 		if (!add_number_form_loaded) {
 			var url = '/dashboard/get_add_number_form';
 			$('#dialog-content').load(url, function(){
+				
+				initLottoGameSelect();
 				initMultipleValueInputField('#add-number-multi-input', function(text){
 					$('#numbers').val(text);
 				});
+							
 				add_number_dialog.dialog( "open" );
 			});
 			
@@ -44,6 +47,14 @@ $(document).ready(function() {
 			add_number_dialog.dialog( "open" );
 		}
 	});
+	
+	var add_number_limit = 2;
+	function initLottoGameSelect() {
+		$('#game_id').change(function(){
+			add_number_limit = $('#game_id option:selected').attr('data-count');
+			$('#add-number-help-info').html('Please enter up to ' + add_number_limit + ' numbers only.');
+		});
+	}
     
     $( "#details_dialog" ).dialog({
       autoOpen: false,
@@ -58,21 +69,7 @@ $(document).ready(function() {
       }]
     });
 	
-	$('.details-btn').click(function(){
-		var numbers = selected_num_link.attr('data-numbers');
-		var game_id = selected_num_link.attr('data-game-id');
-		var url = '/dashboard/get_number_details';
-		
-			$.get( url, {game_id: game_id, numbers: numbers} )
-			  .done(function( data ) {
-			  	var container = $('#details-content');
-			    container.empty();
-			    container.append( data );
-				$( "#details_dialog" ).dialog( "open" );
-			  });
-
-	});
-	
+	initNumDetailsMenuItem('.details-btn');
 	initUserNumMenu();
 	
 	$('#remove-num-btn').click(function(){
@@ -83,6 +80,24 @@ $(document).ready(function() {
           		window.location.reload();
           	});
 	});
+	
+    function initNumDetailsMenuItem(elementSelector) {
+	
+		$(elementSelector).on('click', function(){
+			var numbers = selected_num_link.attr('data-numbers');
+			var game_id = selected_num_link.attr('data-game-id');
+			var url = '/dashboard/get_number_details';
+			
+				$.get( url, {game_id: game_id, numbers: numbers} )
+				  .done(function( data ) {
+				  	var container = $('#details-content');
+				    container.empty();
+				    container.append( data );
+					$( "#details_dialog" ).dialog( "open" );
+				  });
+	
+		});
+	}
 	
 	var user_num_ctx_menu = $('#user-num-context-menu');
 	var selected_num_link = null;
@@ -105,7 +120,7 @@ $(document).ready(function() {
 		var ajaxReq = $.post( "/dashboard/ajax_copy_result_to_user_number", 
           	{ lotto_result_id: num_id } )
           	.done(function(){
-          		window.location.reload();
+          		//window.location.reload();
           	});
 	});
 	
@@ -129,18 +144,10 @@ $(document).ready(function() {
 	
 	initMultipleValueInputField('#search-num-multi-input', function(text){
 		
+		$('#results').after(num_search_ctx_menu);
 		$('#results').load('/dashboard/search_number?q=' + text, initNumSearchMenu);
 	});
 	
-	
-	function invokeOnChange(inputId, onChange) {
-		var txt = '';
-		//join all boxed inputs into one text, separated by dashes
-		$(inputId + ' ul li div').each(function(){txt += $(this).html() + "-";});
-		if (onChange != null) {
-			onChange(txt);
-		}
-	}
 	
 	
     function initMultipleValueInputField(inputId, onChange) {
@@ -151,7 +158,7 @@ $(document).ready(function() {
         $(inputId + ' ul input:text').on('input propertychange', function(){
             $(this).siblings('span.input_hidden').text($(this).val());
             var inputWidth = $(this).siblings('span.input_hidden').width();
-            $(this).width(inputWidth);
+            $(this).width(inputWidth + 5);
         });
         $(inputId + ' ul input:text').on('keypress', function(event){
         	
@@ -176,8 +183,8 @@ $(document).ready(function() {
                 }
             }
         	
-        	
         });
+        
         $(inputId + ' ul input:text').on('keydown', function(event){
         	
  			if (event.which == 8) {
@@ -197,4 +204,14 @@ $(document).ready(function() {
             $(this).parents('li').remove();
         });
     }
+    
+	function invokeOnChange(inputId, onChange) {
+		var txt = '';
+		//join all boxed inputs into one text, separated by dashes
+		$(inputId + ' ul li div').each(function(){txt += $(this).html() + "-";});
+		if (onChange != null) {
+			onChange(txt);
+		}
+	}
+	
 });
