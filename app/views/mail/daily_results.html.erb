@@ -1,5 +1,5 @@
 <div class="row">
-	<h2 class="featurette-heading">Draw Date: <%= @draw_date.strftime("%A, %B %d, %Y") %></h2>
+	<h2 class="featurette-heading"><span>Draw Date:</span> <span><%= @draw_date.strftime("%A, %B %d, %Y") %></span></h2>
 	<% @lotto_results.each do |result| %>
 	<div class="result-box <%= cycle('result-odd', 'result-even') -%>">
 		<h4><%= result.game %>
