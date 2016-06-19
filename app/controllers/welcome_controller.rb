@@ -17,6 +17,9 @@ class WelcomeController < ApplicationController
   end
   
   def about
+  end
+  
+  def test_email
     @user = current_user
     @draw_date = Date.yesterday
     @lotto_results = LottoResult.where(draw_date: @draw_date).order("jackpot_prize DESC, game ASC")
