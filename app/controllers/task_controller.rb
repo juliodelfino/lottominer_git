@@ -19,7 +19,7 @@ class TaskController < ApplicationController
       mail_info = {
           to: u.email,
           from: 'Lotto Analytics <no-reply@' + request.domain + '>',
-          subject: ('[Daily Results] ' + first_result.game + ': ' + first_result.numbers),
+          subject: ('[DR] ' + first_result.game + ': ' + first_result.numbers),
           html: mail_body
       }
       EmailUtil.send mail_info
