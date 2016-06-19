@@ -13,11 +13,13 @@ class DashboardController < ApplicationController
     end
     
     def has_won(user_number)
-      num = user_number.numbers.split('-').join('-')
      # this is for 3D and 2D draws, to query if it has won regardless 11AM, 4PM or 9PM draws
-     # return LottoResult.joins(:lotto_game).where(numbers: num, draw_date: Date.yesterday, lotto_games: {group_name: user_number.lotto_game.group_name}).any?
-    
-      return LottoResult.where(numbers: num, draw_date: Date.yesterday, lotto_game_id: user_number.lotto_game_id).any?
+      num = '-' + user_number.numbers.split('-').sort.join('-') + '-'
+      return LottoResult.joins(:lotto_game).where(sorted_numbers: num, draw_date: Date.yesterday, lotto_games: {group_name: user_number.lotto_game.group_name}).any?
+  
+     # this is for normal scenarios
+     # num = user_number.numbers.split('-').join('-')
+     # return LottoResult.where(numbers: num, draw_date: Date.yesterday, lotto_game_id: user_number.lotto_game_id).any?
     end
     
     def get_add_number_form
