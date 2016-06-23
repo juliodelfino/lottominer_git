@@ -36,7 +36,9 @@ class TaskController < ApplicationController
   def notify_user_by_date(selected_date = Date.yesterday)
     @draw_date = selected_date
     @lotto_results = LottoResult.where(draw_date: @draw_date).order("jackpot_prize DESC, game ASC")
-    first_result = @lotto_results[0]
+    
+    first_result = @lotto_results.find{ |r| r.lotto_game.group_name.start_with?('6D') && r.winners > 0 }
+    first_result = @lotto_results[0] if (first_result.nil?)
     users = FbUser.joins(:user_setting).where(user_settings: { email_verification: 'ok', notify_daily_results: true })
     users.each do |u|     
       @user = u
