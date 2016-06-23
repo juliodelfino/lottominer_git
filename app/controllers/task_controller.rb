@@ -61,17 +61,18 @@ class TaskController < ApplicationController
     hourNow = Time.now.in_time_zone('Singapore').hour
     drawHour = 21 #draw time is 09:00PM or 21:00
     @daily_results = []
+    selectedDate = nil
     if (hourNow < drawHour)
-      result_count = LottoResult.where(draw_date: Date.yesterday).count
-      if (0 == result_count)
-        @daily_results = get_daily_results_by_range(Date.yesterday.strftime("%Y%m%d"))
-      end
+      selectedDate = Date.today.prev_day.in_time_zone('Singapore')
     else
-      result_count = LottoResult.where(draw_date: Date.today).count
-      if (0 == result_count)
-        @daily_results = get_daily_results_by_range(Date.today.strftime("%Y%m%d"))
-      end
+      selectedDate = Date.today.in_time_zone('Singapore')
     end
+    
+    result_count = LottoResult.where(draw_date: selectedDate).count
+    if (0 == result_count)
+      @daily_results = get_daily_results_by_range(selectedDate.strftime("%Y%m%d"))
+    end
+    
     if (@daily_results.size > 0)
       notify_user_by_date(@daily_results[0].draw_date)
     end
