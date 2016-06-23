@@ -34,8 +34,8 @@ class TaskController < ApplicationController
   end
   
   def notify_user_by_date(selected_date = Date.yesterday)
-    
-    @lotto_results = LottoResult.where(draw_date: selected_date).order("jackpot_prize DESC, game ASC")
+    @draw_date = selected_date
+    @lotto_results = LottoResult.where(draw_date: @draw_date).order("jackpot_prize DESC, game ASC")
     first_result = @lotto_results[0]
     users = FbUser.joins(:user_setting).where(user_settings: { email_verification: 'ok', notify_daily_results: true })
     users.each do |u|     
@@ -58,6 +58,7 @@ class TaskController < ApplicationController
      
     hourNow = Time.now.in_time_zone('Singapore').hour
     drawHour = 21 #draw time is 09:00PM or 21:00
+    @daily_results = []
     if (hourNow < drawHour)
       result_count = LottoResult.where(draw_date: Date.yesterday).count
       if (0 == result_count)
@@ -69,8 +70,8 @@ class TaskController < ApplicationController
         @daily_results = get_daily_results_by_range(Date.today.strftime("%Y%m%d"))
       end
     end
-    if (!@daily_results.nil? && @daily_results.size > 0)
-      notify_user_daily(@daily_results[0].draw_date)
+    if (@daily_results.size > 0)
+      notify_user_by_date(@daily_results[0].draw_date)
     end
     
     render json: @daily_results
