@@ -34,8 +34,8 @@ class WelcomeController < ApplicationController
   
   private
     def compute_results
-      @selected_date = (params[:date].nil? || DateTime.parse(params[:date]) > Date.yesterday)? \
-      Date.yesterday : DateTime.parse(params[:date])
+      @selected_date = (params[:date].nil? || DateTime.parse(params[:date]) > Date.today)? \
+      Date.today : DateTime.parse(params[:date])
       @prev_date = (@selected_date - 1.days).strftime("%Y%m%d")
       @next_date = (@selected_date + 1.days).strftime("%Y%m%d")
       all_results = LottoResult.where(draw_date: @selected_date).order("jackpot_prize DESC, game ASC")
