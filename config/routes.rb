@@ -15,6 +15,8 @@ Rails.application.routes.draw do
 
   get 'task/notify_user_daily'
   get 'task/get_daily_results'
+  get 'task/get_daily_results_from_pcso'
+  get 'task/send_mails'
 
   resources :images
   resources :login do

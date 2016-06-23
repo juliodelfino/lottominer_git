@@ -11,13 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160524165020) do
+ActiveRecord::Schema.define(version: 20160621133755) do
 
   create_table "articles", force: :cascade do |t|
     t.string   "title",      limit: 255
     t.text     "text",       limit: 65535
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+  end
+
+  create_table "emails", force: :cascade do |t|
+    t.string   "recipient",        limit: 255
+    t.string   "subject",          limit: 255
+    t.text     "body",             limit: 65535 #collation must be in utf8_general_ci
+    t.datetime "plan_send_date"
+    t.datetime "actual_send_date"
+    t.string   "status",           limit: 5
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
   end
 
   create_table "fb_users", force: :cascade do |t|
