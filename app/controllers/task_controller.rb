@@ -63,7 +63,7 @@ class TaskController < ApplicationController
     @daily_results = []
     selectedDate = nil
     if (hourNow < drawHour)
-      selectedDate = Date.today.prev_day.in_time_zone('Singapore')
+      selectedDate = DateTime.now.prev_day.in_time_zone('Singapore').to_date
     else
       selectedDate = Date.today.in_time_zone('Singapore')
     end
