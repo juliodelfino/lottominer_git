@@ -27,15 +27,15 @@
 	</div>
 	
 	<h3>System variables</h3>
-	<p>Today: <%= DateTime.now.to_date %></p>
-	<p>Today (in Singapore): <%= DateTime.now.to_date.in_time_zone('Singapore') %></p>
+	<p>Today: <%= DateTime.now %></p>
+	<p>Today (in Singapore): <%= DateTime.now.in_time_zone('Singapore') %></p>
 	<p>Time now: <%= Time.now %></p>
 	<p>Time now (in Singapore): <%= Time.now.in_time_zone('Singapore') %></p>
 	<p>Hour now (in Singapore): <%= Time.now.in_time_zone('Singapore').hour %></p>
-	<p>Yesterday: <%= DateTime.now.to_date.yesterday %></p>
-	<p>Yesterday (in Singapore): <%= DateTime.now.to_date.yesterday.in_time_zone('Singapore') %></p>
-	<p>Previous date: <%= DateTime.now.to_date.prev_day %></p>
-	<p>Previous date (in Singapore): <%= DateTime.now.to_date.prev_day.in_time_zone('Singapore') %></p>
+	<p>Yesterday: <%= DateTime.now.yesterday %></p>
+	<p>Yesterday (in Singapore): <%= DateTime.now.yesterday.in_time_zone('Singapore') %></p>
+	<p>Previous date: <%= DateTime.now.prev_day %></p>
+	<p>Previous date (in Singapore): <%= DateTime.now.prev_day.in_time_zone('Singapore') %></p>
 	
 	
   </div>
