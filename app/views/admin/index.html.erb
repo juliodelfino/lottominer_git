@@ -26,6 +26,16 @@
 	<div id="dynamic-results-content">
 	</div>
 	
+	<h3>System variables</h3>
+	<p>Today: <%= Date.today %></p>
+	<p>Today (in Singapore): <%= Date.today.in_time_zone('Singapore') %></p>
+	<p>Time now (in Singapore): <%= Time.now.in_time_zone('Singapore') %></p>
+	<p>Hour now (in Singapore): <%= Time.now.in_time_zone('Singapore').hour %></p>
+	<p>Yesterday: <%= Date.yesterday %></p>
+	<p>Yesterday (in Singapore): <%= Date.yesterday.in_time_zone('Singapore') %></p>
+	<p>Previous date: <%= Date.today.prev_day %></p>
+	<p>Previous date (in Singapore): <%= Date.today.prev_day.in_time_zone('Singapore') %></p>
+	
 	
   </div>
   <div id="database-tab" class="tab-pane fade">
