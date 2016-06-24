@@ -33,9 +33,9 @@
 	<p>Time now (in Singapore): <%= Time.now.in_time_zone('Singapore') %></p>
 	<p>Hour now (in Singapore): <%= Time.now.in_time_zone('Singapore').hour %></p>
 	<p>Yesterday: <%= DateTime.now.yesterday %></p>
-	<p>Yesterday (in Singapore): <%= DateTime.now.yesterday.in_time_zone('Singapore') %></p>
+	<p>Yesterday (in Singapore): <%= DateTime.now.yesterday.in_time_zone('Singapore').to_date %></p>
 	<p>Previous date: <%= DateTime.now.prev_day %></p>
-	<p>Previous date (in Singapore): <%= DateTime.now.prev_day.in_time_zone('Singapore') %></p>
+	<p>Previous date (in Singapore): <%= DateTime.now.prev_day.in_time_zone('Singapore').to_date %></p>
 	
 	
   </div>
