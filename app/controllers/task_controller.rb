@@ -17,7 +17,7 @@ class TaskController < ApplicationController
       }
       mails << e.recipient
       send_result = EmailUtil.send(mail_info)
-      e.status = ('200' == send_result) ? :OK : send_result
+      e.status = ('200' == send_result) ? :SENT : send_result
       e.actual_send_date = DateTime.now
       e.save
     end

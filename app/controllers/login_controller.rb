@@ -189,11 +189,21 @@ class LoginController < ApplicationController
     @user = user
     @verify_url = request.base_url + '/verifyemail?id=' + settings.email_verification
     mail_body = render_to_string :template => '/mail/verify_email', layout: 'mailer'
+    
+    db_email = Email.new(
+      recipient: user.email,
+      subject: 'Welcome to Lotto Analytics',
+      body: mail_body,
+      plan_send_date: DateTime.now,
+      actual_send_date: DateTime.now,
+      status: :SENT)
+    db_email.save
+    
     mail_info = {
-        to: user.email,
+        to: db_email.recipient,
         from: 'Lotto Analytics <no-reply@' + request.domain + '>',
-        subject: 'Welcome to Lotto Analytics',
-        html: mail_body
+        subject: db_email.subject,
+        html: db_email.body
     }
       
     EmailUtil.send mail_info
