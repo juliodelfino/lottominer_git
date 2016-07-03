@@ -5,6 +5,10 @@ class WelcomeController < ApplicationController
     compute_results
   end
   
+  def ads
+    render layout: false
+  end
+  
   def unsubscribe
     user = FbUser.find_by(fb_id: params[:id])
     if (user.present?)

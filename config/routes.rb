@@ -44,6 +44,9 @@ Rails.application.routes.draw do
   get '/analytics' => 'analytics#index'
   get '/analytics/game'
   get '/analytics/profit'
+  
+  get '/ads' => 'welcome#ads'
+  
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
