@@ -50,6 +50,7 @@
 				  <li class="active"><a data-toggle="tab"  href="#tab1">Text</a></li>
 				  <li><a data-toggle="tab"  href="#tab2">Picture</a></li>
 				  <li><a data-toggle="tab"  href="#tab3">Video</a></li>
+				  <li><a data-toggle="tab"  href="#tab4">YouTube Video</a></li>
 				</ul>
 				
 				<div class="tab-content">
@@ -57,14 +58,20 @@
 			 		<p id="text1">The quick brown fox jumps over the lazy dog.</p>
 				  </div>
 				  <div id="tab2" class="tab-pane fade">
-			 		Picture
+			 		<img id="img2" src="http://feelgrafix.com/data_images/out/10/838988-landscape-photos.jpg" />
 				  </div>
 				  <div id="tab3" class="tab-pane fade">
-			 		<video id="vid3" width="320" height="240" controls>
+			 		<video id="vid3" controls>
 					  <source src="http://www.w3schools.com/tags/movie.mp4" type="video/mp4">
 					  <source src="http://www.w3schools.com/tags/movie.ogg" type="video/ogg">
 					  Your browser does not support the video tag.
 					</video>
+				  </div>
+				  <div id="tab4" class="tab-pane fade">
+
+				  	<iframe id="vid4"
+						src="https://www.youtube.com/embed/LbduDRH2m2M">
+					</iframe>
 				  </div>
 				</div>
 			</div>
@@ -176,7 +183,9 @@ if (window.fullScreenApi.supportsFullScreen) {
 		if (fullScreenApi.isFullScreen()) {	
 			fsStatus.innerHTML = 'Whoa, you went fullscreen ' + width + 'px by ' + height + 'px';
 			$("#specialstuff").width(width).height(height-100);
-			$("#vid3").width(width).height(height-300);
+			$("#img2").width(width);
+			$("#vid3").width(width).height(height);
+			$("#vid4").width(width).height(height-200);
 			$("#tabs").show();
 		} else {
 			fsStatus.innerHTML = 'Back to normal ' + width + 'px by ' + height + 'px';
