@@ -6,7 +6,6 @@ class WelcomeController < ApplicationController
   end
   
   def ads
-    render layout: false
   end
   
   def unsubscribe

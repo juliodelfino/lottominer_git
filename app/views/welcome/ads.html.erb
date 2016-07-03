@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>FullScreen API</title>
-	
-  	<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-	
-	<style>
+
+<style>
 	body {
 		background: #F3F5FA;
 	}
@@ -37,16 +31,44 @@
 	#fsstatus.fullScreenSupported {
 		background: #3e3;
 	}
+	
+	#text1 {
+		font-size: 5.9vw
+	}
 	</style>
-</head>
-<body>
 	<div id="container">
-		<h1><%= Lottominer::Application::PROJECT_NAME %> - FullScreen API Testing</h1>
+		<h1><%= Lottominer::Application::PROJECT_NAME %> - FullScreen Ads</h1>
 		
 		<div id="specialstuff">
 			<p>Source: http://johndyer.name/lab/fullscreenapi/</p>
 			<p>As of 10/20/2011, you'll need Safari 5.1, <a href="http://tools.google.com/dlpage/chromesxs">Chrome Canary</a>, or <a href="http://nightly.mozilla.org/">Firefox Nightly</a>
 			<p>Status: <span id="fsstatus"></span>
+				
+			<div id="tabs" style="display: none">
+				
+				<ul class="nav nav-tabs">
+				  <li class="active"><a data-toggle="tab"  href="#tab1">Text</a></li>
+				  <li><a data-toggle="tab"  href="#tab2">Picture</a></li>
+				  <li><a data-toggle="tab"  href="#tab3">Video</a></li>
+				</ul>
+				
+				<div class="tab-content">
+				  <div id="tab1" class="tab-pane fade in active">
+			 		<p id="text1">The quick brown fox jumps over the lazy dog.</p>
+				  </div>
+				  <div id="tab2" class="tab-pane fade">
+			 		Picture
+				  </div>
+				  <div id="tab3" class="tab-pane fade">
+			 		<video id="vid3" width="320" height="240" controls>
+					  <source src="http://www.w3schools.com/tags/movie.mp4" type="video/mp4">
+					  <source src="http://www.w3schools.com/tags/movie.ogg" type="video/ogg">
+					  Your browser does not support the video tag.
+					</video>
+				  </div>
+				</div>
+			</div>
+			
 		</div>
 		
 		<input type="button" value="Go Fullscreen" id="fsbutton" />
@@ -149,14 +171,17 @@ if (window.fullScreenApi.supportsFullScreen) {
 	}, true);
 	
 	fsElement.addEventListener(fullScreenApi.fullScreenEventName, function() {
-		    var width = jQuery(document).width();
-    		var height = jQuery(document).height();
+		    var width = jQuery(window).width();
+    		var height = jQuery(window).height();
 		if (fullScreenApi.isFullScreen()) {	
 			fsStatus.innerHTML = 'Whoa, you went fullscreen ' + width + 'px by ' + height + 'px';
-			$("#specialstuff").width(width).height(height-300);
+			$("#specialstuff").width(width).height(height-100);
+			$("#vid3").width(width).height(height-300);
+			$("#tabs").show();
 		} else {
 			fsStatus.innerHTML = 'Back to normal ' + width + 'px by ' + height + 'px';
 			$("#specialstuff").width(500).height(200);
+			$("#tabs").hide();
 		}
 	}, true);
 	
@@ -165,34 +190,6 @@ if (window.fullScreenApi.supportsFullScreen) {
 }
 
 </script>
-
-
-
-<script type="text/javascript">
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount','UA-3734687-9']);
-_gaq.push(['_trackPageview'],['_trackPageLoadTime']);
-(function() {
-	var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-})();
-</script>
-	
-	
-<script type="text/javascript">
-	var clicky = { log: function(){ return; }, goal: function(){ return; }};
-	var clicky_site_id = 117587;
-	(function() {
-		var s = document.createElement('script');
-		s.type = 'text/javascript'; s.async = true;
-		s.src = '//static.getclicky.com/js';
-		( document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0] ).appendChild( s );
-	})();
-</script>
-
-</body>
-</html>
 
 
 
