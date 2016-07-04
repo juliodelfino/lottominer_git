@@ -5,6 +5,9 @@ class AdminController < ApplicationController
     @selected_table = params[:table].nil? ? 'FbUser' : params[:table]
     clazz = @selected_table.constantize
     @column_names = clazz.columns.map {|c| c.name }
+    @db_table_list = ActiveRecord::Base.connection.tables.map do |model|
+      model.capitalize.singularize.camelize
+    end
   end
   
   def get_db_table

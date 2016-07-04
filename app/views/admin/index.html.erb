@@ -43,11 +43,9 @@
 
 	<select id="table_name" class="form-control list">
 	  <option value=""></option>
-	  <option value="LottoGame" <% if @selected_table == "LottoGame"%>selected="selected"<% end %>>LottoGame</option>
-	  <option value="LottoResult" <% if @selected_table == "LottoResult"%>selected="selected"<% end %>>LottoResult</option>
-	  <option value="FbUser" <% if @selected_table == "FbUser"%>selected="selected"<% end %>>FbUser</option>
-	  <option value="UserNumber" <% if @selected_table == "UserNumber"%>selected="selected"<% end %>>UserNumber</option>
-	  <option value="UserSetting" <% if @selected_table == "UserSetting"%>selected="selected"<% end %>>UserSetting</option>
+	  <% @db_table_list.each do |table| %>
+		  <option value="<%= table %>" <% if @selected_table == table %>selected="selected"<% end %>><%= table %></option>
+	  <% end %>
 	</select>
 	
 	<div id="dynamic-content">
