@@ -3,13 +3,7 @@ class DashboardController < ApplicationController
     
     def index
       @user = current_user
-      @num_info_list = []
-      current_user.user_numbers.each do |n|
-        @num_info_list << {
-          usernum: n,
-          won: has_won(n)
-        }
-      end
+      @user_num_list = current_user.user_numbers
     end
     
     def has_won(user_number)

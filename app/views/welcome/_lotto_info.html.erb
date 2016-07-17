@@ -1,0 +1,64 @@
+
+<div id="lotto-info-div" class="col-md-12" style="text-align: center">
+	
+<!-- 
+    <h1 id="h1">LOTTO 6/42</h1>
+    <hr class="featurette-divider" />
+    <p id="p">
+    	The Philippine Lotto 6/42 for Luzon was introduced in the Philippines on March 8, 1995. 
+    	After more than a year (June 15, 1996), the Lotto 6/42 game was also introduced in the Visayas-Mindanao area. 
+    	At present, the National Lotto 6/42 is played thrice a week, at Php20.00 per standard combination.
+    </p>
+
+-->
+	<style>
+		#lotto-info-div .ball {
+			margin-left: 2.5vw;
+			margin-right: 2.5vw
+		}
+		
+		.featurette-divider {
+			border-width: 1vw;
+		}
+		
+		.no-winners-bg {
+		  background-color: gray;
+		  font-size: inherit
+		}
+		
+	</style>
+	<h1 style="font-size: 5vw">MegaLotto 6/45 <span class="text-muted" style="font-size: 4vw">SEPT 17, 2016 DRAW</span></h1> 
+	
+	<hr class="featurette-divider" />
+	<div style="text-align: center">
+		<h3 style="font-weight: bolder">WINNING NUMBERS</h3>
+		<h1 style="font-size: 6vw; margin-left: -4vw"><%= ball_view '12-16-42-03-07-31' %></h1>
+	</div>
+	<hr class="featurette-divider" />
+	
+	<div style="text-align: center">
+		<h3 style="font-weight: bolder">PRIZE</h3>
+		
+		<table style="margin: 0 auto; font-size: 2vw">
+			<tr style="font-size: 4vw">
+				<td style="text-align: left">JACKPOT</td><td style="text-align: right; font-weight: bolder"><%= number_to_currency(123456789.12, unit: '₱') %></td>
+				<td style="width: 24vw; text-align: right"><span class="winners-bg badge"><%= pluralize(1, 'winner')  %></span></td>
+			</tr>
+			<tr class="text-muted">
+				<td style="text-align: left">5 WINNING NUMBERS</td><td style="text-align: right">UP TO <%= number_to_currency(50000, unit: '₱') %></td>
+			</tr>
+			<tr class="text-muted">
+				<td style="text-align: left">4 WINNING NUMBERS</td><td style="text-align: right">UP TO <%= number_to_currency(1500, unit: '₱') %></td>
+			</tr>
+			<tr class="text-muted">
+				<td style="text-align: left">3 WINNING NUMBERS</td><td style="text-align: right"><%= number_to_currency(20, unit: '₱') %></td>
+			</tr>
+		</table>
+	</div>
+	<hr />
+		
+	<h3 class="text-muted">NEXT DRAW: JULY 19, 2016</h3>
+
+</div>
+
+

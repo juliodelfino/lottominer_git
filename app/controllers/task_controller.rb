@@ -1,10 +1,47 @@
 require 'sendgrid-ruby'
-require 'uri'
-require 'net/http'
 
 class TaskController < ApplicationController
   skip_before_filter :authenticate 
   
+  # Fetches daily results from PCSO website. Performs hourly check
+  # to handle cases when PCSO has not posted the latest results yet,
+  # or when PCSO website is down temporarily.
+  def get_daily_results_from_pcso
+     
+    hourNow = Time.now.in_time_zone('Singapore').hour
+    drawHour = 21 #draw time is 09:00PM or 21:00
+    @daily_results = []
+    selectedDate = nil
+    if (hourNow < drawHour)
+      selectedDate = DateTime.now.prev_day.in_time_zone('Singapore').to_date
+    else
+      selectedDate = Date.today.in_time_zone('Singapore')
+    end
+    
+    result_count = LottoResult.where(draw_date: selectedDate).count
+    if (0 == result_count)
+      @daily_results = LottoResultUtil.get_daily_results_by_range(selectedDate.strftime("%Y%m%d"))
+    end
+    
+    if (@daily_results.size > 0)
+      update_current_jackpot_prizes
+      update_winning_user_numbers(@daily_results[0].draw_date)
+      notify_user_by_date(@daily_results[0].draw_date)
+    end
+    
+    render json: @daily_results
+  end
+ 
+  # Fetches draw results by range.
+  # Example: lotto.jdelfino.com/get_daily_results?from=20160701&to=20160716
+  # This example fetches results from July 1 to 16, 2016.
+  def get_daily_results
+    
+    puts "Method invoked by: " + (params[:callid].nil? ? "nil" : params[:callid])
+    render json: LottoResultUtil.get_daily_results_by_range(params[:from], params[:to])
+  end
+  
+  # Sends the mails that are queued in 'emails' table in the database.
   def send_mails
     mails = []
     dateNow = DateTime.now
@@ -55,88 +92,22 @@ class TaskController < ApplicationController
     return users.map{ |u| u.email }
   end
   
-  
-  def get_daily_results_from_pcso
-     
-    hourNow = Time.now.in_time_zone('Singapore').hour
-    drawHour = 21 #draw time is 09:00PM or 21:00
-    @daily_results = []
-    selectedDate = nil
-    if (hourNow < drawHour)
-      selectedDate = DateTime.now.prev_day.in_time_zone('Singapore').to_date
-    else
-      selectedDate = Date.today.in_time_zone('Singapore')
+  def update_winning_user_numbers(date)
+    UserNumber.update_all won: false
+    LottoResult.where(draw_date: date).each do |result|
+      UserNumber.where(lotto_game_id: result.lotto_game_id, numbers: result.numbers).update_all won: true
     end
-    
-    result_count = LottoResult.where(draw_date: selectedDate).count
-    if (0 == result_count)
-      @daily_results = get_daily_results_by_range(selectedDate.strftime("%Y%m%d"))
-    end
-    
-    if (@daily_results.size > 0)
-      notify_user_by_date(@daily_results[0].draw_date)
-    end
-    
-    render json: @daily_results
   end
   
-  def get_daily_results
-    
-    puts "Method invoked by: " + (params[:callid].nil? ? "nil" : params[:callid])
-    render json: get_daily_results_by_range(params[:from], params[:to])
-  end
-  
-  def get_daily_results_by_range(str_from_date, str_to_date = str_from_date)
-    
-    url = URI.parse("http://www.pcso.gov.ph/lotto-search/lotto-search.aspx")
-    http = Net::HTTP.new(url.host, url.port)
-    http = http.start
-    request = Net::HTTP::Get.new(url)
-    response = http.request(request)
-    
-
-    from_date = str_from_date.nil? ? Date.today : DateTime.parse(str_from_date)
-    to_date = str_to_date.nil? ? Date.today : DateTime.parse(str_to_date)
-    
-    respText = response.read_body
-    
-    formData = {'__VIEWSTATE' => extract_form_value('__VIEWSTATE', respText),
-        '__VIEWSTATEGENERATOR' => extract_form_value('__VIEWSTATEGENERATOR', respText),
-        '__EVENTVALIDATION' => extract_form_value('__EVENTVALIDATION', respText),
-        'ddlStartMonth' => from_date.strftime("%B"),
-        'ddlStartDate' => from_date.strftime("%-d"),  #%-d removes leading zeroes; %d outputs "09" while %-d is "9"
-        'ddlStartYear' => from_date.strftime("%Y"),
-        'ddlEndMonth' => to_date.strftime("%B"),
-        'ddlEndDay' => to_date.strftime("%-d"),
-        'ddlEndYear' => to_date.strftime("%Y"),
-        'ddlSelectGame' => '0',
-        'btnSearch' => 'Search Lotto'    
-      }
-      
-    req = Net::HTTP::Post.new(url.request_uri)
-    req.set_form_data(formData)
-    http.use_ssl = (url.scheme == "https")
-    
-    response = http.request(req)
-    
-    body_text = response.read_body
-    
-    rows = body_text[body_text.index('LOTTO GAME')..-1].scan(/<tr.*?<\/tr>/m)
-    
-    return rows.map{ |row| LottoResultUtil.parse(row) }.select{ |row| row }
-  end
-  
-  def get_daily_results_from_file
-    
-    body_text = File.read(File.dirname(__FILE__) + "/../../tmp/sample_lotto_result.html")
-    rows = body_text[body_text.index('LOTTO GAME')..-1].scan(/<tr.*?<\/tr>/m)
-    @result = "from file: " + rows.map{ |row| LottoResultUtil.parse(row).to_s }.to_s
-  end
-  
-  private 
-  
-    def extract_form_value(fieldname, text_to_extract)
-      kvText = /id="#{fieldname}"\s+value=".*?"/.match(text_to_extract).to_s
-      return kvText.sub(/.*?value="(.*)"/, '\1')
+  def update_current_jackpot_prizes
+    LottoGame.all.each do |g|
+      sample_result = LottoResult.where(lotto_game_id: g.id).order(draw_date: :DESC).limit(1)[0]
+      if (!["2D", "3D"].include?(g.group_name) && sample_result.winners > 0)
+        sample_result = LottoResult.where(lotto_game_id: g.id).order(jackpot_prize: :ASC).limit(1)[0]
+      end
+      g.current_jackpot_prize = sample_result.jackpot_prize
+      g.save
     end
+  end
+  
 end

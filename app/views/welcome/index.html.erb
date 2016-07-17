@@ -19,19 +19,7 @@
       	  <hr class="featurette-divider">
 	
 	      <div class="row featurette">
-	        <div class="col-md-7">
-	          <h2 class="featurette-heading">Games Today, <%= DateTime.now.strftime("%B %d, %Y") %></h2>
-
-					<% weekday = DateTime.now.wday 
-						gamesToday = LottoGame.where("(draw_days like ? or draw_days=7) and active", "%#{weekday}%")
-					%>
-					<% gamesToday.each do |game| %>
-					
-						<div class="col-xs-6 col-lg-4 <%= cycle('result-even', 'result-odd') -%>">             
-							<h4><%= game.name %></h4>
-			            </div>
-					<% end %>     
-	        </div>
+	        <%= render '/welcome/games_today' %>
 	      </div>
       
       <% if (!controller.current_user.present?) %>

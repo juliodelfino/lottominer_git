@@ -14,10 +14,9 @@
 	}
 	
 	#specialstuff {
-		background: #33e;
-		padding: 20px;
-		margin: 20px;
-		color: #fff;
+		background: white;
+		/*padding: 20px;*/
+		color: black;
 	}
 	#specialstuff a {
 		color: #eee;
@@ -35,49 +34,62 @@
 	#text1 {
 		font-size: 5.9vw
 	}
+	
+	#h1 {
+		font-size: 6.5vw
+	}
+	
+	#p {
+		font-size: 3.5vw
+	}
+	
+	.filled {
+		position: absolute;
+		top: 0;
+		left: 0;
+		padding: 0;
+		margin: 0;
+		z-index: 1050;
+	}
+	
+	.youtube-vid {
+		position:fixed; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;
+	}
+	
+	
 	</style>
 	<div id="container">
 		<h1><%= Lottominer::Application::PROJECT_NAME %> - FullScreen Ads</h1>
 		
 		<div id="specialstuff">
-			<p>Status: <span id="fsstatus"></span>
 				
-			<div id="tabs" style="display: none">
+			<div id="tabs2" style="display: none">
+				<div class="tab-content2">
 				
-				<ul class="nav nav-tabs">
-				  <li class="active"><a data-toggle="tab"  href="#tab1">Text</a></li>
-				  <li><a data-toggle="tab"  href="#tab2">Picture</a></li>
-				  <li><a data-toggle="tab"  href="#tab3">Video</a></li>
-				  <li><a data-toggle="tab"  href="#tab4">YouTube Video</a></li>
-				</ul>
-				
-				<div class="tab-content">
-				  <div id="tab1" class="tab-pane fade in active">
-			 		<p id="text1">The quick brown fox jumps over the lazy dog.</p>
+				<% Screen.where(visible: true).order(order: :ASC).each do |s| %>
+				  <div class="tab-pane2" delay="<%= s.duration %>" data-type="<%= s.data_type %>">
+					  <% if (s.data_type == 'SYSTEM') %>
+					    <%= render "/welcome/" + s.content %>
+					  <% elsif (s.data_type == 'TEXT') %>
+				 		<p id="text1"><%= s.content %></p>
+					  <% elsif (s.data_type == 'YOUTUBE') %>
+					  	<input id="content" type="hidden" value="<%= s.content %>" />
+					  <% else %>
+					  
+						  	[default-display format] <br/>
+					 		<p id="text1"><%= s.content %></p>
+					  <% end %>
+				  
 				  </div>
-				  <div id="tab2" class="tab-pane fade">
-			 		<img id="img2" src="http://feelgrafix.com/data_images/out/10/838988-landscape-photos.jpg" />
-				  </div>
-				  <div id="tab3" class="tab-pane fade">
-			 		<video id="vid3" controls>
-					  <source src="http://www.w3schools.com/tags/movie.mp4" type="video/mp4">
-					  <source src="http://www.w3schools.com/tags/movie.ogg" type="video/ogg">
-					  Your browser does not support the video tag.
-					</video>
-				  </div>
-				  <div id="tab4" class="tab-pane fade">
-
-				  	<iframe id="vid4"
-						src="https://www.youtube.com/embed/LbduDRH2m2M">
-					</iframe>
-				  </div>
-				</div>
+				<% end %>
 			</div>
 			
 		</div>
-		
-		<input type="button" value="Go Fullscreen" id="fsbutton" />
-		
+		<div id="btn-section">
+			<p>Status: <span id="fsstatus"></span>
+			<input type="button" value="Go Fullscreen" id="fsbutton" />
+			<input type="button" value="Fill Whole Screen" id="fillbutton" />		
+		</div>	
 	</div>
 
 
@@ -176,25 +188,93 @@ if (window.fullScreenApi.supportsFullScreen) {
 	}, true);
 	
 	fsElement.addEventListener(fullScreenApi.fullScreenEventName, function() {
-		    var width = jQuery(window).width();
-    		var height = jQuery(window).height();
+		    var width = jQuery(document).width();
+    		var height = jQuery(document).height();
 		if (fullScreenApi.isFullScreen()) {	
 			fsStatus.innerHTML = 'Whoa, you went fullscreen ' + width + 'px by ' + height + 'px';
 			$("#specialstuff").width(width).height(height-100);
-			$("#img2").width(width);
-			$("#vid3").width(width).height(height);
-			$("#vid4").width(width).height(height-200);
-			$("#tabs").show();
+
+			$("#btn-section").hide();
+			$("#tabs2").show();
 		} else {
 			fsStatus.innerHTML = 'Back to normal ' + width + 'px by ' + height + 'px';
 			$("#specialstuff").width(500).height(200);
-			$("#tabs").hide();
+			$("#btn-section").show();
+			$("#tabs2").hide();
 		}
 	}, true);
 	
 } else {
 	fsStatus.innerHTML = 'SORRY: Your browser does not support FullScreen';
 }
+
+ESCAPE_KEY = 27;
+isFilledScreen = false;
+
+$(window).keypress(function(e) {
+       if (e.which == ESCAPE_KEY && isFilledScreen) {
+       	  $('#specialstuff').removeClass('filled').width(300).height(100);
+       	  $("#btn-section").show();
+       	  $('tabs2').hide();
+       }
+       //do stuff with "key" here...
+   });
+
+$(document).ready(function() {
+	
+	$('#fillbutton').click(function(){
+	    var width = $(document).width();
+		var height = $(document).height();
+		$("#specialstuff").width(width).height(height).addClass("filled");
+
+		$("#tabs2").show();	
+		$("#btn-section").hide();
+			
+		isFilledScreen = true;
+	});
+	
+		
+	var ds = $('.tab-content2 .tab-pane2');
+    var slide1 = ds.hide().eq(0);
+    slide1.show();
+    setTimeout(showSlide, slide1.attr('delay') * 1000);
+    
+    function showSlide() {
+    	
+    	ds.filter(':visible').fadeOut(function(){
+            var nextDiv = $(this).next('div');
+            if ( nextDiv.length == 0 ) {
+            	nextDiv = ds.eq(0);
+            } else {
+            	if (nextDiv.attr('data-type') == 'YOUTUBE') {
+            		videoDiv = nextDiv.find('iframe');
+            		if (videoDiv != undefined) {
+            			videoDiv.remove();
+            		}
+            		videoDiv = createIframe(nextDiv.find('#content').val());
+            		nextDiv.append(videoDiv);
+            	}
+            }
+            nextDiv.fadeIn();      
+			setTimeout(showSlide, nextDiv.attr('delay') * 1000);
+        });
+    }
+    
+    function createIframe(videoId) {
+    	return $('<iframe class="youtube-vid" src="https://www.youtube.com/embed/' + videoId + '?rel=0&autoplay=1"></iframe>');
+    }
+    
+    // setInterval(function(){
+        // ds.filter(':visible').fadeOut(function(){
+            // var nextDiv = $(this).next('div');
+            // if ( nextDiv.length == 0 ) {
+                // ds.eq(0).fadeIn();
+            // } else {
+                // nextDiv.fadeIn();
+            // }
+        // });
+    // }, 8000);
+});
 
 </script>
 

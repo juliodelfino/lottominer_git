@@ -6,6 +6,7 @@ class WelcomeController < ApplicationController
   end
   
   def ads
+    compute_results
   end
   
   def unsubscribe

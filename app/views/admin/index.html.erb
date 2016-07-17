@@ -1,8 +1,9 @@
 <h1 class="page-header">Admin Tools</h1>
 
 <ul class="nav nav-tabs">
-  <li class="active"><a data-toggle="tab"  href="#latest-results-tab">Latest Results</a></li>
-  <li><a data-toggle="tab"  href="#database-tab">Database</a></li>
+  <li class="active"><a data-toggle="tab" href="#latest-results-tab">Latest Results</a></li>
+  <li><a data-toggle="tab" href="#database-tab">Database</a></li>
+  <li><a data-toggle="tab" href="#public-screen">Public Screen</a></li>
 </ul>
 
 <div class="tab-content">
@@ -52,7 +53,33 @@
 		<%= render '/admin/db_table' %>
 	</div>
 
-
   </div>
+  <div id="public-screen" class="tab-pane fade">
+
+	<table>
+		<tr>
+			<td>TYPE</td>
+			<td>CONTENT</td>
+			<td>SCHEDULE</td>
+			<td>DURATION</td>
+			<td>ORDER</td>
+			<td>VISIBLE</td>
+		</tr>
+		
+		<% Screen.all.each do |s| %>
+		<tr class="<%= cycle('result-odd', 'result-even') -%>">
+			<td><%= s.data_type %></td>
+			<td><%= s.content %></td>
+			<td><%= s.schedule %></td>
+			<td><%= s.duration %></td>
+			<td><%= s.order %></td>
+			<td><%= s.visible %></td>
+		</tr>
+		
+		<% end %>
+		
+	</table>
+  
+  <div>
 </div>
 
