@@ -20,13 +20,17 @@ class TaskController < ApplicationController
     
     result_count = LottoResult.where(draw_date: selectedDate).count
     if (0 == result_count)
-      @daily_results = LottoResultUtil.get_daily_results_by_range(selectedDate.strftime("%Y%m%d"))
+      LottoResult.transaction do
+        @daily_results = LottoResultUtil.get_daily_results_by_range(selectedDate.strftime("%Y%m%d"))
+      end
     end
     
     if (@daily_results.size > 0)
-      update_current_jackpot_prizes
-      update_winning_user_numbers(@daily_results[0].draw_date)
-      notify_user_by_date(@daily_results[0].draw_date)
+      Thread.new do
+        update_current_jackpot_prizes
+        update_winning_user_numbers(@daily_results[0].draw_date)
+        notify_user_by_date(@daily_results[0].draw_date)
+      end
     end
     
     render json: @daily_results
@@ -93,20 +97,24 @@ class TaskController < ApplicationController
   end
   
   def update_winning_user_numbers(date)
-    UserNumber.update_all won: false
-    LottoResult.where(draw_date: date).each do |result|
-      UserNumber.where(lotto_game_id: result.lotto_game_id, numbers: result.numbers).update_all won: true
+    UserNumber.transaction do
+      UserNumber.update_all won: false
+      LottoResult.where(draw_date: date).each do |result|
+        UserNumber.where(lotto_game_id: result.lotto_game_id, numbers: result.numbers).update_all won: true
+      end
     end
   end
   
   def update_current_jackpot_prizes
-    LottoGame.all.each do |g|
-      sample_result = LottoResult.where(lotto_game_id: g.id).order(draw_date: :DESC).limit(1)[0]
-      if (!["2D", "3D"].include?(g.group_name) && sample_result.winners > 0)
-        sample_result = LottoResult.where(lotto_game_id: g.id).order(jackpot_prize: :ASC).limit(1)[0]
+    LottoGame.transaction do
+      LottoGame.all.each do |g|
+        sample_result = LottoResult.where(lotto_game_id: g.id).order(draw_date: :DESC).limit(1)[0]
+        if (!["2D", "3D"].include?(g.group_name) && sample_result.winners > 0)
+          sample_result = LottoResult.where(lotto_game_id: g.id).order(jackpot_prize: :ASC).limit(1)[0]
+        end
+        g.current_jackpot_prize = sample_result.jackpot_prize
+        g.save
       end
-      g.current_jackpot_prize = sample_result.jackpot_prize
-      g.save
     end
   end
   
