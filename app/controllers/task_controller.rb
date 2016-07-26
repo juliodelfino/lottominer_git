@@ -98,11 +98,28 @@ class TaskController < ApplicationController
   
   def update_winning_user_numbers(date)
     UserNumber.transaction do
-      UserNumber.update_all won: false
-      LottoResult.where(draw_date: date).each do |result|
-        UserNumber.where(lotto_game_id: result.lotto_game_id, numbers: result.numbers).update_all won: true
+      UserNumber.update_all won: false, status: ''
+      LottoResult.joins(:lotto_game).where(draw_date: date).each do |result|
+        
+        if result.lotto_game.group_name.starts_with?('6D')
+          UserNumber.where('lotto_game_id = ' + result.lotto_game_id + ' AND (' + sql_for_match(result.numbers, 3) + ')' ).update_all status: 'MATCH 3'
+          UserNumber.where('lotto_game_id = ' + result.lotto_game_id + ' AND (' + sql_for_match(result.numbers, 4) + ')' ).update_all status: 'MATCH 4'
+          UserNumber.where('lotto_game_id = ' + result.lotto_game_id + ' AND (' + sql_for_match(result.numbers, 5) + ')' ).update_all status: 'MATCH 5'
+          sorted_wnumbers = '-' + result.numbers.split('-').map{ |x| x.rjust(2, '0')}.sort.join('-') + '-'
+          UserNumber.where(lotto_game_id: result.lotto_game_id, sorted_numbers: sorted_wnumbers).update_all status: 'JACKPOT'
+        else
+          UserNumber.where(lotto_game_id: result.lotto_game_id, numbers: result.numbers).update_all won: true
+        end
+        UserNumber.where()
       end
     end
+  end
+  
+  def sql_for_match(numbers, match_count)
+    wnums = numbers.split('-').map(&:to_i).sort
+    idx_permutations = [0,1,2,3,4,5].combination(match_count).to_a
+    sqls = idx_permutations.map{ |p| 'sorted_numbers LIKE "%' + wnums.values_at(*p).map{ |x| x.to_s.rjust(2, '0')}.join('%') + '%"' }
+    return sqls.join(' OR ')
   end
   
   def update_current_jackpot_prizes

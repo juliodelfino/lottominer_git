@@ -34,10 +34,13 @@ class DashboardController < ApplicationController
     end
        
     def ajax_add_number
+      
+      sorted_nums = '-' + params[:numbers].split('-').map{ |x| x.rjust(2, '0')}.sort.join('-') + '-'
       row = UserNumber.new(
         numbers: params[:numbers],
         fb_user_id: current_user.id,
-        lotto_game_id: params[:game_id]);
+        lotto_game_id: params[:game_id],
+        sorted_numbers: sorted_nums);
       row.save
       render json: row
     end

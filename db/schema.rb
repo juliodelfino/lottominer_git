@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160716075948) do
+ActiveRecord::Schema.define(version: 20160726163618) do
 
   create_table "articles", force: :cascade do |t|
     t.string   "title",      limit: 255
@@ -77,12 +77,14 @@ ActiveRecord::Schema.define(version: 20160716075948) do
   end
 
   create_table "user_numbers", force: :cascade do |t|
-    t.string   "numbers",       limit: 255
-    t.integer  "fb_user_id",    limit: 4
-    t.integer  "lotto_game_id", limit: 4
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
-    t.boolean  "won",                       default: false
+    t.string   "numbers",        limit: 255
+    t.integer  "fb_user_id",     limit: 4
+    t.integer  "lotto_game_id",  limit: 4
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+    t.boolean  "won",                        default: false
+    t.string   "sorted_numbers", limit: 255
+    t.string   "status",         limit: 255
   end
 
   create_table "user_settings", force: :cascade do |t|
