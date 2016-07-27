@@ -6,7 +6,10 @@
 			  
 			  <div class="jumbotron">
 	            <h1><%= @latest_result.game %></h1>
-	            <h1><%= ball_view @latest_result.numbers %></h1>
+	            <div style="display: inline-block">
+            	<h1><%= ball_view @latest_result.numbers %></h1>
+            	<div class="order-rule text-muted">&nbsp;IN ANY ORDER</div>
+            	</div>
 	            <h2><%= number_to_currency(@latest_result.jackpot_prize, unit: '₱') %>
 	               <% if @latest_result.winners > 0 %>
 	               	<span class="winners-bg badge"><%= pluralize(@latest_result.winners, 'winner')  %></span>

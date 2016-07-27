@@ -37,7 +37,7 @@ class DashboardController < ApplicationController
       
       sorted_nums = '-' + params[:numbers].split('-').map{ |x| x.rjust(2, '0')}.sort.join('-') + '-'
       row = UserNumber.new(
-        numbers: params[:numbers],
+        numbers: params[:numbers].split('-').join('-'),
         fb_user_id: current_user.id,
         lotto_game_id: params[:game_id],
         sorted_numbers: sorted_nums);

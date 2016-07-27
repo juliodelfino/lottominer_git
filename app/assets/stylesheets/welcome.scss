@@ -22,13 +22,14 @@
   //float: right
 }
 
+.order-rule {
+  letter-spacing: 40px; 
+  text-align: center
+}
+
 
 /* From getbootstrap.com - Off Canvas */
 
-html,
-body {
-  overflow-x: hidden; /* Prevent scroll on narrow devices */
-}
 footer {
   padding: 30px 0;
 }
@@ -71,6 +72,12 @@ footer {
     position: absolute;
     top: 0;
     width: 50%; /* 6 columns */
+  }
+  
+
+  .order-rule {
+    letter-spacing: 10px; 
+    text-align: center
   }
 }
 

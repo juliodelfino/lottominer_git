@@ -55,7 +55,9 @@
 
   </div>
   <div id="public-screen" class="tab-pane fade">
-
+	<p>
+		<a href="/ads" class="btn btn-primary">View Ads</a>
+	</p>
 	<table>
 		<tr>
 			<td>TYPE</td>
@@ -64,6 +66,7 @@
 			<td>DURATION</td>
 			<td>ORDER</td>
 			<td>VISIBLE</td>
+			<td>ACTIONS</td>
 		</tr>
 		
 		<% Screen.all.each do |s| %>
@@ -74,6 +77,13 @@
 			<td><%= s.duration %></td>
 			<td><%= s.order %></td>
 			<td><%= s.visible %></td>
+			<td>
+				<% if s.data_type != 'SYSTEM' %>
+					<a href="#" class="btn">Preview</a>
+					<a href="#" class="btn">Edit</a>
+					<a href="#" class="btn">Delete</a>
+				<% end %>
+			</td>
 		</tr>
 		
 		<% end %>
