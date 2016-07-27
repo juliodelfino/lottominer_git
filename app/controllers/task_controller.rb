@@ -108,7 +108,7 @@ class TaskController < ApplicationController
           sorted_wnumbers = '-' + result.numbers.split('-').map{ |x| x.rjust(2, '0')}.sort.join('-') + '-'
           UserNumber.where(lotto_game_id: result.lotto_game_id, sorted_numbers: sorted_wnumbers).update_all status: 'JACKPOT'
         else
-          UserNumber.where(lotto_game_id: result.lotto_game_id, numbers: result.numbers).update_all won: true
+          UserNumber.where(lotto_game_id: result.lotto_game_id, numbers: result.numbers).update_all won: true, status: 'WINNER'
         end
         UserNumber.where()
       end

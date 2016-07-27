@@ -26,7 +26,7 @@
 		</h4>
 		<span class="text-muted"><%= user_num.lotto_game.name %></span>
 		<% if (user_num.won)%>
-			<span class="winners-bg badge">Today's winner!</span>
+			<span class="winners-bg badge"><%= user_num.status %></span>
 		<% end %>
 	</div>
 	<% end %>
