@@ -1,5 +1,10 @@
 <h1 class="page-header">Settings</h1>
 
+<div id="notif" class="alert alert-success fade in" style="display: none">
+  <a href="#" class="close" aria-label="close">&times;</a>
+  <span>Successfully updated.</span>
+</div>
+
 <div class="row">
 
 	<div class="user-photo col-xs-10 col-lg-1">
@@ -7,7 +12,7 @@
 	</div>
 	<div class=" col-xs-10 col-lg-4">
 		
-		<%= form_for :user, class: 'form-horizontal', url: '/settings/save', method: :post, :html => { :id => 'validate-form' } do |f| %>
+		<%= form_for :user, class: 'form-horizontal', url: '/settings/save', :html => { :id => 'validate-form' } do |f| %>
 		<div class="form-group has-feedback">
 			<%= f.label :email, class: 'control-label' %> 
 			<% if (@db_user.user_setting.email_verification == 'ok') %>
@@ -29,7 +34,7 @@
 		<%= check_box_tag :notify_if_winner, true, true %>
 		<%= label_tag(:notify_if_winner, "Notify me if I won") %>
 		<p>
-			<%= submit_tag "Save", class: "btn btn-primary" %>
+			<%= submit_tag "Save", id: 'save-btn', class: "btn btn-primary" %>
 		</p>
 		<% end %>
 	</div>

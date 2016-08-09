@@ -6,7 +6,8 @@ class UserController < ApplicationController
   def save_settings
     current_user.update(user_params)
     current_user.user_setting.update(user_setting_params)
-    redirect_to '/dashboard'
+    #redirect_to '/dashboard'
+    render text: 'ok'
   end
   
     private

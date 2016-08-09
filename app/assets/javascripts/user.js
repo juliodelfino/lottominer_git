@@ -27,7 +27,26 @@ $(document).ready(function() {
             } else {
             error.insertAfter(element);
             }
-        } 
- });
+        }
+    });
+    
+    
+	$("#validate-form").submit(function( event ) {
+		$('.alert').hide();
+	 
+		// Stop form from submitting normally
+		event.preventDefault();
+    
+    	var settingsForm = $(this);
+    	if (!settingsForm.valid()) {
+    		return false;
+    	}
+    	
+		$.post(settingsForm.attr('action'), settingsForm.serialize())
+		.done(function(){
+			$('.alert').show();
+		});
+	});
+  
 
 });
