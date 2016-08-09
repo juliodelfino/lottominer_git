@@ -1,9 +1,11 @@
+
       <h1 class="page-header">Draw Results</h1>
       <div>
-		  <a id="left-arrow">PREVIOUS</a>
+		  <a id="left-arrow"><%= image_tag 'images/prev-icon.png', width: 16 %>PREVIOUS</a>&nbsp;&nbsp;
 		  <input type="hidden" id="datepicker" />
-		  <%= image_tag 'images/calendar.gif', id: 'cal-btn', width: 16 %>
-		  <a id="right-arrow">NEXT</a>
+		  <a id="cal-btn"><%= image_tag 'images/calendar.gif', width: 16 %> CALENDAR</a>&nbsp;&nbsp;
+		  <a id="right-arrow"><%= image_tag 'images/next-icon.png', width: 16 %>NEXT</a>&nbsp;&nbsp;
+		  <%= image_tag 'images/load-icon.gif', id: 'load-icon', width: 16 %>
 		  <div id="dynamic-content">
 		  	<%= render '/welcome/results' %>
           

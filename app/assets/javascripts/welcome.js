@@ -6,7 +6,7 @@ $(document).ready(function() {
       dateFormat: 'yymmdd',
       defaultDate: getParameterByName('date') != null ? getParameterByName('date') : new Date(),
       onSelect: function(date) {
-      	$("#dynamic-content").load('/welcome/ajax_results?date=' + date);
+      	queryResultsByDate(date);
       }
     });
     
@@ -16,13 +16,20 @@ $(document).ready(function() {
     
     $('#left-arrow').click(function(){
     	var prevDate = $('#prev-date').val();
-      	$("#dynamic-content").load('/welcome/ajax_results?date=' + prevDate);
+      	queryResultsByDate(prevDate);
       	lottoDate.datepicker('option','defaultDate', prevDate);
     });
     
     $('#right-arrow').click(function(){
     	var nextDate = $('#next-date').val();
-      	$("#dynamic-content").load('/welcome/ajax_results?date=' + nextDate);
+      	queryResultsByDate(nextDate);
       	lottoDate.datepicker('option','defaultDate', nextDate);
     });
+    
+    function queryResultsByDate(selectedDate) {
+    	$('#load-icon').show();
+      	$("#dynamic-content").load('/welcome/ajax_results?date=' + selectedDate, function() {
+      		$('#load-icon').hide();
+      	});
+    }
 });
