@@ -41,10 +41,11 @@ $(document).ready(function() {
     	if (!settingsForm.valid()) {
     		return false;
     	}
-    	
+    	$('#load-icon').show();
 		$.post(settingsForm.attr('action'), settingsForm.serialize())
 		.done(function(){
 			$('.alert').show();
+    		$('#load-icon').hide();
 		});
 	});
   
