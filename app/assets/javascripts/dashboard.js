@@ -112,6 +112,7 @@ $(document).ready(function() {
 			}
 		});
 	}
+
 	
 	
 	//Number Search START	
@@ -120,17 +121,20 @@ $(document).ready(function() {
 		var ajaxReq = $.post( "/dashboard/ajax_copy_result_to_user_number", 
           	{ lotto_result_id: num_id } )
           	.done(function(){
+          		$('#notif').show();
           		//window.location.reload();
           	});
 	});
 	
 	var num_search_ctx_menu = $('#num-search-context-menu');
 	
-	$('#search-num-box').on('input', function(){
+/*	$('#search-num-box').on('input', function(){
 		$('#results').load('/dashboard/search_number?q=' + $(this).val(), initNumSearchMenu);
 	});
-	
+*/
 	function initNumSearchMenu() {
+	    
+        $('#load-icon').hide();
 		$(".lotto-num-menu").click(function(){
 			
 			if (selected_num_link == null || $(this).attr('id') != selected_num_link.attr('id')) {
@@ -145,6 +149,7 @@ $(document).ready(function() {
 	initMultipleValueInputField('#search-num-multi-input', function(text){
 		
 		$('#results').after(num_search_ctx_menu);
+        $('#load-icon').show();
 		$('#results').load('/dashboard/search_number?q=' + text, initNumSearchMenu);
 	});
 	
