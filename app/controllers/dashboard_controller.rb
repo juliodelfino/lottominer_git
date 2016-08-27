@@ -11,7 +11,7 @@ class DashboardController < ApplicationController
     end
     
     def search_number
-      token = params[:q].split('-').map{|x|x.to_i}.sort.join('-')
+      token = params[:q].split('-').map{|x|x.rjust(2, '0')}.sort.join('-')
       @results = LottoResult.where('sorted_numbers LIKE ?', "%#{token}%").order(draw_date: :desc).limit(20);
       render action: 'number_search_results', layout: false
     end
