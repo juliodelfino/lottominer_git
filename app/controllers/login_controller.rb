@@ -71,6 +71,9 @@ class LoginController < ApplicationController
       @db_user = FbUser.find_by(fb_id: @fb_user["id"])
       if (@db_user)
         session[:fb_user_id] = @fb_user["id"]
+        @db_user.photo = @fb_user["photo_large"]
+        @db_user.fb_info = @fb_user.inspect
+        @db_user.save
         redirect_to dashboard_path
       else
         @db_user = FbUser.new(
