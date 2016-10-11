@@ -3,11 +3,6 @@ require 'sendgrid-ruby'
 class TaskController < ApplicationController
   skip_before_filter :authenticate 
   
-  def get_stock_info
-    
-    render text: PseUtil.get_stock_info(params[:code])
-  end
-  
   # Fetches daily results from PCSO website. Performs hourly check
   # to handle cases when PCSO has not posted the latest results yet,
   # or when PCSO website is down temporarily.

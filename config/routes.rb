@@ -13,7 +13,6 @@ Rails.application.routes.draw do
   get 'admin/ajax_get_results'
   get 'admin/ajax_delete_row'
 
-  get 'task/get_stock_info'
   get 'task/notify_user_daily'
   get 'task/get_daily_results'
   get 'task/get_daily_results_from_pcso'
