@@ -57,7 +57,7 @@ class LottoResultUtil
      row = LottoResult.new(
        game:     cells[0].sub(/.*>(.*)<.*/, '\1'), 
        numbers:       cells[1].sub(/.*>(.*)<.*/, '\1'), 
-       draw_date:     Date.strptime(cells[2].sub(/.*>(.*)<.*/, '\1'), "%m/%d/%Y"), 
+       draw_date:     Date.strptime(cells[2].sub(/.*>(.*)<.*/, '\1'), "%d/%m/%Y"), 
        jackpot_prize: cells[3].sub(/.*>(.*)<.*/, '\1').gsub(',','').to_i, 
        winners:       cells[4].sub(/.*>(.*)<.*/, '\1').to_i)
      
