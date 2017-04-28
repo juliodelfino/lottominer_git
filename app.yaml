@@ -15,5 +15,5 @@
 # [START app_yaml]
 runtime: ruby
 env: flex
-entrypoint: bundle exec ruby rails
+entrypoint: bundle exec ruby bin/rails
 # [END app_yaml]
