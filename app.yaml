@@ -15,5 +15,5 @@
 # [START app_yaml]
 runtime: ruby
 env: flex
-entrypoint: bundle exec ruby bin/rails s --port 80
+entrypoint: bundle exec rackup --port 80
 # [END app_yaml]
