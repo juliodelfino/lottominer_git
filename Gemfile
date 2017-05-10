@@ -31,7 +31,8 @@ gem 'mail'
 gem 'sendgrid-ruby'
 gem 'chartkick'
 
-#gem 'omniauth-facebook'
+gem 'omniauth-facebook'
+gem 'devise'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

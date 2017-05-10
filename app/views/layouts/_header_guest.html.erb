@@ -1,42 +1,27 @@
 <nav class="navbar navbar-fixed-top navbar-inverse">
-      <div class="container">
+    <div class="container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/">
-          	<%= image_tag 'images/OneBall.png', width: 24 %>
-          	<%= Lottominer::Application::PROJECT_NAME %>
-          </a>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/"> <%= image_tag 'images/OneBall.png', width: 24 %>
+            <%= Lottominer::Application::PROJECT_NAME %> </a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li class="<%= "active" if params[:action] == "about" %>"><a href="/about">About</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            	<%  @user = controller.current_user
-            		if @user.present? %> 
-            	<li>
-        			<a href="<%= @user["fb_id"] %>">
-            		<%= image_tag @user["photo"], width: '24' %>
-            		<%= @user["name"] %>
-            		</a>
-            	</li>
-	            	<li>
-	            		<a id="btn-logout">Logout</a>
-	            	</li>
-            	<% else %>
-	            	<li>
-	            		<a href="/login/facebook">
-            				<%= image_tag 'https://z-1-static.xx.fbcdn.net/rsrc.php/v2/yo/r/jVG1f1GslU7.png', width: 24 %>
-							Log In
-						</a>
-					</li>
-            	<% end %>
-          </ul>
+            <ul class="nav navbar-nav">
+                <li class="<%= "active" if params[:action] == "about" %>">
+                    <a href="/about">About</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="<%= oauth_user_facebook_omniauth_authorize_path %>"> <%= image_tag 'https://z-1-static.xx.fbcdn.net/rsrc.php/v2/yo/r/jVG1f1GslU7.png', width: 24 %>
+                    Log In </a>
+                </li>
+            </ul>
         </div><!-- /.nav-collapse -->
-      </div><!-- /.container -->
-    </nav><!-- /.navbar -->
+    </div><!-- /.container -->
+</nav><!-- /.navbar -->

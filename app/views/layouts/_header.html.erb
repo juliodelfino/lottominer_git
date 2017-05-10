@@ -45,12 +45,12 @@
         	<li>
     		<% @user = controller.current_user %>
 			<a href="/settings">
-    		<%= image_tag @user["photo"], width: '24' %>
-    		<%= @user["name"] %>
+    		<%= image_tag current_oauth_user.image, width: '24' %>
+    		<%= current_oauth_user.name %>
     		</a>
     	</li>
     	<li>
-    		<a id="btn-logout">Logout</a>
+    	    <%= link_to "Logout", destroy_oauth_user_session_path, method: :delete %>
     	</li>
 
       </ul>

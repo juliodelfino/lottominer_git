@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
+  devise_for :oauth_users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  
   root 'welcome#index'
   get 'about' => 'welcome#about'
   get 'welcome/ajax_results'

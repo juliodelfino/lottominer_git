@@ -1,7 +1,7 @@
 <h1>Hello there!</h1>
 <p>You are just one step away to completing your registration! To proceed, please enter or verify the following information.</p>
 <div class="row">
-	    <div class="user-photo col-xs-10 col-lg-1"><%= image_tag @db_user.photo %></td>
+	    <div class="user-photo col-xs-10 col-lg-1"><%= image_tag @db_user.image %></td>
 	    </div>
 	    <div class="col-xs-10 col-lg-5">
 	    	
@@ -16,9 +16,9 @@
 			    <%= f.text_field :name, value: @db_user.name, class: 'form-control', placeholder: 'Enter your name' %>
 			  </p>
 			  	  
-			  <%= f.hidden_field :fb_id, value: @db_user.fb_id %>
-			  <%= f.hidden_field :photo, value: @db_user.photo %>			  
-			  <%= f.hidden_field :fb_info, value: @db_user.fb_info %>
+			  <%= f.hidden_field :fb_id, value: @db_user.uid %>
+			  <%= f.hidden_field :photo, value: @db_user.image + "?type=large" %>			  
+			  <%= f.hidden_field :fb_info, value: 'none' %>
 			  <%= check_box_tag :notify_daily_results, true, true %>
 			  <%= label_tag(:notify_daily_results, "Subscribe to the Daily Results email") %><br/>
 			  <%= check_box_tag :notify_if_winner, true, true %>

@@ -19,11 +19,6 @@
 //= require turbolinks
 //= require json2
 
-$(function() {
-	$('#btn-logout').click(function(){
-		window.location = "/logout";
-	});
-});
 
 //utility functions
 

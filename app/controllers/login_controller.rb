@@ -35,6 +35,7 @@ class LoginController < ApplicationController
     end
   end
   
+=begin
   def facebook
     
     callback_url = URI.escape(request.base_url + "/login/fb_redirect", Regexp.new("[^#{URI::PATTERN::UNRESERVED}]")) 
@@ -91,7 +92,8 @@ class LoginController < ApplicationController
       render text: ex.message
     end
   end
-  
+=end
+
   def saveuser
     fbuser = FbUser.new(fbuser_params)
     if (fbuser.save)
@@ -121,6 +123,7 @@ class LoginController < ApplicationController
   
   def logout
     @_current_user = session[:fb_user_id] = nil
+    destroy_oauth_user_session_path
     redirect_to root_path
   end
 
@@ -156,7 +159,8 @@ class LoginController < ApplicationController
   def login_params
     params.require(:login).permit(:email, :password)
   end
-  
+
+=begin  
   def get_current_fb_user
 
     access_token = session[:fb_access_token]
@@ -178,7 +182,8 @@ class LoginController < ApplicationController
   def fbuser_params
     params.require(:user).permit(:fb_id, :name, :email, :photo, :fb_info)
   end
-  
+=end
+
   def create_user_settings(fbuser)
     
     setting = UserSetting.new(
