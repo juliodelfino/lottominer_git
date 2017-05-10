@@ -11,7 +11,7 @@ Rails.application.config.assets.version = '1.0'
 # Rails.application.config.assets.precompile += %w( search.js )
 Rails.application.config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
 
-=begin
+
 Rails.application.config.assets.precompile << Proc.new do |path|
   if path =~ /\.(css|js)\z/
     full_path = Rails.application.assets.resolve(path).to_s
@@ -27,4 +27,3 @@ Rails.application.config.assets.precompile << Proc.new do |path|
     false
   end
 end
-=end
