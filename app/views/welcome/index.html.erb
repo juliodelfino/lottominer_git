@@ -1,41 +1,46 @@
+<h1 class="page-header">
+<ul class="nav nav-tabs">
+    <li class="active">
+        <a data-toggle="tab" href="#draw-results-tab">Draw Results</a>
+    </li>
+    <li>
+        <a data-toggle="tab" href="#games-tab">Games</a>
+    </li>
+</ul></h1>
 
-      <h1 class="page-header">Draw Results</h1>
-      <div>
-		  <a id="left-arrow"><%= image_tag 'images/prev-icon.png', width: 16 %>PREVIOUS</a>&nbsp;&nbsp;
-		  <input type="hidden" id="datepicker" />
-		  <a id="cal-btn"><%= image_tag 'images/calendar.gif', width: 16 %> CALENDAR</a>&nbsp;&nbsp;
-		  <a id="right-arrow"><%= image_tag 'images/next-icon.png', width: 16 %>NEXT</a>&nbsp;&nbsp;
-		  <%= image_tag 'images/load-icon.gif', id: 'load-icon', width: 16 %>
-		  <div id="dynamic-content">
-		  	<%= render '/welcome/results' %>
-          
-	      </div>
-      </div>
-      
-      	  <hr class="featurette-divider">
-      	  
-	      <div class="row featurette">
-	      	</div>
-	      	
-	      	
-      	  <hr class="featurette-divider">
-	
-	      <div class="row featurette">
-	        <%= render '/welcome/games_today' %>
-	      </div>
-      
-      <% if (!controller.current_user.present?) %>
-	      <hr class="featurette-divider">
-	
-	      <div class="row featurette">
-	        <div class="col-md-7">
-	          <h2 class="featurette-heading">Try your luck. <span class="text-muted">Sign in now.</span></h2>
-	          	<p class="lead">Discover a lot of cool ways to analyze the numbers.</p>
-	  		    <a href="/login/facebook" id="btn-login" class="btn btn-primary">
-					<%= image_tag 'https://z-1-static.xx.fbcdn.net/rsrc.php/v2/yo/r/jVG1f1GslU7.png', width: 32 %>
-					Sign in thru Facebook
-				</a>       
-	        </div>
-	      </div>
-      <% end %>
+<div class="tab-content">
+    <div id="draw-results-tab" class="tab-pane fade in active">
+    <a id="left-arrow"><%= image_tag 'images/prev-icon.png', width: 16 %>PREVIOUS</a>&nbsp;&nbsp;
+    <input type="hidden" id="datepicker" />
+    <a id="cal-btn"><%= image_tag 'images/calendar.gif', width: 16 %> CALENDAR</a>&nbsp;&nbsp; <a id="right-arrow"><%= image_tag 'images/next-icon.png', width: 16 %>NEXT</a>&nbsp;&nbsp;
+    <%= image_tag 'images/load-icon.gif', id: 'load-icon', width: 16 %>
+    <div id="dynamic-content">
+        <%= render '/welcome/results' %>
+
+    </div>
+    </div>
+    <div id="games-tab" class="tab-pane fade in">
+<%= render '/welcome/games_today' %>
+    </div>
+</div>
+
+
+<hr class="featurette-divider">
+
+<div class="row featurette"></div>
+
+<% if (!controller.current_user.present?) %>
+<hr class="featurette-divider">
+
+<div class="row featurette">
+    <div class="col-md-7">
+        <h2 class="featurette-heading">Try your luck. <span class="text-muted">Sign in now.</span></h2>
+        <p class="lead">
+            Discover a lot of cool ways to analyze the numbers.
+        </p>
+        <a href="<%= oauth_user_facebook_omniauth_authorize_path %>" id="btn-login" class="btn btn-primary"> <%= image_tag 'https://z-1-static.xx.fbcdn.net/rsrc.php/v2/yo/r/jVG1f1GslU7.png', width: 32 %>
+        Sign in thru Facebook </a>
+    </div>
+</div>
+<% end %>
 
