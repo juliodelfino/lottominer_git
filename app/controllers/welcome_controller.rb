@@ -11,10 +11,10 @@ class WelcomeController < ApplicationController
   end
   
   def unsubscribe
-    user = FbUser.find_by(fb_id: params[:id])
-    if (user.present?)
-      user.user_setting.notify_daily_results = false
-      user.user_setting.save
+    sub = Subscription.where(id: params[:id])
+    if (sub.present?)
+      sub.notify_daily_results = false
+      sub.save
       render '/mail/unsubscribed'
     else
       raise ActionController::RoutingError.new('Not Found')
@@ -40,6 +40,14 @@ class WelcomeController < ApplicationController
   def ajax_games
     @week_day = params[:weekday].nil? ? DateUtil.now.wday : params[:weekday].to_i
     render action: '_games', layout: false
+  end
+  
+  def subscribe
+    @email = params[:email]
+    subs = Subscription.where(:email => @email).first
+    if subs.nil?
+      Subscription.new(email: @email).save
+    end
   end
   
   private

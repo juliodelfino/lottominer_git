@@ -41,4 +41,41 @@ $(document).ready(function() {
             $('#game-load-icon').hide();
         });
     });
+    
+    $('#subscribe-form').validate({    
+    rules: {
+        'email': {
+            required: true,
+            email: true
+        }
+    },
+    highlight: function(element) {
+        $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+    },
+    unhighlight: function(element) {
+        $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+    },
+    errorElement: 'span',
+        errorClass: 'help-block',
+        errorPlacement: function(error, element) {
+            if(element.length) {
+                error.insertAfter(element);
+            } else {
+            error.insertAfter(element);
+            }
+        }
+    });
+    
+        $("#subscribe-form").submit(function( event ) {
+        $('.alert').hide();
+     
+        // Stop form from submitting normally
+        event.preventDefault();
+        var currentTarget = event.target;
+        var settingsForm = $(this);
+        if (!settingsForm.valid()) {
+            return false;
+        }
+        currentTarget.submit();
+    });
 });

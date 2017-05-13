@@ -98,6 +98,9 @@ class LoginController < ApplicationController
     fbuser = FbUser.new(fbuser_params)
     if (fbuser.save)
       session[:fb_user_id] = fbuser[:fb_id]
+      if Subscription.where(:email => fbuser.email).nil?
+          Subscription.new(email: fbuser.email).save
+      end
       user_settings = create_user_settings(fbuser)
       send_email(fbuser, user_settings)
       render 'reg_ok'

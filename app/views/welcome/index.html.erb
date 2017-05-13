@@ -20,8 +20,8 @@
     </div>
     <div id="games-tab" class="tab-pane fade in">
         <%= raw Date::DAYNAMES.each_with_index.map { |x,i| \
-            '<a class="game-wday-btn" ' + (DateUtil.now.wday == i ? 'style="font-weight: bold"' : '') \
-            + ' data="' + i.to_s + '">' + x.upcase + '</a>'}.join(' | ') %>
+        '<a class="game-wday-btn" ' + (DateUtil.now.wday == i ? 'style="font-weight: bold"' : '') \
+        + ' data="' + i.to_s + '">' + x.upcase + '</a>'}.join(' | ') %>
         <%= image_tag 'images/load-icon.gif', id: 'game-load-icon', width: 16, :class => 'load-icon' %>
         <div id="games-content">
             <%= render '/welcome/games' %>
@@ -55,10 +55,14 @@
         <p class="lead">
             Receive our daily draw results email.
         </p>
-        <div class="form-group">
-            <input type="email" class="form-control" id="email" placeholder="Enter email">
-        </div>
-        <a href="#" id="btn-login" class="btn btn-primary">Subscribe</a>
+        <form method="POST" action="/subscribe" id="subscribe-form">
+            <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+            <div class="form-group">
+                <input type="email" class="form-control" name="email" id="email" placeholder="Enter email">
+            </div>
+            <button type="submit" id="btn-login" class="btn btn-primary">
+                Subscribe</button>
+        </form>
     </div>
 </div>
 <% end %>

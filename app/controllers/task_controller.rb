@@ -79,12 +79,12 @@ class TaskController < ApplicationController
     @lotto_results = LottoResult.where(draw_date: @draw_date).order("jackpot_prize DESC, game ASC")
     first_result = @lotto_results.find{ |r| r.lotto_game.group_name.start_with?('6D') && r.winners > 0 }
     first_result = @lotto_results[0] if (first_result.nil?)
-    users = FbUser.joins(:user_setting).where(user_settings: { email_verification: 'ok', notify_daily_results: true })
-    users.each do |u|     
-      @user = u
+    subs = Subscription.where(enabled: true, notify_daily_results: true)
+    subs.each do |s|     
+      @subscription = s
       mail_body = render_to_string :template => '/mail/daily_results', layout: 'mailer'
       db_email = Email.new(
-        recipient: u.email,
+        recipient: s.email,
         subject: ('[DR] ' + first_result.game + ': ' + first_result.numbers),
         body: mail_body,
         plan_send_date: DateTime.now,
@@ -92,7 +92,7 @@ class TaskController < ApplicationController
       db_email.save
     end
     
-    return users.map{ |u| u.email }
+    return subs.map{ |s| s.email }
   end
   
   def update_winning_user_numbers(date)

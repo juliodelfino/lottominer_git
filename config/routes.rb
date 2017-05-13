@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get 'about' => 'welcome#about'
   get 'welcome/ajax_results'
   get 'welcome/ajax_games'
+  post 'subscribe' => 'welcome#subscribe'
   
   get 'admin' => "admin#index"
   get 'admin/get_db_table'
