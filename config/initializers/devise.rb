@@ -272,5 +272,5 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
   config.omniauth :facebook, Lottominer::Application::FB_APP_ID, Lottominer::Application::FB_APP_SECRET, callback_url: "http://lotto.jdelfino.com/oauth_users/auth/facebook/callback"
-
+  config.secret_key = '6bf6fff503d5d5a72403967427f1fed5be69e855081a5e41f150cf5c258aa428a98ff4a74d02c774340b49d0d309e36e65d23425669ea8477d65e677ad18df4b'
 end
