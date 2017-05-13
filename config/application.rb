@@ -26,7 +26,6 @@ module Lottominer
     config.eager_load_paths << "#{Rails.root}/lib/pcso"
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
-    config.assets.version = '1.1'
     
     PROJECT_NAME = "Lotto Analytics"
     FB_APP_ID = ENV['FB_APP_ID']
