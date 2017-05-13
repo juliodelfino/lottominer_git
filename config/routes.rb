@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   root 'welcome#index'
   get 'about' => 'welcome#about'
   get 'welcome/ajax_results'
+  get 'welcome/ajax_games'
   
   get 'admin' => "admin#index"
   get 'admin/get_db_table'

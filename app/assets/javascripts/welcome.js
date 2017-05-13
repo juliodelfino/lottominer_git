@@ -27,9 +27,18 @@ $(document).ready(function() {
     });
     
     function queryResultsByDate(selectedDate) {
-    	$('#load-icon').show();
-      	$("#dynamic-content").load('/welcome/ajax_results?date=' + selectedDate, function() {
-      		$('#load-icon').hide();
+    	$('#res-load-icon').show();
+      	$("#draw-results-content").load('/welcome/ajax_results?date=' + selectedDate, function() {
+      		$('#res-load-icon').hide();
       	});
     }
+    
+    $('.game-wday-btn').click(function(){
+        
+        var weekDay = $(this).attr('data');
+        $('#game-load-icon').show();
+        $("#games-content").load('/welcome/ajax_games?weekday=' + weekDay, function() {
+            $('#game-load-icon').hide();
+        });
+    });
 });

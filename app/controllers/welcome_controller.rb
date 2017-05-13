@@ -1,8 +1,9 @@
 class WelcomeController < ApplicationController
   skip_before_filter :authenticate 
     
-  def index   
+  def index  
     compute_results
+    @week_day = DateUtil.now.wday
   end
   
   def ads
@@ -34,6 +35,11 @@ class WelcomeController < ApplicationController
   def ajax_results
     compute_results
     render action: '_results', layout: false
+  end
+  
+  def ajax_games
+    @week_day = params[:weekday].nil? ? DateUtil.now.wday : params[:weekday].to_i
+    render action: '_games', layout: false
   end
   
   private

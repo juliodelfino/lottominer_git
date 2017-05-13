@@ -1,4 +1,4 @@
-<h1 class="page-header">
+<h1 class="page-header" style="border-bottom: 0">
 <ul class="nav nav-tabs">
     <li class="active">
         <a data-toggle="tab" href="#draw-results-tab">Draw Results</a>
@@ -10,20 +10,24 @@
 
 <div class="tab-content">
     <div id="draw-results-tab" class="tab-pane fade in active">
-    <a id="left-arrow"><%= image_tag 'images/prev-icon.png', width: 16 %>PREVIOUS</a>&nbsp;&nbsp;
-    <input type="hidden" id="datepicker" />
-    <a id="cal-btn"><%= image_tag 'images/calendar.gif', width: 16 %> CALENDAR</a>&nbsp;&nbsp; <a id="right-arrow"><%= image_tag 'images/next-icon.png', width: 16 %>NEXT</a>&nbsp;&nbsp;
-    <%= image_tag 'images/load-icon.gif', id: 'load-icon', width: 16 %>
-    <div id="dynamic-content">
-        <%= render '/welcome/results' %>
-
-    </div>
+        <a id="left-arrow"><%= image_tag 'images/prev-icon.png', width: 16 %>PREVIOUS</a>&nbsp;&nbsp;
+        <input type="hidden" id="datepicker" />
+        <a id="cal-btn"><%= image_tag 'images/calendar.gif', width: 16 %> CALENDAR</a>&nbsp;&nbsp; <a id="right-arrow"><%= image_tag 'images/next-icon.png', width: 16 %>NEXT</a>&nbsp;&nbsp;
+        <%= image_tag 'images/load-icon.gif', id: 'res-load-icon', width: 16, :class => 'load-icon' %>
+        <div id="draw-results-content">
+            <%= render '/welcome/results' %>
+        </div>
     </div>
     <div id="games-tab" class="tab-pane fade in">
-<%= render '/welcome/games_today' %>
+        <%= raw Date::DAYNAMES.each_with_index.map { |x,i| \
+            '<a class="game-wday-btn" ' + (DateUtil.now.wday == i ? 'style="font-weight: bold"' : '') \
+            + ' data="' + i.to_s + '">' + x.upcase + '</a>'}.join(' | ') %>
+        <%= image_tag 'images/load-icon.gif', id: 'game-load-icon', width: 16, :class => 'load-icon' %>
+        <div id="games-content">
+            <%= render '/welcome/games' %>
+        </div>
     </div>
 </div>
-
 
 <hr class="featurette-divider">
 
@@ -40,6 +44,21 @@
         </p>
         <a href="<%= oauth_user_facebook_omniauth_authorize_path %>" id="btn-login" class="btn btn-primary"> <%= image_tag 'https://z-1-static.xx.fbcdn.net/rsrc.php/v2/yo/r/jVG1f1GslU7.png', width: 32 %>
         Sign in thru Facebook </a>
+    </div>
+</div>
+
+<hr class="featurette-divider">
+
+<div class="row featurette">
+    <div class="col-md-7">
+        <h2 class="featurette-heading">Get notified. <span class="text-muted">Subscribe.</span></h2>
+        <p class="lead">
+            Receive our daily draw results email.
+        </p>
+        <div class="form-group">
+            <input type="email" class="form-control" id="email" placeholder="Enter email">
+        </div>
+        <a href="#" id="btn-login" class="btn btn-primary">Subscribe</a>
     </div>
 </div>
 <% end %>

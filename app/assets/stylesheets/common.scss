@@ -182,6 +182,11 @@ body {
 
 .result-odd {
     background-color: #eee;
+    border: solid 1px #eee;
+}
+
+.result-even {
+    border: solid 1px #eee;
 }
 
 //src: http://kaliko.com/blog/circled-number-with-pure-css/
@@ -209,7 +214,7 @@ span.ball {
   display: table;
 }
 
-#load-icon, #notif {
+#load-icon, #notif, .load-icon {
   display: none;
 }
 

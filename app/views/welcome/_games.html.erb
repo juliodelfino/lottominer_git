@@ -1,0 +1,22 @@
+<div class="col-md-12">
+    
+   <% if @week_day == DateUtil.now.wday %> 
+      <h2 class="featurette-heading">Today, <span class="text-muted"><%= DateUtil.now.strftime("%B %d, %Y") %></span></h2>
+   <% else %>
+     <h2 class="featurette-heading"><%= Date::DAYNAMES[@week_day] %> <span class="text-muted">Games</span></h2>
+   <% end %>
+	<% gamesToday = LottoGame.where("(draw_days like ? or draw_days=7) and active", "%#{@week_day}%").order('current_jackpot_prize DESC')
+	%>
+	<% gamesToday.each do |game| %>
+	
+		<div class="col-xs-6 col-sm-4 col-lg-4 <%= cycle('result-even', 'result-odd') -%>">             
+			<h4><%= game.name %></h4>
+			<p><%= number_to_currency(game.current_jackpot_prize, unit: '₱') %></p>
+        </div>
+	<% end %>
+
+	
+	<div class="footnote col-xs-10">
+	Note: Jackpot prizes for 6D and 4D games may not be accurate as some of them are based from the previous draw.
+	</div>
+</div>
