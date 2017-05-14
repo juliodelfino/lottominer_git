@@ -11,7 +11,7 @@ class WelcomeController < ApplicationController
   end
   
   def unsubscribe
-    sub = Subscription.where(id: params[:id])
+    sub = Subscription.where(:id => params[:id])
     if (sub.present?)
       sub.notify_daily_results = false
       sub.save
