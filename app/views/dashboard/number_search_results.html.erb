@@ -13,7 +13,7 @@
 				data-toggle="dropdown" data-numbers="<%= result.numbers %>" data-game-id="<%= result.lotto_game_id %>"></a>
 		</h4>
 		<span class="text-muted"><%= result.game %><br/>
-			<%= result.draw_date %>
+			<%= result.draw_date.strftime("%b %d, %Y") %>
 		</span>
 	</div>
 	<% end %>

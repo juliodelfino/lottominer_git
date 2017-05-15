@@ -28,11 +28,11 @@
 			<%= f.text_field :name, value: @db_user.name, class: 'form-control', placeholder: 'Enter your name' %>
 		</div>
 
-		<%= check_box_tag :notify_daily_results, true, @db_user.user_setting.notify_daily_results %>
+		<%= check_box_tag :notify_daily_results, true, @subscription.notify_daily_results %>
 		<%= label_tag(:notify_daily_results, "Notify me of the daily results") %>
 		<br/>
-		<%= check_box_tag :notify_if_winner, true, true %>
-		<%= label_tag(:notify_if_winner, "Notify me if I won") %>
+		<%= check_box_tag :notify_personal_num_info, true, @subscription.notify_personal_num_info %>
+		<%= label_tag(:notify_personal_num_info, "Notify me if my selected numbers have won") %>
 		<p>
 			<%= submit_tag "Save", id: 'save-btn', class: "btn btn-primary" %>
 		  	<%= image_tag 'images/load-icon.gif', id: 'load-icon', width: 16 %>
