@@ -1,16 +1,16 @@
 <div class="row">
-	<h2 class="featurette-heading"><span>Draw Date:</span> <span><%= @draw_date.strftime("%A, %B %d, %Y") %></span></h2>
+	<p><h3>Here are the results for the PCSO lotto draw on <b><%= @draw_date.strftime("%B %d, %Y (%A)") %>.</b></h3></p>
 	<% @lotto_results.each do |result| %>
 	<div class="result-box <%= cycle('result-odd', 'result-even') -%>">
-		<h4><%= result.game %>
+		<h2><%= result.game %>
 		<br/>
-		<%= ball_view result.numbers %></h4>
-		<div>
+		<%= ball_view result.numbers %></h2>
+		<h3>
 			<%= number_to_currency(result.jackpot_prize, unit: '₱') %>
 			<% if result.winners > 0 %>
 			<span class="winners-bg badge"><%= pluralize(result.winners, 'winner')  %></span>
 			<% end %>
-		</div>
+		</h3>
 	</div>
 	<% end %>
 </div>

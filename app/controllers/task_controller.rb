@@ -85,7 +85,7 @@ class TaskController < ApplicationController
       mail_body = render_to_string :template => '/mail/daily_results', layout: 'mailer'
       db_email = Email.new(
         recipient: s.email,
-        subject: ('[DR] ' + first_result.game + ': ' + first_result.numbers),
+        subject: ('[Lotto Results] ' + first_result.game + ': ' + first_result.numbers),
         body: mail_body,
         plan_send_date: DateTime.now,
         status: :QUEUED)

@@ -68,11 +68,12 @@ a {
 }
 
 .result-box {
-  width: 50%;
+
   box-sizing: border-box;
   float: left;
-  padding: 3px 20px;
-  
+  width: 370px;
+  padding: 1px 5px;
+  margin: 5px;
   -webkit-border-radius: 6px 0 6px 6px;
   -moz-border-radius: 6px 0 6px 6px;
   border-radius: 6px 0 6px 6px;
