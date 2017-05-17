@@ -26,6 +26,7 @@ class WelcomeController < ApplicationController
   
   def test_email
     @user = current_user
+    @subscription = Subscription.where(email: @user.email).first
     @draw_date = Date.yesterday
     @lotto_results = LottoResult.where(draw_date: @draw_date).order("jackpot_prize DESC, game ASC")
     txt = render_to_string :template => '/mail/daily_results', layout: 'mailer'

@@ -28,8 +28,10 @@ class TaskController < ApplicationController
     if (@daily_results.size > 0)
       Thread.new do
         update_current_jackpot_prizes
-        update_winning_user_numbers(@daily_results[0].draw_date)
-        notify_user_by_date(@daily_results[0].draw_date)
+        tmp_date = @daily_results[0].draw_date
+        update_winning_user_numbers(tmp_date)
+        notify_user_by_date(tmp_date)
+        notify_winners(tmp_date)
       end
     end
     
@@ -80,16 +82,18 @@ class TaskController < ApplicationController
     first_result = @lotto_results.find{ |r| r.lotto_game.group_name.start_with?('6D') && r.winners > 0 }
     first_result = @lotto_results[0] if (first_result.nil?)
     subs = Subscription.where(enabled: true, notify_daily_results: true)
-    subs.each do |s|     
-      @subscription = s
-      mail_body = render_to_string :template => '/mail/daily_results', layout: 'mailer'
-      db_email = Email.new(
-        recipient: s.email,
-        subject: ('[Lotto Results] ' + first_result.game + ': ' + first_result.numbers),
-        body: mail_body,
-        plan_send_date: DateTime.now,
-        status: :QUEUED)
-      db_email.save
+    Email.transaction do
+      subs.each do |s|     
+        @subscription = s
+        mail_body = render_to_string :template => '/mail/daily_results', layout: 'mailer'
+        db_email = Email.new(
+          recipient: s.email,
+          subject: ('[Lotto Results] ' + first_result.game + ': ' + first_result.numbers),
+          body: mail_body,
+          plan_send_date: DateTime.now,
+          status: :QUEUED)
+        db_email.save
+      end
     end
     
     return subs.map{ |s| s.email }
@@ -99,7 +103,6 @@ class TaskController < ApplicationController
     UserNumber.transaction do
       UserNumber.update_all won: false, status: ''
       LottoResult.joins(:lotto_game).where(draw_date: date).each do |result|
-        puts 'results here: ' + result.numbers
         if result.lotto_game.group_name.starts_with?('6D')
           match_sql = sprintf('lotto_game_id = %s AND (%s)', result.lotto_game_id, sql_for_match(result.numbers, 3))
           UserNumber.where(match_sql).update_all won: true, status: 'MATCH 3'
@@ -147,6 +150,31 @@ class TaskController < ApplicationController
         g.save
       end
     end
+  end
+  
+  def notify_winners(date)
+    
+    winners = FbUser.joins(:user_numbers).where(user_numbers: {won: true}).distinct
+    Email.transaction do
+      winners.each do |u|
+        @subscription = Subscription.where(email: u.email).first
+        if !@subscription.notify_personal_num_info
+          next
+        end
+        @winning_numbers = u.user_numbers.select {|i| i.won}
+        first_wnum = @winning_numbers.first
+        @draw_date = date
+        mail_body = render_to_string :template => '/mail/winner_notif', layout: 'mailer'
+        db_email = Email.new(
+          recipient: @subscription.email,
+          subject: ('Congrats! Your number ' + first_wnum.numbers + ' has won!'),
+          body: mail_body,
+          plan_send_date: DateTime.now,
+          status: :QUEUED)
+        db_email.save
+      end
+    end
+    render text: 'ok'
   end
   
 end

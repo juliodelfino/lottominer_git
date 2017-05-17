@@ -1,0 +1,22 @@
+<div class="row">
+    <h3>Congratulations! One (or more) of your numbers have won for the draw <b><%= @draw_date.strftime("%B %d, %Y (%A)") %></b>.</h3>
+    <% @winning_numbers.each do |usernum| %>
+    <div class="result-box <%= cycle('result-odd', 'result-even') -%>">
+        <h2><%= usernum.lotto_game.name %>
+        <br/>
+        <%= ball_view usernum.numbers %><span class="winners-bg badge"><%= usernum.status %></span></h2>
+        <h3>
+            <span class="text-muted">Prize won:</span> <%= number_to_currency(usernum.lotto_game.current_jackpot_prize, unit: '₱') %>
+        </h3>
+    </div>
+    <% end %>
+</div>
+
+<div class="row">
+    <p class="footnote">
+        You have received this email because you have subscribed to Winner Notification emails from <%= Lottominer::Application::PROJECT_NAME %>.
+        <br/>
+        <a href="<%= request.base_url + '/mail/unsubscribe?id=' + @subscription.id.to_s %>">Click here if you want to unsubscribe.</a>
+    </p>
+</div>
+
