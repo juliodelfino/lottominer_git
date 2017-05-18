@@ -16,7 +16,6 @@
 //= require jquery-ui
 //= require jquery.dataTables
 //= require jquery.validate
-//= require turbolinks
 //= require json2
 
 
