@@ -181,11 +181,10 @@ class LoginController < ApplicationController
     
     return fb_user
   end
-  
+=end  
   def fbuser_params
     params.require(:user).permit(:fb_id, :name, :email, :photo, :fb_info)
   end
-=end
 
   def create_user_settings(fbuser)
     
