@@ -1,7 +1,7 @@
   <div class="row text-center">
-      <h2 class="featurette-heading">Hello, <%= controller.current_user.name %>!</h2>
+      <h2 class="featurette-heading">Hello, <%= @fbuser.name %>!</h2>
       <p class="lead">Thank you for your registration.<br/>
-      	We have sent an email to <span style="text-decoration: underline"><%= controller.current_user.email %></span> for verification.<br />
+      	We have sent an email to <span style="text-decoration: underline"><%= @fbuser.email %></span> for verification.<br />
         You will be able to receive emails such as Daily Results once your email is verified.
       </p>
       <a href="/dashboard" class="btn btn-primary">Done</a>
