@@ -51,6 +51,8 @@ Rails.application.routes.draw do
   
   get '/ads' => 'welcome#ads'
   
+  get '/search' => 'search#index'
+  
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
