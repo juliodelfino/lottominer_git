@@ -5,7 +5,7 @@ class LottoResultUtil
   
   def self.get_daily_results_by_range(str_from_date, str_to_date = str_from_date)
     
-    url = URI.parse("http://www.pcso.gov.ph/lotto-search/lotto-search.aspx")
+    url = URI.parse("http://www.pcso.gov.ph/search-lotto-results/lotto-search.aspx")
     http = Net::HTTP.new(url.host, url.port)
     http = http.start
     request = Net::HTTP::Get.new(url)
@@ -57,7 +57,7 @@ class LottoResultUtil
      row = LottoResult.new(
        game:     cells[0].sub(/.*>(.*)<.*/, '\1'), 
        numbers:       cells[1].sub(/.*>(.*)<.*/, '\1'), 
-       draw_date:     Date.strptime(cells[2].sub(/.*>(.*)<.*/, '\1'), "%d/%m/%Y"), 
+       draw_date:     Date.strptime(cells[2].sub(/.*>(.*)<.*/, '\1'), "%m/%d/%Y"), 
        jackpot_prize: cells[3].sub(/.*>(.*)<.*/, '\1').gsub(',','').to_i, 
        winners:       cells[4].sub(/.*>(.*)<.*/, '\1').to_i)
      
