@@ -22,6 +22,7 @@ class TaskController < ApplicationController
     if (0 == result_count)
       LottoResult.transaction do
         @daily_results = LottoResultUtil.get_daily_results_by_range(selectedDate.strftime("%Y%m%d"))
+        @daily_results = try_save_lotto_results(@daily_results)
       end
     end
     
@@ -44,7 +45,9 @@ class TaskController < ApplicationController
   def get_daily_results
     
     puts "Method invoked by: " + (params[:callid].nil? ? "nil" : params[:callid])
-    render json: LottoResultUtil.get_daily_results_by_range(params[:from], params[:to])
+    results = LottoResultUtil.get_daily_results_by_range(params[:from], params[:to])
+    
+    render json: try_save_lotto_results(results)
   end
   
   # Sends the mails that are queued in 'emails' table in the database.
@@ -177,4 +180,20 @@ class TaskController < ApplicationController
     render text: 'ok'
   end
   
+  private 
+  
+  def try_save_lotto_results(results)
+    LottoResult.transaction do
+      results.each do |row|
+         if (LottoResult.find_by(game: row.game, draw_date: row.draw_date).nil?)
+           nums = row.numbers.split('-').map{ |x| x.rjust(2, '0') }.sort
+           row.sorted_numbers = '-' + nums.join('-') + '-'
+           game = LottoGame.where(name: row.game)[0]
+           row.lotto_game_id = game.id
+           row.save
+         end
+       end
+     end
+     return results.select{ |row| row.persisted? }
+  end
 end
