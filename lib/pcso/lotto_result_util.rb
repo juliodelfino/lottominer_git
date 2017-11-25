@@ -5,8 +5,9 @@ class LottoResultUtil
   
   def self.get_daily_results_by_range(str_from_date, str_to_date = str_from_date)
     
-    url = URI.parse("http://www.pcso.gov.ph/search-lotto-results/lotto-search.aspx")
+    url = URI.parse("https://www.pcso.gov.ph/SearchLottoResult.aspx")
     http = Net::HTTP.new(url.host, url.port)
+    http.use_ssl = true
     http = http.start
     request = Net::HTTP::Get.new(url)
     response = http.request(request)
@@ -14,21 +15,23 @@ class LottoResultUtil
 
     from_date = str_from_date.nil? ? Date.today : DateTime.parse(str_from_date)
     to_date = str_to_date.nil? ? Date.today : DateTime.parse(str_to_date)
-    
-    respText = response.read_body
+
+    respText = response.read_body   
+    prefix = 'ctl00$ctl00$cphContainer$cpContent$'
     
     formData = {'__VIEWSTATE' => extract_form_value('__VIEWSTATE', respText),
         '__VIEWSTATEGENERATOR' => extract_form_value('__VIEWSTATEGENERATOR', respText),
         '__EVENTVALIDATION' => extract_form_value('__EVENTVALIDATION', respText),
-        'ddlStartMonth' => from_date.strftime("%B"),
-        'ddlStartDate' => from_date.strftime("%-d"),  #%-d removes leading zeroes; %d outputs "09" while %-d is "9"
-        'ddlStartYear' => from_date.strftime("%Y"),
-        'ddlEndMonth' => to_date.strftime("%B"),
-        'ddlEndDay' => to_date.strftime("%-d"),
-        'ddlEndYear' => to_date.strftime("%Y"),
-        'ddlSelectGame' => '0',
-        'btnSearch' => 'Search Lotto'    
+        prefix + 'ddlStartMonth' => from_date.strftime("%B"),
+        prefix + 'ddlStartDate' => from_date.strftime("%-d"),  #%-d removes leading zeroes; %d outputs "09" while %-d is "9"
+        prefix + 'ddlStartYear' => from_date.strftime("%Y"),
+        prefix + 'ddlEndMonth' => to_date.strftime("%B"),
+        prefix + 'ddlEndDay' => to_date.strftime("%-d"),
+        prefix + 'ddlEndYear' => to_date.strftime("%Y"),
+        prefix + 'ddlSelectGame' => '0',
+        prefix + 'btnSearch' => 'Search Lotto'    
       }
+    #print formData.inspect
       
     req = Net::HTTP::Post.new(url.request_uri)
     req.set_form_data(formData)
