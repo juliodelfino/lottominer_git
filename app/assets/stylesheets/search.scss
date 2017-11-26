@@ -79,3 +79,30 @@
         position: absolute;
         clip: rect(0,0,0,0);
     }
+    
+.caret.caret-reversed {
+    border-top-width: 0;
+    border-bottom: 4px solid #fff;
+}
+
+    .columns{
+        -moz-column-count:4; /* Firefox */
+        -webkit-column-count:4; /* Safari and Chrome */
+        column-count:4;
+    }
+    
+@media screen and (max-width: 991px){
+    .columns{
+        -moz-column-count:2; /* Firefox */
+        -webkit-column-count:2; /* Safari and Chrome */
+        column-count:2;
+    }
+    
+    #filter-collapse button {
+      width: 100%;
+    }
+    
+    #filter-collapse .filter-option {
+      padding-bottom: 5px
+    }
+}

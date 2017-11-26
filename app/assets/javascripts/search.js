@@ -1,6 +1,7 @@
 
 $(document).ready(function() {
   
+    var searchNums = '';
     //Number Search START   
     $('#add-result-to-user-num-btn').click(function(){
         var num_id = selected_num_link.attr('id').replace('result-', '');
@@ -14,13 +15,19 @@ $(document).ready(function() {
     
     var num_search_ctx_menu = $('#num-search-context-menu');
     
-/*  $('#search-num-box').on('input', function(){
-        $('#results').load('/dashboard/search_number?q=' + $(this).val(), initNumSearchMenu);
-    });
-*/
+
     function initNumSearchMenu() {
         
         $('#load-icon').hide();
+        
+        //highlight balls with matching numbers
+        tmpSearchNums = searchNums.split("-").filter(Boolean);
+        tmpSearchNums.forEach(function(item){
+            $('.ball').filter(function(){ 
+                return $(this).html() == (item.length == 1 ? ($(this).html().length == 1 ? item : '0' + item) : item); })
+            .css("background-color", "#428bca");
+        });
+        
         $(".lotto-num-menu").click(function(){
             
             if (selected_num_link == null || $(this).attr('id') != selected_num_link.attr('id')) {
@@ -36,7 +43,13 @@ $(document).ready(function() {
         
         $('#results').after(num_search_ctx_menu);
         $('#load-icon').show();
-        $('#results').load('/dashboard/search_number?q=' + text, initNumSearchMenu);
+        searchNums = text;
+        var selectedGames = [];
+        $.each($('#game-filter li input:checked'), function() { selectedGames.push($(this).val()); });
+        $('#results').load('/search/search_number?q=' + searchNums 
+            + '&games=' + selectedGames.join(",")
+            + '&winners='  + $('#winners-check').is(':checked')
+            + '&date_exp=' + $('#date-exp').val(), initNumSearchMenu);
     });
     
     

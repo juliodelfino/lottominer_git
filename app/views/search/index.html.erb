@@ -1,6 +1,6 @@
 <br/>
-<label for="search-num-box">Separate your number inputs by using comma, dash, space, or enter keys.
-<%= image_tag 'images/load-icon.gif', id: 'load-icon', width: 16 %></label>
+<label for="search-num-box">Enter your numbers here. Separate them by using comma, dash, space, or enter keys.
+    <%= image_tag 'images/load-icon.gif', id: 'load-icon', width: 16 %></label>
 
 <div id="search-num-multi-input" class="multiple-val-input form-control">
     <ul>
@@ -9,34 +9,102 @@
     </ul>
 </div>
 
-    <a href="#">More options</a>
-    
-    <table>
-        <tr>
-            <td style="min-width: 200px">
-                
-                <h4>Filter</h4>
-                <% LottoGame.find_each do |g| %>
-                
-                <input id="search-by-game<%= g.id %>" type="checkbox" value="<%= g.id %>" />
-                <label for="search-by-game<%= g.id %>"><%= g.name %></label><br>
-                <% end %>
-                
-                
-                <h4>Sort</h4>
-                <input type="checkbox" /><label>Number</label>
-                <input type="checkbox" /><label>Date</label>
-                <input type="checkbox" /><label>Game</label>
-                
-            </td>
-            <td>
-                <div id="results">
-                
-                </div>     
-            </td>
-        </tr>
-    </table>
+<a href="#filter-collapse" data-toggle="collapse">More options</a>
 
+<div id="filter-collapse" class="panel-collapse collapse" style="width: 100%">
+    <div class="col-sm-6">
+        <div>
+            FILTER
+        </div>
+        <div class="col-sm-3 filter-option">
+            <div class="button-group">
+                <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+                    <span>Select Game&nbsp;</span><span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu columns" id="game-filter">
+                    <li>
+                        <a href="#" class="small" tabIndex="-1">
+                        <input type="checkbox" value="all" />
+                        &nbsp;All Games</a>
+                    </li>
+                    <% LottoGame.find_each do |g| %>
+                    <li>
+                        <a href="#" class="small" tabIndex="-1">
+                        <input type="checkbox" id="game_id_<%= g.id %>" value="<%= g.id %>" />
+                        &nbsp;<label for="game_id_<%= g.id %>"><%= g.name %></label> </a>
+                    </li>
+                    <% end %>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-3 filter-option">
+            <div class="button-group">
+                <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+                    <span>Select Date&nbsp;</span><span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" id="date-filter">
+                    <li>
+                        <a id="cal-btn" href="#" class="small" data-value="all" tabIndex="-1">
+                        <input type="radio" name="date-filter-options" />
+                        &nbsp;Date Expression
+                        <input type="hidden" id="datepicker" />
+                        <input type="text" id="date-exp" style="width: 120px" />
+                        <%= image_tag 'images/calendar.gif', width: 16 %> </a><span></span>
+                    </li>
+                    <li>
+                        <a href="#" class="small" data-value="range" tabIndex="-1">
+                        <input type="radio" name="date-filter-options" />
+                        &nbsp;Date Range
+                        <input type="text" style="width: 80px" />
+                        <input type="text" style="width: 80px" />
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-6 filter-option">
+            <label>
+                <input type="checkbox" id="winners-check" />
+                <span>Winning numbers only</span> </label>
+
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div>
+            SORT
+        </div>
+        <div id="sort-btn-group" class="btn-group" data-toggle="buttons">
+            <label class="btn btn-info active">
+                <input type="radio" name="options" id="option1" autocomplete="off" value="1" checked/>
+                Date&nbsp;<span id="sort-caret1" class="caret"></span> </label>
+            <label class="btn btn-info">
+                <input type="radio" name="options" id="option2" autocomplete="off" value="2" />
+                Game&nbsp;<span id="sort-caret2" class="caret" style="display: none"></span> </label>
+            <label class="btn btn-info">
+                <input type="radio" name="options" id="option3" autocomplete="off" value="3" />
+                Number&nbsp;<span id="sort-caret3" class="caret" style="display: none"></span> </label>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div>
+            GROUP
+        </div>
+        <select>
+            <option>None</option>
+            <option>Game</option>
+            <option>Month and Year</option>
+        </select>
+
+    </div>
+    <hr/>
+    <div class="col-sm-8">
+        <input class="btn-primary btn" type="submit" value="Filter" />
+    </div>
+</div>
+
+<div id="results" class="col-lg-12">
+
+</div>
 
 <ul class="dropdown-menu" role="menu" id="num-search-context-menu">
     <li>
@@ -48,3 +116,65 @@
     </li>
 </ul>
 
+<script>
+    $('#game-filter a').on('click', function(event) {
+
+        var $target = $(event.currentTarget),
+            $inp = $target.find('input'),
+            val = $inp.val(),
+            idx;
+
+        setTimeout(function() {
+            $inp.prop('checked', !$inp.prop('checked'));
+            if (val == 'all') {
+                $('#game-filter input').prop('checked', $inp.prop('checked'));
+            } else {
+                $('#game-filter input[value="all"]').prop('checked', false);
+            }
+        }, 0);
+        $(event.target).blur();
+
+        return false;
+    });
+
+    $('#date-filter a').on('click', function(event) {
+
+        var $target = $(event.currentTarget),
+            $inp = $target.find('input'),
+            val = $inp.val(),
+            idx;
+
+        setTimeout(function() {
+            if (!$inp.prop('checked')) {
+                $inp.prop('checked', true);
+            }
+        }, 0);
+
+        return false;
+    });
+
+    $('#sort-btn-group label').on('click', function(event) {
+
+        $('#sort-btn-group label .caret').css('display', 'none');
+        var $target = $(event.currentTarget),
+            $inp = $target.find('input'),
+            val = $inp.val();
+        $('#sort-caret' + val).css('display', 'inline-block');
+        $('#sort-caret' + val).toggleClass('caret-reversed');
+    });
+
+    // var lottoDate = $("#datepicker").datepicker({
+    // changeYear: true,
+    // yearRange: '2002:present',
+    // dateFormat: 'yymmdd',
+    // defaultDate: getParameterByName('date') != null ? getParameterByName('date') : new Date(),
+    // onSelect: function(date) {
+    // queryResultsByDate(date);
+    // }
+    // });
+    //
+    // $('#cal-btn').click(function(){
+    // lottoDate.datepicker('show');
+    // });
+
+</script>
