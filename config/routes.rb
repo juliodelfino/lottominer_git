@@ -40,7 +40,6 @@ Rails.application.routes.draw do
   get '/mail/unsubscribe' => 'welcome#unsubscribe'
   get '/dashboard/get_add_number_form'
   get '/dashboard/get_number_details'
-  get '/dashboard/search_number'
   post '/dashboard/ajax_add_number'
   post '/dashboard/ajax_remove_number'
   post '/dashboard/ajax_copy_result_to_user_number'
@@ -52,6 +51,7 @@ Rails.application.routes.draw do
   get '/ads' => 'welcome#ads'
   
   get '/search' => 'search#index'
+  get '/search/search_number'
   
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

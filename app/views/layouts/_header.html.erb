@@ -15,6 +15,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li class="<%= "active" if params[:controller] == "dashboard" %>"><a href="/dashboard">Dashboard</a></li>
+        <li class="<%= "active" if params[:controller] == "search" %>"><a href="/search">Search Results</a></li>
         <li class="<%= "active" if params[:controller] == "analytics" %>">
 		    <a href="#" class="dropdown-toggle js-activated" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Analytics <span class="caret"></span></a>
         	<ul class="dropdown-menu" role="menu">  
@@ -22,6 +23,7 @@
 			    <a href="#">By Game</a>
             	<ul class="dropdown-menu" role="menu">
             		<li><a href="/analytics">All Games</a></li>
+            		<!-- TODO: change query from LottoResult to LottoGame -->
             		<% LottoResult.uniq.pluck(:game).each do |result| %> 
             			<li><a href="/analytics/game?id=<%= result %>"><%= result %></a></li>
 		  			<% end %>
