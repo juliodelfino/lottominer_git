@@ -7,8 +7,8 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   
-  <%= stylesheet_link_tag params[:controller], media: 'all', 'data-turbolinks-track' => true  %>
-  <%= javascript_include_tag params[:controller], 'data-turbolinks-track' => true %> 
+  <%= stylesheet_link_tag params[:controller], media: 'all', 'data-turbolinks-track' => false  %>
+  <%= javascript_include_tag params[:controller], 'data-turbolinks-track' => false %> 
 
   <%= csrf_meta_tags %>
   <%= favicon_link_tag 'favicon-32x32.png' %>
@@ -21,7 +21,7 @@
 	<%= render controller.current_user.present? ? "/layouts/header" : "/layouts/header_guest" %>
 	
     <div class="container-fluid">
-      <div class="row">
+
       	
       	<% if params[:controller] == "analytics" && (params[:action] == 'index' || params[:action] == 'game') %>
 		<%= render "/layouts/navbar" %>
@@ -37,7 +37,7 @@
       </div>
       
       <%= render "/layouts/footer" %>
-    </div>
+ 
 
 </body>
 </html>
